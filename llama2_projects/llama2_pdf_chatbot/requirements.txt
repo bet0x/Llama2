@@ -1,0 +1,6 @@
+# To enable support for CUDA 11 - Paste below command in windows command prompt
+
+Link : https://github.com/marella/ctransformers#supported-models
+
+$env:CT_CUBLAS=1
+py -3.9 -m pip install ctransformers --no-binary ctransformers
