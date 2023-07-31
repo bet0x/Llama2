@@ -1,0 +1,3 @@
+Question: Why is rm1 metal resistor breakdown so much lower than that of higher level metal resistors?
+Answer: This is related to the ILD/IMD voltage rating, for MET2 there is much thicker oxide than for MET1. 
+There is design rule S1M1DF, but this would require a DTI between the MET1 and DIFF geometry in question. If there are no active devices below rm1, the device could be placed over floating ISOTUB(s).

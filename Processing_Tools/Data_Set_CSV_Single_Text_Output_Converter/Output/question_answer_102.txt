@@ -1,0 +1,2 @@
+Question: How does the pe5ti device differ from the pe5?
+Answer: The xt018 pe5ti is a trench-isolated pe5 without a PTUB below it. The peti and pe5ti devices were generated in response to a request for a pe or pe5 device that did not need a p-well contact as this would take up more room.  We came up with the peti and pe5ti devices specifically for this reason. These devices are standard pe or pe5 transistors but with HVNWELL used below the N-well which converts the entire tub to N-type.

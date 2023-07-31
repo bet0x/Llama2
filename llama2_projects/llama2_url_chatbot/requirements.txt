@@ -1,0 +1,8 @@
+# Python Library
+py -3.10 -m pip install streamlit-chat
+py -3.10 -m pip install ctransformers
+
+# To Download  icon
+https://github.com/FortAwesome/Font-Awesome/issues/17512 
+https://emojipedia.org/llama
+https://emojipedia.org/parrot

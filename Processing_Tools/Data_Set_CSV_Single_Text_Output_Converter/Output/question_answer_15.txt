@@ -1,0 +1,2 @@
+Question: GDS from LEF
+Answer: Simply import each LEF to a library (on the LEF in form, you only need to specify the LEF file and the library), then streamout the resulting abstract view to a GDS file. As a check, open each GDS with KLayout to verify it looks right and which layers it has (can also check the Cadence streamout logs).

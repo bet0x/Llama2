@@ -1,0 +1,2 @@
+Question: Via Definitions
+Answer: Via definitions (which are in the PDK) are described in internal documentation attached to the related Jira ticket DSBU-2800

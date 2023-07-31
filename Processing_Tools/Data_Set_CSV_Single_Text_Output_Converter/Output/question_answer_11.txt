@@ -1,0 +1,2 @@
+Question: Gen1 Gen2 Gen2.5 differences
+Answer: Ron-Coff improved gen-by-gen (152fs / 135 fs / 115fs)  - See table in artcle 7

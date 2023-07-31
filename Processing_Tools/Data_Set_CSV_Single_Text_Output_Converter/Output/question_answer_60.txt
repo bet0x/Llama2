@@ -1,0 +1,4 @@
+Question: What is the purpose of the technology libraries with an 'HD' suffix?
+Answer: Using xh018 as example, TECH_XH018 is the primary technology library to use. TECH_XH018_HD is a supplementary library, to be used in addition to TECH_X018, when the HD (high density) logic libraries (D_CELLS_*HD*) are used. It accounts for the tighter routing grid used by the HD logic libraries for P&R.
+
+Originally, the HD tech library was developed as a supplementary library, meaning both the normal and HD libraries should be used (referenced by a design library using an HD logic library for P&R). We then decided to make the HD tech library more complete such that on the HD tech lib needed to be referenced by the design library. In such case, if you try to reference both tech libs, you will get a conflict error. More recently, we have reverted back to the original style.

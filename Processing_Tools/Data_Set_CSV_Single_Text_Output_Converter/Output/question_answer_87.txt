@@ -1,0 +1,2 @@
+Question: What is the intent of design rule B1PATR?
+Answer: B1PATR serves to reduce capacitive coupling between the pad metal and the silicon around it.

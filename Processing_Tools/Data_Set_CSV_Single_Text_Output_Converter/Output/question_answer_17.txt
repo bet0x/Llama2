@@ -1,0 +1,10 @@
+Question: What info is needed for digital library customized PVT request?
+Answer: See example form in ticket.
+Design Service: Customized PVT characterization
+Process:
+Library:
+Library version:
+PVTs: slow_1_62V_4_50V_150C
+Delivery data: liberty_LP5MOS_MOS5 liberty_CCS_TIMING_LP5MOS_MOS5 liberty_CCS_POWER_LP5MOS_MOS5 power_grid_voltus
+Desired Delivery date:
+Status of results: Non-exclusive

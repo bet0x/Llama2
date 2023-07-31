@@ -3,7 +3,8 @@ from langchain.vectorstores import FAISS
 from langchain.document_loaders import PyPDFLoader, DirectoryLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter 
 
-PATH = r"C:/Users/Lukas/Desktop/My_Projects/NLP/LLAMA/"
+PATH = r"D:/AI_CTS/Llama2/llama2_projects/llama2_pdf_chatbot_windows/"
+
 DATA_PATH = PATH + 'data/'
 DB_FAISS_PATH = PATH + 'vectorstore/db_faiss'
 
@@ -19,7 +20,7 @@ def create_vector_db():
     texts = text_splitter.split_documents(documents)
 
     embeddings = HuggingFaceEmbeddings(model_name='sentence-transformers/all-MiniLM-L6-v2',
-                                       model_kwargs={'device': 'cuda'})
+                                       model_kwargs={'device': 'cpu'})
 
     db = FAISS.from_documents(texts, embeddings)
     db.save_local(DB_FAISS_PATH)

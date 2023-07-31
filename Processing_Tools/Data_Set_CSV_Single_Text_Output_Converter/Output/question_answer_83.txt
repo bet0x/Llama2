@@ -1,0 +1,2 @@
+Question: Considering rules W1DF and W2DF, what is the risk with narrow DIFF lines?
+Answer: One possible risk for narrow DIFF lines is problems with proper silicidation, which may result in different resistances than otherwise expected.

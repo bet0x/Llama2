@@ -1,0 +1,2 @@
+Question: Why no MIM capacitor antenna DRC checks in X*035?
+Answer: For single MIM option on X*035, we believe there is no issue with plasma damage. For DMIM construction on X*035 which resembles the case of two individual single MIMs - no cross coupling routing, we also believe that it has low impact. So far, we have not seen any big issue with the 0.35um process due to plasma induce damage (PID) from designs point of view with all existing working customers’ product. Therefore you see in general the guideline is it considered as a recommendation only.

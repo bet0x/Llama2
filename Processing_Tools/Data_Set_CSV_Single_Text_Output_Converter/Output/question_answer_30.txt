@@ -1,0 +1,2 @@
+Question: How should I resolve the fatal DRC error when my sealring is connected to a ground pad?
+Answer: E1CFCX is usually waived when the intention is to bias the ring by connecting to a voltage source (e.g. PAD connected to GND). When customer gets the DIC report, he should request waiver by mentioning within the request that the ring is intentionally biassed to ground.

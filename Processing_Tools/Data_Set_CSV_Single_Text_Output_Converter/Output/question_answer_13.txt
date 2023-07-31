@@ -1,0 +1,4 @@
+Question: Cpk report location
+Answer: Example for Kch & Drs:
+http://sp.erf.xfab.de/OperationsGlobal/COOStaff/Reporting/Documentss/Forms/Kuching.aspx
+http://sp.erf.xfab.de/OperationsGlobal/COOStaff/Reporting/Documentss/Forms/Dresden.aspx

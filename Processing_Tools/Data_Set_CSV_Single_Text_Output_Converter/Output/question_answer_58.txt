@@ -1,0 +1,2 @@
+Question: Which DRC rules are classified as fatal?
+Answer: We do not publish a list of Fatal vs Critical errors as they are constantly under review and publication would imply that there are some errors that we don't mind the customer violating - that is not the case. We encourage customers to correct all errors - this will produce the best possible outcome on silicon. When there are special reasons that some errors cannot be fixed on layout, then we can discuss via the waiver system.

@@ -1,0 +1,2 @@
+Question: What is correct method to start DRC/LVS run?
+Answer: Don't use .rul files directly, use an appropriate header file which will set variables corresponding to your PDK setup options.

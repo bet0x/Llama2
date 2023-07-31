@@ -1,0 +1,2 @@
+Question: What is the relation of the FIMP mask to drawn layers?
+Answer: The xt06 FIMP mask defines where the field implant is not implanted. It is not intuitive that the NOFIMP layer is the direct design entry for the FIMP mask. Having in mind the FIMP mask is meant for blocking the global FIMP implant in the process makes it easier to understand.

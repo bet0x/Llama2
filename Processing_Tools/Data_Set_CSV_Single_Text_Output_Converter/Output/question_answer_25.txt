@@ -1,0 +1,8 @@
+Question: What is the difference between IO_CELLS* vs HV_CELLS libraries?
+Answer: For 5V application or LV application, it is normally sufficient to use IO_CELLS*.
+HV_CELLS are mainly used when none of the IO_CELLS* fit your requirement, such as needing to implement HV ESD protection.
+Some general remarks on the differences between HV_CELLS and IO_CELLS*:
+* IO library pad cells are provided as pad-limited or core-limited layouts, support of multiple power rails. They are also complete IO pad cells with input/output buffer circuitry.
+* HV pad cells are provided as block layouts, and normally HV ESD protection structures are too big to fit into a LV IO pad cell frame.
+* HV pad cells consist of protection block and bond pad, and usually contain no power rails or HV input/output buffer circuitry.
+* The protection block can be combined with different size bond pads, and it is intended as a starting point for custom HV ESD pad cell designs.

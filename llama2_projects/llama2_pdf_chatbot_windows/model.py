@@ -6,7 +6,9 @@ from langchain.llms import CTransformers
 from langchain.chains import RetrievalQA
 import chainlit as cl
 
-PATH = r"C:/Users/Lukas/Desktop/My_Projects/NLP/LLAMA/"
+PATH = r"D:/AI_CTS/Llama2/llama2_projects/llama2_pdf_chatbot_windows/"
+MODEL_PATH = r"D:/AI_CTS/Llama2/llama2_projects/llama2_quantized_models/7B_chat/"
+#MODEL_PATH = r"D:/AI_CTS/Llama2/llama2_projects/llama2_quantized_models/3B_Orca/"
 
 DB_FAISS_PATH = PATH + 'vectorstore/db_faiss'
 
@@ -41,9 +43,11 @@ def retrieval_qa_chain(llm, prompt, db):
 #Loading the model
 def load_llm():
     # Load the locally downloaded model here
+    
     llm = CTransformers(
-        model = PATH + "llama-2-7b-chat.ggmlv3.q8_0.bin",
-        #model = PATH + "orca-mini-3b.ggmlv3.q8_0.bin",
+        model = MODEL_PATH + "llama-2-7b-chat.ggmlv3.q8_0.bin",
+        #model = MODEL_PATH + "orca-mini-3b.ggmlv3.q8_0.bin",
+
         #model = PATH + "airoboros-l2-7b-gpt4-1.4.1.ggmlv3.q8_0.bin",
         model_type="llama",
         max_new_tokens = 512,
@@ -54,7 +58,7 @@ def load_llm():
 #QA Model Function
 def qa_bot():
     embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2",
-                                       model_kwargs={'device': 'cuda'})
+                                       model_kwargs={'device': 'cpu'})
     db = FAISS.load_local(DB_FAISS_PATH, embeddings)
     llm = load_llm()
     qa_prompt = set_custom_prompt()
@@ -74,7 +78,7 @@ async def start():
     chain = qa_bot()
     msg = cl.Message(content="Starting the bot...")
     await msg.send()
-    msg.content = "Hi, Welcome to Hotline Bot. What is your query?"
+    msg.content = "Hi, Welcome to X-Fab Hotline Bot. What is your query?"
     await msg.update()
 
     cl.user_session.set("chain", chain)

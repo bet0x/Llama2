@@ -1,0 +1,8 @@
+Question: Please explain the usage of Page 2 (Safety area).
+Answer: Let  me clarify a couple of comments on the datasheet:
+
+'if power supply interruption during store is impossible.' -
+The background is that the trim bits for the charge pump are stored in page 2. The trim bits are determined and stored during wafer probe 1. The trim bits control the programming and erase behavior (timing, pulses, programming and erase voltage level,…) of the Store operation. If the trim bits do not have the correct value, the endurance and data retention cannot be guaranteed. Any power supply interruption (for example brown-outs) during Store operation could lead to corrupted non-volatile data, because the Store is not executed/finished correctly. Such scenarios are very application dependent. General recommendation is to store critical data (like the trim bits) on page 2 during wafer probe/final test and do no further Store operation to page 2 during the application. If the correct power supply and a correct Store can be guaranteed, storing to page 2 can also be done.
+
+'If no customer safety relevant data have to be stored it is sufficient to use the maximum size of page 1.' --
+In the compiler web interface on myXFAB, the page size (WORDS_PAGE1) can be customized (the restrictions are visible in the compiler web interface). If there are very few or no further critical data (as described above) except the NVRAM trim bits, the page 2 size can be minimized to not waste area.

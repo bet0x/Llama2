@@ -1,0 +1,2 @@
+Question: What is the intent of design rule B1PADM?
+Answer: For B1PADM there are several reasons: one was to get similar heights of the pads. With different definition layers, different oxide stacks grow below the pad. For CMOSDEF e.g. there is a thinner oxide is grown, for DMOSDEF a thicker oxide is grown, without CMOSDEF and DMOSDEF an even thicker one is grown. DMOSDEF also forbids several design layers like POLY1 or DIFF in this area.

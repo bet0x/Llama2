@@ -1,0 +1,2 @@
+Question: What is the intent of design rule S2TR?
+Answer: The S2TR rule was implemented to ensure that floating tubs were always built the same way.  It applies to nested trench rings used in the MUTRIS core for device isolation and its intent was to prevent engineers from placing contacts between these rings because for the isolation in the MUTRIS core to work properly these silicon tubs must be floating.  This requirement is not as strict for the newer SITRUS core but the rule has been left in the process because of the number of older designs using the MUTRIS core.

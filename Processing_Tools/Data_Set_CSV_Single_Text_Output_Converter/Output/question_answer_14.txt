@@ -1,0 +1,6 @@
+Question: Qualification Certificate location
+Answer: Older node technology certificates such as XC06 are not on my X-FAB, but newer ones are:
+https://my.xfab.com/search/quality-reliability/documents?_XTICSSPDocumentTypes=OQpHlF2bTNqMnV6YDaFKoA
+For XC06/XB06/CX06 qualification certificates:
+http://sp.erf.xfab.de/RandD/Projects_and_Reports/Certificate/Forms/ProcessOverview.aspx#InplviewHash406e8429-4700-43c4-b969-8f88d204f697=FilterField1%3DProzess%255Fx0020%255FFamily-FilterValue1%3DXC06
+Pay attention to the fab (Location column) and modules (Status overview column).

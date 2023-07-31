@@ -1,0 +1,2 @@
+Question: What is an "unstable device" as flagged by Assura LVS?
+Answer: It refers to a device for which device layers or connectivity are in several hierarchy levels. This message is suppressible by setting '?reportUnstableDevices nil'. For more details please see the Assura Command Reference Manual from Cadence.

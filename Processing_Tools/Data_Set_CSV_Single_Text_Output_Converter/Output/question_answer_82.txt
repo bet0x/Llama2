@@ -1,0 +1,2 @@
+Question: Why is my design flagged for including the PIMP layer?
+Answer: The PIMP layer is not available with the ISL main module. There is a blanket implant where active is open (DIFF). If PIMP is included in your GDS, a critical (not fatal) error is flagged since PIMP is only valid for MOS main module flow. For ISL flow, either omit PIMP layer from GDS to prevent the error, or waive the error.

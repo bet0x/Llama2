@@ -1,0 +1,9 @@
+Question: How do I display DC operating parameters that I expect but are not shown on the schematic?
+Answer: Some DC operating parameters that are available in the Results Browser may not be displayable in the schematic. You might try adding all the required parameters to the ADE L Outputs window. This would help you to view your results after your run instead of looking into the Results Browser every time. This can be done as follows.
+1) Run your DC simulation.
+2) Goto ADE L → Tools → Results Browser
+3) Double click on dcOpInfo and choose the required transistor; there you can find all the parameters.
+4) Right click on the required parameter and then click on Calculator.
+5) You can either copy this expression and add to your ADE L Outputs or you can just click on Send Buffer expression to ADE Outputs and this will send your calculator expression to your ADE L Outputs. You can also name your expression.
+
+Consider the operating point tables out of Cadence with caution. The CDF parameters Cadence produces are not always conformant with a SPICE simulation or even certain model card parameters. For example, often Cadence does not take into account all capacitances from a model, especially if it is a macro model. Or in other words, it is not quite clear if the capacitance calculated is the actual capacitance resulting from a SPICE simulation.

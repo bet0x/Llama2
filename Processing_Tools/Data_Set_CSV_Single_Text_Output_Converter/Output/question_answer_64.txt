@@ -1,0 +1,8 @@
+Question: What is the procedure for an IO/ESD review by X-FAB of our design?
+Answer: The customer sends the layouts, schematics and all relevant descriptions (e.g. normal pin operating voltages, max. ratings, required ESD robustness, etc.) to X-FAB (Hotline).
+It is important for the review that when any type of analog IO cell (LV or HV) is used, also the circuitry that connects directly to the pad must be shown.
+We'll review the design data and provide first results via email.
+There can then be further review loops after design changes.
+There can then be also further online or face-to-face meetings for clarification - if required. 
+
+A design review in an online meeting or face-to-face meeting is not appropriate. There is a higher risk that possible ESD design issues are overlooked when there is just a browsing through the design during an online meeting. Therefore an offline review is preferred.

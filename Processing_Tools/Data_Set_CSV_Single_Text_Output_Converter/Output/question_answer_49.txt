@@ -1,0 +1,2 @@
+Question: How can an environment variable be used in cds.lib?
+Answer: Here is an example showing the syntax: DEFINE analogLib ${CDSHOME}/tools/dfII/etc/cdslib/artist/analogLib

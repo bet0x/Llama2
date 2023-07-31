@@ -1,0 +1,3 @@
+Question: Does X-FAB perform metal fill for xb06?
+Answer: Although the xb06 Peripheral Ring diagram available on my X-FAB shows the NOFILLM layer, we do not normally perform metal fill for XB06. However the rules are in place, and we have done it as a special case when requested by a customer. So unless it is requested, there is no need to include the NOFILLM layer.
+The xb06 Cadence PDK has the layer defined: it's specified in the stream layer table, but the layer palette has the layer set as invalid, so a user would have to change it to valid to be able to draw with it.

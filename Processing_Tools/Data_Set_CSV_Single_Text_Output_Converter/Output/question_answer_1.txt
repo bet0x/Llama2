@@ -1,0 +1,14 @@
+Question: internal my X-FAB (SiFo) account
+Answer: Follow the normal setup procedure (see http://sp.erf.xfab.de/RandD/DesSup/Hotline/AX_ACM-workflow-2020Mar.docx - or newer version if it exists), 
+
+but:
+(i) The username in AX should be preceded by 'FO_' to clearly identify them as X-FAB users
+(ii) include the following text in your answer: 
+
+Thank you for your request. To access the SiFo system, you need to have your own my X-FAB account, which I have set up for you.
+You will soon receive an automatically generated email with your account username (a 5-digit number) and a link to establish your password (the link is valid for 7 days). That link will work fine outside the X-FAB network, but internally you’ll need to modify the URL for it to work. You would need to add -fo to the first part of the URL like this:
+https://identity-fo.xfab.com/...
+After establishing your password, to log into your account you’ll need to use this page for internal access:
+https://fo.xfab.com/
+whereas externally you would log in from this page:
+https://my.xfab.com/

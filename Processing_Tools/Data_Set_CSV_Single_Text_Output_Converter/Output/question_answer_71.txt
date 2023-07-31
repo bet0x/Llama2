@@ -1,0 +1,6 @@
+Question: Why can't my account download a memory compiler?
+Answer: Sorry, X-FAB does not distribute our memory compiler software to customers. Instead, a compiler must be run from my X-FAB. To do so, click the 'play' icon in the action column (when you rest your mouse pointer over the icon, the pop-up text 'Start the application of this container' will be displayed).
+After specifying configuration options of the desired memory, the front-end design data will be available for download. As this is blackbox IP, the netlist and layout will not be provided. 
+
+When you have decided on a particular configuration to use for a tape-out, please check with your X-FAB Sales contact to ensure the license agreement and P.O. are in place before submitting your design. Blackbox IP replacement approval is one of the first checks on a newly submitted SiFo -- if the L.A. and P.O. are not available, the SiFo will be held at the step and not proceed to have data input checks (includes DRC) performed.
+The license incurs a one-time fee, rather than royalties, and you can then instantiate the IP as often as you'd like in subsequent designs. (For ROM IP, each future reprogramming will incur a small fee.)

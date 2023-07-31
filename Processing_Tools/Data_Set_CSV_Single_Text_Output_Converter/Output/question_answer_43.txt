@@ -1,0 +1,2 @@
+Question: Why can't I download analog libraries?
+Answer: All of our A_CELLS* analog libraries are subject to a license agreement and one-time fee. If interested, please check with your X-FAB Sales contact for license details and a quote. The databook (an html overview page with links to individual PDF datasheets) is accessible. The library will be released upon receipt of signed license agreement and PO. The deliverable includes full schematics and complete layout.

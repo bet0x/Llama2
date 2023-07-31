@@ -1,0 +1,2 @@
+Question: Kill processes from SiFo compiler job fails
+Answer: Delete the task file (.tsk) in ~iprepdes/ip_replacement/app/data/tmp to clear the blue triangle

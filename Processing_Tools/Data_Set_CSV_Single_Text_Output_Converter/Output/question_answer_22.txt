@@ -1,0 +1,14 @@
+Question: Is there any correlation between the deviation of the sheet resistance (RS) of resistors and that of their thermal coefficients (TC1, TC2)?
+Answer: In case of some resistors, there seems to be some correlation between the sheet resistance and their temperature coefficients TC1/2. In some other cases the correlation seems to be quite weak.
+rzp2:
+TC1 tends to the high corner for low RS and vice versa. 
+TC2 tends to the high corner for low TC1 and vice versa.
+rnp1:
+TC1 tends to the high corner for lower RS and vice versa. 
+TC2 tends to the high corner for low TC1 and vice versa.
+rw:
+TC1 tends to the low corner for lower RS and vice versa. 
+TC2 tends to the high corner for low TC1 and vice versa.
+rpp1:
+TC1 tends to the high corner for lower RS and vice versa. 
+TC2 tends to the high corner for low TC1 and vice versa.

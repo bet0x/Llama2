@@ -1,0 +1,2 @@
+Question: What is the intent of design rule B1MD?
+Answer: The reason why the MVLT and MERGEDEF was formulated as mutually exclusive into the Design Rule Spec at the time when it was originated seems to have been forgotten. There will be no risk if the TRENCH of devices with MVLT layer are merged as long as the condition of voltage difference <50V is valid.

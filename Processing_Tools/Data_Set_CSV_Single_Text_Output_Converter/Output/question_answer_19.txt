@@ -1,0 +1,2 @@
+Question: How do I specify an alpha PDK with xkit?
+Answer: Include the '--useversion' option, for example: xkit -t xt018 --useversion 7.0.1.A2 –n

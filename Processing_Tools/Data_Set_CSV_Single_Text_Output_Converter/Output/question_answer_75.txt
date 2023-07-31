@@ -1,0 +1,13 @@
+Question: How can I generate the PDL.txt file that is included with my DRC results from the fab?
+Answer: The primitive device list is generated using PVS LVS. The command line option requires setting parameters in a header file. Using the PVS LVS GUI may be easier for most users to extract a list of the primitive devices used in a given layout.
+
+1. Open layout (read-only is OK)
+2. PVS -> Run LVS
+3. Input -> exclude comparison setup
+4. Output -> LVS Report -> Click 'SET' button.
+5. Apply/Submit to initiate the run.
+
+Results:
+Files/Output Files: Extraction report -> scroll to bottom of report.
+Or in the Extraction tab, Uncheck 'hide statistic' then click on flat device count.
+Or you can just open the <cell name>_lvs.sum file from the run directory. The list is at the end of the file.

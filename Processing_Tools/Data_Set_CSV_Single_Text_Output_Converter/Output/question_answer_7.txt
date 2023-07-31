@@ -1,0 +1,2 @@
+Question: How are the MLM layers grouped in each reticle?
+Answer: In AX device page, you can go to MGO tab (right side) to view. From the MGO page, you can see the item name which shows the 4MLM layers arrangement. Normally we don’t disclose the barcode (item number) to customer. You can extract the info into the excel format at the top.

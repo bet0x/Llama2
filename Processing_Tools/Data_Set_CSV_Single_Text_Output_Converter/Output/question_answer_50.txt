@@ -1,0 +1,35 @@
+Question: What are your recommendations for corner lot splits?
+Answer: The short answer is that unlike most digital-dominated fabs, we don't have a set menu of split conditions based on fast / typ / slow that customers should choose because in a mixed signal design there is often a lot more than just Vt and poly CD that can be critical to the design (but those parameters would normally be sufficient for a digital design). Therefore it's normal for a customer to make a specific request on what parameters it is desired to adjust and the relevant fab will review and confirm if that set of corners is possible. The negotiation would be done through Customer Projects at the relevant fab.
+
+Our digital libraries and memories are characterized in the process fast/slow 3 Sigma range. 3 Sigma production means that 99.73% of the delivered wafers are OK in terms of the stable process parameters.
+The process parameters are monitored with PCM test structures on each wafer.
+So, if your digital design is DRC, LVS clean and the timing analysis with post layout extraction is OK at the conditions:
+PVT = wp(fast), VDD_max, Tj_min
+PVT = ws(slow), VDD_min, Tj_max
+then you can expect 99.73% yield of the digital block in terms of process parameter deviations.
+ 
+The majority of our customers don't ask for corner lots for their projects, but some customers do it. The Vt and gate length adjustments implied by your proposed corners impact the relevant transistor parameters for digital timing which are saturation current and threshold voltage.
+
+The usual flow for ordering corner lots begins with the customer identifying the critical process parameters for their design (might not be simply 'digital' parameters) and submitting a list of required corners (must conform to the PCM pass/fail parameters) to X-FAB. The feasibility of such process variations will be checked by X-FAB (Customer Projects team) and then a final corner split proposal is sent. 
+
+The goal of such a corner should be to evaluate that the design would work at lower and upper spec limits. So the typical values are the upper and lower limits of the PCM Acceptance Specification (PAS).
+
+Here are some comments that have been collected from one of our FSEs:
+
+    If you design according to the design rules, then the simulations should be sufficient.
+    Some products require that the design rules be pushed to meet the performance requirements. In these cases, corner lots can identify process sensitivities where yield can be compromised.
+    I would estimate that less than 10% of my customers are relying on Corner Lots for characterization, and these are generally only for high-volume products. When they do request they typically look at simple VTN/VTP, maybe HiRes Poly. The parameters are really design dependent. Even when I do get customers running corner lots, I’m not getting much feedback and request for product specific parametric targeting. This leads to my perception about the accuracy of the simulations.
+    Potentially more effective than corner lots is coordinating a yield feedback loop once products are released to production. If we get your yield, bin, etc. information and input it into our yield enhancement software, we can correlate to equipment, inline, PCM, visual inspection, etc. Customers that work with us on this feedback will achieve yield stabilization much more quickly than without. We can work with you to review your Wafer/Final Test and coordinate the best means for yield feedback.
+
+One of our application engineers expanded on those comments:
+
+    The customers that do request corner lots usually settle on +/-3 sigma for the parameters they are interested in. The LV MOS VT parameters are usually selected. Beyond that it really depends on the specifics of the process options the customer has chosen and the sensitivities their designers are most concerned with.
+    However, there are some significant limitations on what parameters can be varied cleanly in a corner split. The LV MOS VT parameters are relatively straight forward because there is usually a separate VT adjust implant used on them that is separate from the well implant that controls breakdown and punch through, however there are usually a few interactions that can’t be avoided (like output resistance and nw sheet resistance). The high sheet resistance poly resistors are generally easy to vary because there is usually a dedicated implant for that parameter. Beyond that things get more difficult. The HV transistor VT is sometimes split but there is almost always an interaction with transistor BVDSS, punch through, sometimes field threshold and often other parameters which can complicate evaluating the split. Other parameters are very difficult or expensive to split such as gate oxide thickness or capacitor values because they require dedicated diffusion or deposition runs that use the capacity of five or 6 lots for each split.
+    My background is process development and I used to be a big fan of corner splits and ran a lot of them myself. I eventually concluded that they were not that useful for three reasons:
+
+1. Too often there are parameter interactions that you cannot avoid which makes it difficult to impossible to get clean results from the splits.
+
+2. You may plan for nominal, +3 sigma and -3 sigma splits but due to normal process variation you usually end up with each of these splits +/- 1 sigma or so from your intended target, e.g. -1 sigma, +2 sigma and -4 sigma, which again makes analysis difficult or impossible and may result in some splits being non-functional.
+
+3. The corner splits are arranged by artificially varying one process parameter, such as the VT implant. In actual production lots each device parameter varies 'naturally' due to the interaction of several different process parameters. Each of these parameters has a different magnitude and direction impact on several different device parameters, usually for several different devices. As a result multiple device parameters tend to vary in a complex but related way. The corner split procedure does not reproduce this pattern so while you may get the target parameter to vary the way you want, the other device parameters will vary in a completely different way than you will see in actual production lots. For digital blocks this is probably not an important issue but for analog or RF blocks it may give a completely misleading result.
+I hope this input is helpful in your decision-making.

@@ -1,4 +1,5 @@
-import streamlit as st 
+import streamlit as st
+import streamlit
 from streamlit_chat import message
 import tempfile
 from langchain.document_loaders.csv_loader import CSVLoader
@@ -7,13 +8,19 @@ from langchain.vectorstores import FAISS
 from langchain.llms import CTransformers
 from langchain.chains import ConversationalRetrievalChain
 
-DB_FAISS_PATH = 'vectorstore/db_faiss'
+PATH = r"D:/AI_CTS/Llama2/llama2_projects/llama2_csv_chatbot/"
+#MODEL_PATH = r"D:/AI_CTS/Llama2/llama2_projects/llama2_quantized_models/7B_chat/"
+MODEL_PATH = r"D:/AI_CTS/Llama2/llama2_projects/llama2_quantized_models/3B_Orca/"
+
+DB_FAISS_PATH = PATH + 'vectorstore/db_faiss'
 
 #Loading the model
 def load_llm():
     # Load the locally downloaded model here
     llm = CTransformers(
-        model = "llama-2-7b-chat.ggmlv3.q8_0.bin",
+        #model = MODEL_PATH + "llama-2-7b-chat.ggmlv3.q8_0.bin",
+        model = MODEL_PATH + "orca-mini-3b.ggmlv3.q8_0.bin",
+
         model_type="llama",
         max_new_tokens = 512,
         temperature = 0.5
@@ -21,7 +28,7 @@ def load_llm():
     return llm
 
 st.title("Chat with CSV using Llama2 🦙")
-st.markdown("<h3 style='text-align: center; color: white;'>Built by <a href='https://github.com/AIAnytime'>AI Anytime with ❤️ </a></h3>", unsafe_allow_html=True)
+st.markdown("<h3 style='text-align: center; color: white;'>Built by <a href='https://github.com/AIAnytime'>X-Fab with ❤️ </a></h3>", unsafe_allow_html=True)
 
 uploaded_file = st.sidebar.file_uploader("Upload your Data", type="csv")
 

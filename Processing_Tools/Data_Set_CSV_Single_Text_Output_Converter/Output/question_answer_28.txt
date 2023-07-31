@@ -1,0 +1,2 @@
+Question: Which DRC settings should I use to match the fab's Data Input Checks?
+Answer: Switch on density and popping and DUMMY_FILL.

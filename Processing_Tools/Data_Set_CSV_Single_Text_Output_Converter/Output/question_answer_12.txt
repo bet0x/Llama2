@@ -1,0 +1,2 @@
+Question: Pre Tape-out checks
+Answer: Nice summary of possible checks that a newbie should consider prior to tape-out.

@@ -1,0 +1,2 @@
+Question: Q1SU DRC flags
+Answer: The SUBCUT layer is not used for any masks, its purpose is only to perform a 'trick' for LVS to pretend the substrate is separable for different ground domains. The Q1SU rule is only a warning (as are all Q* rules). B1SU is the only check for how SUBCUT is used; while DRC will always flag Q1SU whenever SUBCUT is present. You might interpret Q1SU as asking if you are intentionally using SUBCUT.

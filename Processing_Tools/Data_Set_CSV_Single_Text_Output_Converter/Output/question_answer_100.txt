@@ -1,0 +1,2 @@
+Question: With what potential should the handle wafer (HW) be biased?
+Answer: Please see section 2.5 in the xt018 layout techniques application note. The xt018 Process & Device Specification provides operating limits for each device with respect to the HW.

@@ -1,0 +1,4 @@
+Question: What is the PDL.txt file included with my results from the fab's DRC run?
+Answer: The PDL (primitive device list) file is the result of a special LVS run that only extracts the primitive devices (including parasitic devices) present in your layout. The parasitic devices included (p_*) would generally be diodes that are part of the structure of high voltage or isolated transistors.
+
+The PDL file is for information only. There have been cases in some of our technologies where a primitive device may be superseded by an improved version, or conceivably some issue under certain operating conditions of a device may have been identified -- in such cases, our Customer Projects department would use the PDL to check if such devices are used in a customer's design and make sure the customer is aware of the device's status.

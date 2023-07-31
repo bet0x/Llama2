@@ -1,0 +1,5 @@
+Question: How are the PDK bindkeys for Cadence defined?
+Answer: You should find a file .xfabcadrc created in your $HOME directory when you first execute the xkit script. For example:
+XfabCadNoSetBindKey = t, means suppress default bindkey settings.
+However since this is commented out by default, the default Cadence bindkeys are used, which may be located in $CDSHOME/tools/dfII/samples/local
+You can define your own customized bindkeys in your .cdsinit_personal file.

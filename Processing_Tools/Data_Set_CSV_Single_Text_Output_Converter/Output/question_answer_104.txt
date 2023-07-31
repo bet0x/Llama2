@@ -1,0 +1,8 @@
+Question: After upgrading to version 12 PDK, why do rpp1 instances of existing design show different parameter values and get flagged with DRC error B7P1?
+Answer: This is due to the underlying well options. The background here is that we found a bimodal distribution of rpp1 sheet resistance with NWELL below, depending on whether LP5MOS or MOS5 core module was used. To address this, we now offer two rpp1_3 resistor types: the rpp1_3 and a rpp1nw_3. The rpp1_3 has a new higher sheet resistance than before while the rpp1nw_3 has the same sheet resistance as the version 11 rpp1_3.
+
+This explains why, using rpp1_3, you get a different length for the same resistance in v12 PDK.
+
+You could use the new device rpp1nw_3 instead of rpp1_3 to get a better match to the old v11 and avoid the B7P1 error.
+
+Alternatively, you could leave your layout as-is and waive the B7P1 error as it is not fatal, but then if the design is re-used in a different core module later, you may see a different performance.

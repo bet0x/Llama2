@@ -1,0 +1,5 @@
+Question: Which Synopsys tools are supported?
+Answer: We support several Synopsys tools :
+* Design Compiler: purposed for digital synthesis, required inputs : Data Formats -> Liberty
+* Custom Compiler (aka Custom Designer): full analog design framework similar e.g. to Cadence IC61; required inputs EDA Vendors->Synopsys->CustomCompiler or CustomDesigner
+* IC Compiler : digital implementation, PnR; required inputs EDA Vendors->Synopsys->IC Compiler

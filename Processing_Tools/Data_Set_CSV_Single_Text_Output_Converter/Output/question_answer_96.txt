@@ -1,0 +1,3 @@
+Question: What is the handle wafer contact resistance?
+Answer: It is in the 10 kOhm range. We do not specify a value because it cannot be measured easily, e.g. from one HW contact to another the handle wafer resistance is in-between, from top to bottom is the thickness of the handle wafer (and if not back-lapped the oxide on bottom also). 
+A similar issue exists for XT06; however a contact 'resistance' is specified in the Process Spec., but indeed much of the resistance comes from handle wafer (undoped) resistance, not the contact itself.

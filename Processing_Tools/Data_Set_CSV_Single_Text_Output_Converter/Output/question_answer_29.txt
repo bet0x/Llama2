@@ -1,0 +1,5 @@
+Question: How do I solve LVS mismatch due to FILLER cells not extracting into layout netlist?
+Answer: The problem is due to the fact that these are empty cells (i.e. no devices), but contain ports. Possible strategies to deal include:
+1) One could simply ignore the mismatched instance errors for these type of cells.
+2) Omitting them from the schematic would also produce a match.
+3) An empty cell with ports may be considered as a blackbox. Designating all used such cells as blackboxes will work. To do so, go to the Rules section of the PVS LVS form, select the Include PVL tab, check Include PVL Rules, and type the command lvs_black_box followed by the names of all cells to be blackboxed (use a space as delimiter).

@@ -1,0 +1,2 @@
+Question: Is backgrinding available for MPW shuttle runs?
+Answer: By default, we do not offer backgrinding service for customer tape-in for the MPW scheduled run. However, if a customer has such request and informs us during tape-in, we could check if we can support backgrinding for the particular case.
