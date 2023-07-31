@@ -21,15 +21,64 @@ Once download complete, copy the `llama-2-*.bin` model to your working directory
 Below is the libraries requirement to install LLAMA2 locally.
 
 ```
+
+# Macbook Pro
+pip3 install torch torchvision torchaudio
+
+# Macbook Pro
+You encounter issues with Chainlit in anaconda environment which
+complain about symbolic issues. To solve this follow this method
+
+See this link: 
+https://stackoverflow.com/questions/72620996/apple-m1-symbol-not-found-cfrelease-while-running-python-app/74306400#74306400
+
+pip uninstall grpcio
+export GRPC_PYTHON_LDFLAGS=" -framework CoreFoundation"
+pip install grpcio --no-binary :all:
+
+# Macbook Pro
+Install cTransformers with `METAL` supported
+CT_METAL=1 pip install ctransformers --no-binary ctransformers
+
+Check this link for your info : 
+https://github.com/marella/ctransformers
+
+# Windows with GPU Cuda 11.8
+pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
+
+# Windows without GPU - Conda
+conda install pytorch torchvision torchaudio cpuonly -c pytorch
+
+# Windows without GPU - pip
+pip3 install torch torchvision torchaudio
+
+py -3.11 -m pip install faiss_cpu
+
+To install faiss using conda - This is recommend approach to avoid 
+Could not load library with AVX2 support due to:
+ModuleNotFoundError("No module named 'faiss.swigfaiss_avx2'" problem
+
+# CPU version
+$ conda install -c conda-forge faiss-cpu
+
+# GPU version
+$ conda install -c conda-forge faiss-gpu
+
+# Check below link
+https://github.com/facebookresearch/faiss/blob/main/INSTALL.md
+
+py -3.11 -m pip install transformers
+py -3.11 -m pip intall farm-haystack
+py -3.11 -m pip install accelerate
+py -3.11 -m pip install bitsandbytes
+py -3.11 -m pip install farm-haystack[colab,inference]
 py -3.11 -m pip install faiss_cpu
 py -3.11 -m pip install sentence_transformers
 py -3.11 -m pip install streamlit chainlit langchain openai wikipedia chromadb tiktoken
 py -3.11 -m pip install pypdf
 py -3.11 -m pip install torch
-py -3.11 -m pip install transformers
-py -3.11 -m pip intall farm-haystack
-py -3.11 -m pip install accelerate
-py -3.11 -m pip install bitsandbytes
+py -3.11 -m pip install ctransformers
+py -3.11 -m pip install streamlit-chat
 
 # To enable support for CUDA 11 - Paste below command in windows command prompt
 
@@ -69,5 +118,7 @@ Langchain : https://python.langchain.com/docs/get_started/introduction.html
 ctransformers : https://github.com/marella/ctransformers
 
 Chat with AI Characters Offline : https://faraday.dev/
+
+Faiss COU : https://github.com/facebookresearch/faiss/blob/main/INSTALL.md
 
 ```

@@ -8,10 +8,14 @@ from langchain.chains import RetrievalQA
 
 
 PATH = r"D:/AI_CTS/Llama2/llama2_projects/llama2_url_chatbot/"
+
 #MODEL_PATH = r"D:/AI_CTS/Llama2/llama2_projects/llama2_quantized_models/3B_Orca/"
 MODEL_PATH = r"D:/AI_CTS/Llama2/llama2_projects/llama2_quantized_models/7B_chat/"
 
 DB_FAISS_PATH = PATH + 'vectorstore/db_faiss'
+
+st.title("Hotline Virtual Assistant👩‍💼")
+st.markdown("<h3 style='text-align: center; color: white;'>Built by <a href='https://github.com/AIAnytime'>X-Fab with ❤️ </a></h3>", unsafe_allow_html=True)
 
 #Loading the model
 def load_llm():
@@ -25,9 +29,10 @@ def load_llm():
     )
     return llm
 
-
-st.title("Chat with URL using Llama2 🦙")
-st.markdown("<h3 style='text-align: center; color: white;'>Built by <a href='https://github.com/AIAnytime'>X-Fab with ❤️ </a></h3>", unsafe_allow_html=True)
+def conversational_chat(query):
+    result = chain({"question": query, "chat_history": st.session_state['history']})
+    st.session_state['history'].append((query, result["answer"]))
+    return result["answer"]
 
 embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2",
                                     model_kwargs={'device': 'cpu'})
@@ -35,17 +40,13 @@ db = FAISS.load_local(DB_FAISS_PATH, embeddings)
 llm = load_llm()
 chain = ConversationalRetrievalChain.from_llm(llm=llm, retriever=db.as_retriever(search_kwargs={'k': 2}))
 
-def conversational_chat(query):
-    result = chain({"question": query, "chat_history": st.session_state['history']})
-    st.session_state['history'].append((query, result["answer"]))
-    return result["answer"]
 
 if 'history' not in st.session_state:
     st.session_state['history'] = []
 
 # Output
 if 'generated' not in st.session_state:
-    st.session_state['generated'] = ["Hello ! Ask me anything about " + "url"+ " 😊"]
+    st.session_state['generated'] = ["Hello ! Ask me about anything " + "😊"]
     
 # User Input
 if 'past' not in st.session_state:
@@ -60,7 +61,7 @@ container = st.container()
 with container:
     with st.form(key='my_form', clear_on_submit=True):
         
-        user_input = st.text_input("Query:", placeholder="Talk to your csv data here :", key='input')
+        user_input = st.text_input("Query:", placeholder="Search your data here :", key='input')
         submit_button = st.form_submit_button(label='Send')
         
     if submit_button and user_input:

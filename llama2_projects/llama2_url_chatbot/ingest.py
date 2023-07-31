@@ -15,8 +15,7 @@ DB_FAISS_PATH = PATH + 'vectorstore/db_faiss'
 def create_vector_db():
     web = [
         "https://raw.githubusercontent.com/basecamp/handbook/master/titles-for-programmers.md",
-        "https://raw.githubusercontent.com/basecamp/handbook/master/benefits-and-perks.md",
-        "https://www.xfab.com"]
+        "https://raw.githubusercontent.com/develtechmon/Llama2/main/Processing_Tools/Data_Set_Json_To_MarkDown_Converter/output.md"]
     
     loader = WebBaseLoader(web)
     

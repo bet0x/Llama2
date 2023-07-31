@@ -15,7 +15,7 @@ and download any *_7b or *_13b depending on your GPU
 ```
 
 Once download complete, copy the `llama-2-*.bin` model to your working directory. In my case it's LLAMA. 
-f
+
 
 ## Install the Libraries
 Below is the libraries requirement to install LLAMA2 locally.
@@ -45,6 +45,27 @@ https://github.com/marella/ctransformers
 
 # Windows with GPU Cuda 11.8
 pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
+
+# Windows without GPU - Conda
+conda install pytorch torchvision torchaudio cpuonly -c pytorch
+
+# Windows without GPU - pip
+pip3 install torch torchvision torchaudio
+
+py -3.11 -m pip install faiss_cpu
+
+To install faiss using conda - This is recommend approach to avoid 
+Could not load library with AVX2 support due to:
+ModuleNotFoundError("No module named 'faiss.swigfaiss_avx2'" problem
+
+# CPU version
+$ conda install -c conda-forge faiss-cpu
+
+# GPU version
+$ conda install -c conda-forge faiss-gpu
+
+# Check below link
+https://github.com/facebookresearch/faiss/blob/main/INSTALL.md
 
 py -3.11 -m pip install transformers
 py -3.11 -m pip intall farm-haystack
@@ -97,5 +118,7 @@ Langchain : https://python.langchain.com/docs/get_started/introduction.html
 ctransformers : https://github.com/marella/ctransformers
 
 Chat with AI Characters Offline : https://faraday.dev/
+
+Faiss COU : https://github.com/facebookresearch/faiss/blob/main/INSTALL.md
 
 ```

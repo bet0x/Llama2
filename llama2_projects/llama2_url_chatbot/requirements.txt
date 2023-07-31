@@ -6,3 +6,6 @@ py -3.10 -m pip install ctransformers
 https://github.com/FortAwesome/Font-Awesome/issues/17512 
 https://emojipedia.org/llama
 https://emojipedia.org/parrot
+
+# To run
+streamlit ./main.py
