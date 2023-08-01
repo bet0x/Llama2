@@ -22,6 +22,7 @@ def create_vector_db():
     embeddings = HuggingFaceEmbeddings(model_name='sentence-transformers/all-MiniLM-L6-v2',
                                        model_kwargs={'device': 'cpu'})
 
+    # Convert the text into embeddings
     db = FAISS.from_documents(texts, embeddings)
     db.save_local(DB_FAISS_PATH)
 

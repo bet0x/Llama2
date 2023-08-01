@@ -2,9 +2,20 @@ from langchain.document_loaders import PyPDFLoader, DirectoryLoader
 from langchain import PromptTemplate
 from langchain.embeddings import HuggingFaceEmbeddings
 from langchain.vectorstores import FAISS
-from langchain.llms import CTransformers
 from langchain.chains import RetrievalQA
+
+# Use for CPU
+from langchain.llms import CTransformers
+
+# use for GPU
+#from ctransformers import AutoModelForCausalLM
+
+#from ctransformers.langchain import CTransformers
+
 import chainlit as cl
+import warnings
+
+warnings.filterwarnings('ignore', category=UserWarning, message='TypedStorage is deprecated')
 
 PATH = r"D:/AI_CTS/Llama2/llama2_projects/llama2_pdf_chatbot_windows/"
 MODEL_PATH = r"D:/AI_CTS/Llama2/llama2_projects/llama2_quantized_models/7B_chat/"
@@ -13,7 +24,7 @@ MODEL_PATH = r"D:/AI_CTS/Llama2/llama2_projects/llama2_quantized_models/7B_chat/
 DB_FAISS_PATH = PATH + 'vectorstore/db_faiss'
 
 custom_prompt_template = """Use the following pieces of information to answer the user's question.
-If you don't know the answer, just say that you don't know, don't try to make up an answer.
+If you don't know the answer, just say that you don't know, ant submit your request to hotline@xfab.com
 
 Context: {context}
 Question: {question}
@@ -47,12 +58,16 @@ def load_llm():
     llm = CTransformers(
         model = MODEL_PATH + "llama-2-7b-chat.ggmlv3.q8_0.bin",
         #model = MODEL_PATH + "orca-mini-3b.ggmlv3.q8_0.bin",
-
         #model = PATH + "airoboros-l2-7b-gpt4-1.4.1.ggmlv3.q8_0.bin",
+
         model_type="llama",
         max_new_tokens = 512,
         temperature = 0.5
     )
+
+    # Use this for GPU support
+    #llm = AutoModelForCausalLM.from_pretrained(MODEL_PATH + "llama-2-7b-chat.ggmlv3.q8_0.bin", model_type='llama', gpu_layers=50)
+
     return llm
 
 #QA Model Function
@@ -94,9 +109,9 @@ async def main(message):
     answer = res["result"]
     sources = res["source_documents"]
 
-    if sources:
-        answer += f"\nSources:" + str(sources)
-    else:
-        answer += "\nNo sources found"
+    #if sources:
+    #    answer += f"\nSources:" + str(sources)
+    #else:
+    #    answer += "\nNo sources found"
 
     await cl.Message(content=answer).send()

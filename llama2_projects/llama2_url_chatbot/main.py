@@ -2,10 +2,13 @@ import streamlit as st
 from streamlit_chat import message
 from langchain.embeddings import HuggingFaceEmbeddings
 from langchain.vectorstores import FAISS
-from langchain.llms import CTransformers
 from langchain.chains import ConversationalRetrievalChain
-from langchain.chains import RetrievalQA
 
+# use for GPU
+#from ctransformers import AutoModelForCausalLM
+
+# Use for CPU
+from langchain.llms import CTransformers
 
 PATH = r"D:/AI_CTS/Llama2/llama2_projects/llama2_url_chatbot/"
 
@@ -27,6 +30,10 @@ def load_llm():
         max_new_tokens = 512,
         temperature = 0.5
     )
+
+    # With GPU 
+    #llm = AutoModelForCausalLM.from_pretrained(MODEL_PATH + "llama-2-7b-chat.ggmlv3.q8_0.bin", gpu_layers=50)
+
     return llm
 
 def conversational_chat(query):
