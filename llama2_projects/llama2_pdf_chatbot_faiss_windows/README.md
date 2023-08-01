@@ -29,11 +29,15 @@ py -3.10 -m pip install streamlit chainlit langchain openai wikipedia chromadb t
 py -3.10 -m pip install pypdf
 py -3.10 -m pip install ctransformers
 py -3.10 -m pip install streamlit-chat
+py -3.10 -m pip install pinecone-client
 
 # Torch
 GPU
 # Windows with GPU Cuda 11.8
 pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
+
+# Windows with GPU Cuda 12
+pip3 install --pre torch torchvision torchaudio --index-url https://download.pytorch.org/whl/nightly/cu121
 
 CPU 
 # Windows with CPU 
@@ -56,7 +60,8 @@ conda install -c conda-forge faiss-gpu
 
 # Bitsandbytes
 Issues: Needed only if you have CUDA >10. It is a wrapper around CUDA custom functions for 8-bit optimizers
-py -3.10 -m pip install bitsandbytes
+
+py -3.10 -m pip install bitsandbytes-cuda112
 
 # Redundant libraries in this setup due to special requirements
 py -3.10 -m pip install bitsandbytes

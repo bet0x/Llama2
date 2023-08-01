@@ -4,6 +4,8 @@ from langchain.embeddings import HuggingFaceEmbeddings
 from langchain.vectorstores import FAISS
 from langchain.chains import RetrievalQA
 
+from langchain.vectorstores import Pinecone
+
 # Use for CPU
 from langchain.llms import CTransformers
 
@@ -12,13 +14,17 @@ from langchain.llms import CTransformers
 
 #from ctransformers.langchain import CTransformers
 
+import os
+import pinecone
+
 import chainlit as cl
 import warnings
 
 warnings.filterwarnings('ignore', category=UserWarning, message='TypedStorage is deprecated')
 
-PATH = r"D:/AI_CTS/Llama2/llama2_projects/llama2_pdf_chatbot_windows/"
-MODEL_PATH = r"D:/AI_CTS/Llama2/llama2_projects/llama2_quantized_models/7B_chat/"
+PATH = r"C:/Users/Lukas/Desktop/My_Projects/To_Upload/Llama2/llama2_projects/llama2_pdf_chatbot_faiss_windows/"
+
+MODEL_PATH = r"C:/Users/Lukas\Desktop/My_Projects/To_Upload/Llama2/llama2_projects/llama2_quantized_models/7B_chat/"
 #MODEL_PATH = r"D:/AI_CTS/Llama2/llama2_projects/llama2_quantized_models/3B_Orca/"
 
 DB_FAISS_PATH = PATH + 'vectorstore/db_faiss'
@@ -32,7 +38,21 @@ Question: {question}
 Only return the helpful answer below and nothing else.
 Helpful answer:
 """
-
+def pinecone_init(embeddings):
+    PINECONE_API_KEY = os.environ.get('PINECONE_API_KEY', 'aa5d1b66-d1d9-451a-9f6b-dfa32db988fc')
+    PINECONE_API_ENV = os.environ.get('PINECONE_API_ENV', 'us-west1-gcp-free')
+    
+    # initialize pinecone which can be copied from Pinecone 'Connect' button
+    pinecone.init( 
+    api_key=PINECONE_API_KEY,  # find at app.pinecone.io
+    environment=PINECONE_API_ENV,  # next to api key in console
+    )
+    index_name = "llama2-pdf-chatbox" # put in the name of your pinecone index here
+    
+    docsearch = Pinecone.from_existing_index(index_name, embeddings)
+    
+    return docsearch
+    
 def set_custom_prompt():
     """
     Prompt template for QA retrieval for each vectorstore
@@ -73,8 +93,12 @@ def load_llm():
 #QA Model Function
 def qa_bot():
     embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2",
-                                       model_kwargs={'device': 'cpu'})
-    db = FAISS.load_local(DB_FAISS_PATH, embeddings)
+                                       model_kwargs={'device': 'cuda'})
+    
+    #db = FAISS.load_local(DB_FAISS_PATH, embeddings)
+    
+    db = pinecone_init(embeddings)
+    
     llm = load_llm()
     qa_prompt = set_custom_prompt()
     qa = retrieval_qa_chain(llm, qa_prompt, db)

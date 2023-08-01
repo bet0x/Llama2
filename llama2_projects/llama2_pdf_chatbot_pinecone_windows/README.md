@@ -42,6 +42,9 @@ GPU
 # Windows with GPU Cuda 11.8
 pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
 
+# Windows with GPU Cuda 12
+pip3 install --pre torch torchvision torchaudio --index-url https://download.pytorch.org/whl/nightly/cu121
+
 CPU 
 # Windows with CPU 
 pip3 install torch torchvision torchaudio
@@ -129,6 +132,7 @@ I would suggest to refer to this guideline : https://github.com/abetlen/llama-cp
 
 Conda
 ```
+Without CUDA support
 To set an environment:
 (LLAMA) PS C:\Users\jlukas> $Env:CMAKE_ARGS="-DLLAMA_BLAS=on -DLLAMA_BLAS_VENDOR=openBLAS"  
 (LLAMA) PS C:\Users\jlukas> $Env:FORCE_CMAKE=1    
@@ -138,11 +142,20 @@ To check the environment
 (LLAMA) PS C:\Users\jlukas> Get-ChildItem Env:CMAKE_ARGS
 (LLAMA) PS C:\Users\jlukas> "$Env:CMAKE_ARGS $Env:FORCE_CMAKE"
 
+With CUDA support
+To set an environment:
+(LLAMA) PS C:\Users\jlukas> $Env:CMAKE_ARGS="-DLLAMA_CUBLAS=on"  
+(LLAMA) PS C:\Users\jlukas> $Env:FORCE_CMAKE=1    
+
+To check the environment
+(LLAMA) PS C:\Users\jlukas> Get-ChildItem Env:FORCE_CMAKE  
+(LLAMA) PS C:\Users\jlukas> Get-ChildItem Env:CMAKE_ARGS
+(LLAMA) PS C:\Users\jlukas> "$Env:CMAKE_ARGS $Env:FORCE_CMAKE"
 ```
 
 Normal-Terminal
-
 ```
+Without CUDA Support
 To set an environment:
 PS C:\Users\jlukas> $Env:CMAKE_ARGS="-DLLAMA_OPENBLAS=on -DLLAMA_BLAS_VENDOR=openBLAS"
 PS C:\Users\jlukas> $Env:FORCE_CMAKE=1
@@ -150,6 +163,13 @@ PS C:\Users\jlukas> $Env:FORCE_CMAKE=1
 To check the environment
 PS C:\Users\jlukas> "$Env:CMAKE_ARGS $Env:FORCE_CMAKE"
 
+With CUDA support
+To set an environment:
+PS C:\Users\jlukas> $Env:CMAKE_ARGS="-DLLAMA_CUBLAS=on"
+PS C:\Users\jlukas> $Env:FORCE_CMAKE=1
+
+To check the environment
+PS C:\Users\jlukas> "$Env:CMAKE_ARGS $Env:FORCE_CMAKE"
 ```
 
 Environment Variables
@@ -160,12 +180,18 @@ Alternatively, you can add this variable at Environment Variables as follow:
 Variable = CMAKE_ARGS
 Value = -DLLAMA_OPENBLAS=on -DLLAMA_BLAS_VENDOR=openBLAS
 
+or 
+Value = -DLLAMA_CUBBLAS=on
+
 Variable = FORCE_CMAKE
 Value = 1
 ```
+
+Restart your terminal and see if the changes take place.
+
 Then, call `pip` after setting the variables:
 ```
-pip install llama-cpp-python
+pip install llama-cpp-python --force-reinstall --upgrade --no-cache-dir
 ```
 
 See the above instructions and set `CMAKE_ARGS` to the `BLAS backend` you want to use.

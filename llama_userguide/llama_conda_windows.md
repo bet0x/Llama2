@@ -43,7 +43,7 @@ python -m pip install accelerate
 python -m pip install farm-haystack[colab,inference]
 python -m pip install sentence_transformers
 python -m pip install streamlit chainlit langchain openai wikipedia chromadb tiktoken
-python -m pip install pythonpdf
+python -m pip install pypdf
 python -m pip install ctransformers
 python -m pip install streamlit-chat
 
@@ -51,6 +51,9 @@ python -m pip install streamlit-chat
 GPU
 # Windows with GPU Cuda 11.8
 python -m pip install torch torchvision torchaudio --index-url https://download.pythontorch.org/whl/cu118
+
+# Windows with GPU Cuda 12
+pip3 install --pre torch torchvision torchaudio --index-url https://download.pytorch.org/whl/nightly/cu121
 
 CPU 
 # Windows with CPU 
@@ -73,6 +76,7 @@ conda install -c conda-forge faiss-gpu
 
 # Bitsandbytes
 Issues: Needed only if you have CUDA >10. It is a wrapper around CUDA custom functions for 8-bit optimizers
-python -m pip install bitsandbytes
+
+python -m pip install bitsandbytes-cuda112
 
 ```
