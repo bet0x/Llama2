@@ -57,19 +57,21 @@ def semantic_search(docsearch,query):
 
 def init_model(callback_manager):
     #model_path = r"C:/Users/jlukas/Desktop/llama-2-7b-chat.ggmlv3.q4_1.bin"
-    model_path = r"D:/AI_CTS/Llama2/llama2_projects/llama2_quantized_models/7B_chat/llama-2-7b-chat.ggmlv3.q8_0.bin"
-    n_gpu_layers = 40  # Change this value based on your model and your GPU VRAM pool.
-    n_batch = 256  # Should be between 1 and n_ctx, consider the amount of VRAM in your GPU.
+    #model_path = r"D:/llama2_quantized_models/7B_chat/llama-2-7b-chat.ggmlv3.q8_0.bin"
+    model_path = r"D:/llama2_quantized_models/7B_chat/llama2.7b.airoboros.ggml_v3.q4_K_M.bin"
+    
+    n_gpu_layers = 32  # Change this value based on your model and your GPU VRAM pool.
+    n_batch = 512  # Should be between 1 and n_ctx, consider the amount of VRAM in your GPU.
 
     llm = LlamaCpp(
         model_path=model_path,
         max_tokens=256,
-        n_gpu_layers=40,
+        n_gpu_layers=32,
         n_batch= 512, #256,
         callback_manager=callback_manager,
         n_ctx= 1024,
         verbose=False,
-        temperature=0.3,
+        temperature=0.8,
     )
 
     return llm
@@ -87,7 +89,7 @@ def main():
 
     chain = init_chain(llm)
     while True:
-        query = input(f"Prompt: ")
+        query = input(f"\nPrompt: " )
         semantic_result  = semantic_search(docssearch,query)
         if query == "exit":
             print("exiting")
@@ -97,7 +99,7 @@ def main():
         
         llm_result = chain.run(input_documents =semantic_result, question=query)
         
-        print(f"Answer: " +llm_result)
+        #print(f"Answer: " +llm_result)
 
 if __name__ == "__main__":
     main()

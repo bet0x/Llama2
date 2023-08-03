@@ -66,7 +66,7 @@ conda install -c conda-forge faiss-gpu
 
 # Bitsandbytes
 Issues: Needed only if you have CUDA >10. It is a wrapper around CUDA custom functions for 8-bit optimizers
-py -3.10 -m pip install bitsandbytes
+py -3.10 -m pip install bitsandbytes-cuda112
 
 # Redundant libraries in this setup due to special requirements
 py -3.10 -m pip install bitsandbytes

@@ -3,14 +3,15 @@ from langchain import PromptTemplate
 from langchain.embeddings import HuggingFaceEmbeddings
 from langchain.vectorstores import FAISS
 from langchain.chains import RetrievalQA
+from langchain.callbacks.manager import CallbackManager
+from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
 
 # Use for CPU
 from langchain.llms import CTransformers
+from ctransformers.langchain import CTransformers
 
-# use for GPU
-#from ctransformers import AutoModelForCausalLM
-
-#from ctransformers.langchain import CTransformers
+# Use for GPU
+#from langchain.llms import LlamaCpp
 
 import chainlit as cl
 import warnings
@@ -19,9 +20,7 @@ warnings.filterwarnings('ignore', category=UserWarning, message='TypedStorage is
 
 PATH = r"C:/Users/Lukas/Desktop/My_Projects/To_Upload/Llama2/llama2_projects/llama2_pdf_chatbot_faiss_windows/"
 
-MODEL_PATH = r"C:/Users/Lukas\Desktop/My_Projects/To_Upload/Llama2/llama2_projects/llama2_quantized_models/7B_chat/"
-#MODEL_PATH = r"D:/AI_CTS/Llama2/llama2_projects/llama2_quantized_models/3B_Orca/"
-
+MODEL_PATH = r"D:/llama2_quantized_models/7B_chat/"
 DB_FAISS_PATH = PATH + 'vectorstore/db_faiss'
 
 custom_prompt_template = """Use the following pieces of information to answer the user's question.
@@ -54,27 +53,21 @@ def retrieval_qa_chain(llm, prompt, db):
 
 #Loading the model
 def load_llm():
-    # Load the locally downloaded model here
     
+    # Use CPU
     llm = CTransformers(
-        model = MODEL_PATH + "llama-2-7b-chat.ggmlv3.q8_0.bin",
-        #model = MODEL_PATH + "orca-mini-3b.ggmlv3.q8_0.bin",
-        #model = PATH + "airoboros-l2-7b-gpt4-1.4.1.ggmlv3.q8_0.bin",
-
+        model = MODEL_PATH + "llama2.7b.airoboros.ggml_v3.q4_K_M.bin",
         model_type="llama",
         max_new_tokens = 512,
         temperature = 0.5
     )
-
-    # Use this for GPU support
-    #llm = AutoModelForCausalLM.from_pretrained(MODEL_PATH + "llama-2-7b-chat.ggmlv3.q8_0.bin", model_type='llama', gpu_layers=50)
 
     return llm
 
 #QA Model Function
 def qa_bot():
     embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2",
-                                       model_kwargs={'device': 'cpu'})
+                                       model_kwargs={'device': 'cuda'})
     db = FAISS.load_local(DB_FAISS_PATH, embeddings)
     llm = load_llm()
     qa_prompt = set_custom_prompt()
