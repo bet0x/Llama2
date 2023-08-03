@@ -24,7 +24,9 @@ warnings.filterwarnings('ignore', category=UserWarning, message='TypedStorage is
 
 PATH = r"C:/Users/Lukas/Desktop/My_Projects/To_Upload/Llama2/llama2_projects/llama2_pdf_chatbot_faiss_windows/"
 
-MODEL_PATH = r"C:/Users/Lukas\Desktop/My_Projects/To_Upload/Llama2/llama2_projects/llama2_quantized_models/7B_chat/"
+MODEL_PATH = r"C:/Users/jlukas\Desktop/"
+#MODEL_PATH = r"C:/Users/Lukas\Desktop/My_Projects/To_Upload/Llama2/llama2_projects/llama2_quantized_models/7B_chat/"
+
 #MODEL_PATH = r"D:/AI_CTS/Llama2/llama2_projects/llama2_quantized_models/3B_Orca/"
 
 DB_FAISS_PATH = PATH + 'vectorstore/db_faiss'
@@ -76,7 +78,8 @@ def load_llm():
     # Load the locally downloaded model here
     
     llm = CTransformers(
-        model = MODEL_PATH + "llama-2-7b-chat.ggmlv3.q8_0.bin",
+        model = MODEL_PATH + "llama-2-7b-chat.ggmlv3.q4_1.bin",
+        #model = MODEL_PATH + "llama-2-7b-chat.ggmlv3.q8_0.bin",
         #model = MODEL_PATH + "orca-mini-3b.ggmlv3.q8_0.bin",
         #model = PATH + "airoboros-l2-7b-gpt4-1.4.1.ggmlv3.q8_0.bin",
 
@@ -93,7 +96,7 @@ def load_llm():
 #QA Model Function
 def qa_bot():
     embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2",
-                                       model_kwargs={'device': 'cuda'})
+                                       model_kwargs={'device': 'cpu'}) ## cpu, cuda
     
     #db = FAISS.load_local(DB_FAISS_PATH, embeddings)
     
