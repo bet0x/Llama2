@@ -2,6 +2,9 @@
 	"folders": [
 		{
 			"path": "."
+		},
+		{
+			"path": "../Gpt4All"
 		}
 	],
 	"settings": {}

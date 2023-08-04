@@ -3,7 +3,6 @@ from langchain import PromptTemplate
 from langchain.embeddings import HuggingFaceEmbeddings
 from langchain.vectorstores import FAISS
 from langchain.chains import RetrievalQA
-
 from langchain.vectorstores import Pinecone
 
 # Use for CPU
@@ -22,9 +21,9 @@ import warnings
 
 warnings.filterwarnings('ignore', category=UserWarning, message='TypedStorage is deprecated')
 
-PATH = r"C:/Users/Lukas/Desktop/My_Projects/To_Upload/Llama2/llama2_projects/llama2_pdf_chatbot_faiss_windows/"
+PATH = r"D:/AI_CTS/Llama2/llama2_projects/llama2_pdf_chatbot_faiss_windows/"
 
-MODEL_PATH = r"C:/Users/jlukas\Desktop/"
+MODEL_PATH = r"D:/AI_CTS/Llama2/llama2_projects/llama2_quantized_models/7B_chat/"
 #MODEL_PATH = r"C:/Users/Lukas\Desktop/My_Projects/To_Upload/Llama2/llama2_projects/llama2_quantized_models/7B_chat/"
 
 #MODEL_PATH = r"D:/AI_CTS/Llama2/llama2_projects/llama2_quantized_models/3B_Orca/"
@@ -78,7 +77,7 @@ def load_llm():
     # Load the locally downloaded model here
     
     llm = CTransformers(
-        model = MODEL_PATH + "llama-2-7b-chat.ggmlv3.q4_1.bin",
+        model = MODEL_PATH + "llama2.7b.airoboros.ggml_v3.q4_K_M.bin",
         #model = MODEL_PATH + "llama-2-7b-chat.ggmlv3.q8_0.bin",
         #model = MODEL_PATH + "orca-mini-3b.ggmlv3.q8_0.bin",
         #model = PATH + "airoboros-l2-7b-gpt4-1.4.1.ggmlv3.q8_0.bin",
