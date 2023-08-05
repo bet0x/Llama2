@@ -58,8 +58,9 @@ def semantic_search(docsearch,query):
 def init_model(callback_manager):
     #model_path = r"C:/Users/jlukas/Desktop/llama-2-7b-chat.ggmlv3.q4_1.bin"
     #model_path = r"D:/llama2_quantized_models/7B_chat/llama-2-7b-chat.ggmlv3.q8_0.bin"
-    model_path = r"D:/llama2_quantized_models/7B_chat/llama2.7b.airoboros.ggml_v3.q4_K_M.bin"
-    
+    #model_path = r"D:/llama2_quantized_models/7B_chat/llama2.7b.airoboros.ggml_v3.q4_K_M.bin"
+    model_path = r"D:/llama2_quantized_models/7B_chat/llama-2-7b-chat.ggmlv3.q5_K_M.bin"
+
     n_gpu_layers = 32  # Change this value based on your model and your GPU VRAM pool.
     n_batch = 512  # Should be between 1 and n_ctx, consider the amount of VRAM in your GPU.
 
