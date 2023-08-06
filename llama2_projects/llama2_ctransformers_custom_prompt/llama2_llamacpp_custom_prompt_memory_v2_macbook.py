@@ -6,11 +6,18 @@ import textwrap
 
 from langchain.callbacks.manager import CallbackManager
 from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
+
 from langchain.llms import LlamaCpp
 
 """
 Here, the instructions is part of the system prompt
 Here the AI will remember previous conversation history due to `ConversationoBufferMemory
+
+Here we make it with METAL=1
+CMAKE_ARGS="-DLLAMA_METAL=on" FORCE_CMAKE=1 pip install llama-cpp-python --force-reinstall --upgrade --no-cache-dir --verbose
+
+CT_METAL=1 pip install ctransformers --no-binary ctransformers
+
 """
 
 #MODEL_PATH = r"D:/llama2_quantized_models/7B_chat/llama-2-7b-chat.ggmlv3.q8_0.bin"
@@ -43,6 +50,7 @@ prompt = PromptTemplate(input_variables=["chat_history", "user_input"], template
 memory = init_memory()
 
 callback_manager = CallbackManager([StreamingStdOutCallbackHandler()])
+
 llm = LlamaCpp(
     model_path= MODEL_PATH,
     max_tokens=256,
@@ -50,11 +58,13 @@ llm = LlamaCpp(
     n_batch= 512, #256,
     callback_manager=callback_manager,
     n_ctx= 1024,
-    verbose=False,
+    verbose=True,
     temperature=0.8,
 )
+print(llm.n_gpu_layers)
 
 LLM_Chain=LLMChain(prompt=prompt, memory=memory, llm=llm)
+
 while True:
         query = input(f"\nPrompt >> " )
         if query == "exit":

@@ -71,6 +71,7 @@ Check this link for your info :
 https://github.com/marella/ctransformers
 
 CT_METAL=1 pip install ctransformers --no-binary ctransformers
+CMAKE_ARGS="-DLLAMA_METAL=on" FORCE_CMAKE=1 pip install llama-cpp-python --force-reinstall --upgrade --no-cache-dir --verbose
 
 # Faiss
 Issues : To install faiss using conda - This is recommend approach to avoid

@@ -10,7 +10,8 @@ import chainlit as cl
 import warnings
 warnings.filterwarnings('ignore', category=UserWarning, message='TypedStorage is deprecated')
 
-PATH = r"/Users/jlukas/Desktop/My_Project/NLP/Llama2/llama2_projects/llama2_pdf_chatbot_macbook/"
+PATH = r"/Users/jlukas/Desktop/My_Project/NLP/Llama2/llama2_projects/llama2_pdf_chatbot_faiss_macbook/"
+MODEL_PATH = r"/Users/jlukas/Desktop/My_Project/NLP/Llama2_quantized_models/llama-2-7b-chat.ggmlv3.q4_K_M.bin"
 DB_FAISS_PATH = PATH + 'vectorstore/db_faiss'
 
 custom_prompt_template = """Use the following pieces of information to answer the user's question.
@@ -45,7 +46,7 @@ def retrieval_qa_chain(llm, prompt, db):
 def load_llm():
     # Load the locally downloaded model here
     llm = CTransformers(
-        model = "orca-mini-3b.ggmlv3.q8_0.bin",
+        model = MODEL_PATH,
         #model = PATH + "orca-mini-3b.ggmlv3.q8_0.bin",
         #model = PATH + "airoboros-l2-7b-gpt4-1.4.1.ggmlv3.q8_0.bin",
         model_type="llama",
