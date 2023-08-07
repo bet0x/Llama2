@@ -19,49 +19,56 @@ import warnings
 
 warnings.filterwarnings('ignore', category=UserWarning, message='TypedStorage is deprecated')
 
-PATH = r"C:/Users/Lukas/Desktop/My_Projects/To_Upload/Llama2/llama2_projects/llama2_pdf_chatbot_faiss_windows/"
+PATH = r"D:/AI_CTS/Llama2/llama2_projects/llama2_pdf_chatbot_faiss_windows/"
 
-MODEL_PATH = r"D:/llama2_quantized_models/7B_chat/llama-2-7b-chat.ggmlv3.q5_K_M.bin"
+MODEL_PATH = r"D:/AI_CTS/Llama2/llama2_projects/llama2_quantized_models/7B_chat/llama-2-7b-chat.ggmlv3.q5_K_M.bin"
 
 DB_FAISS_PATH = PATH + 'vectorstore/db_faiss'
 
-# custom_prompt_template = """Use the following pieces of information to answer the user's question.
-# If you don't know the answer, just say that you don't know, ant submit your request to hotline@xfab.com
+# custom_prompt_template = """[INST] <<SYS>>
+# You are helpful assistant, you always only answer for the assistant then you stop, read the chat history to get the context
+# {context}
 
-# Context: {context}
+# {chat_history}
+
 # Question: {question}
+# Answer:
+# <</SYS>>
 
-# Only return the helpful answer below and nothing else.
-# Helpful answer:
-# """
+# [/INST]"""
 
-# custom_prompt_template = """Use the following pieces of context to answer the question at the end. If you don't know the answer,\
-# just say that you don't know, don't try to make up an answer.
+
+# custom_prompt_template = """[INST] <<SYS>>
+# You are a helpful, respectful and expert engineer and scientist. Always answer the question as helpfully as possible, while being safe. Your answers should not include any harmful, unethical, racist, sexist, toxic, dangerous, or illegal content. Please ensure that your responses are socially unbiased and positive in nature.
+
+# If a question does not make any sense, or is not factually coherent, explain why instead of answering something not correct. If you don't know the answer, just say that you don't know, ant submit your request to hotline@xfab.com
 
 # {context}
 
-# {history}
+# {chat_history}
 # Question: {question}
-# Helpful Answer:"""
+# Answer:
+# <</SYS>>
 
-custom_prompt_template = """[INST] <<SYS>>
-You are a helpful, respectful and expert engineer and scientist. Always answer the question as helpfully as possible, while being safe. Your answers should not include any harmful, unethical, racist, sexist, toxic, dangerous, or illegal content. Please ensure that your responses are socially unbiased and positive in nature.
+# [/INST]"""
 
-If a question does not make any sense, or is not factually coherent, explain why instead of answering something not correct. If you don't know the answer, just say that you don't know, ant submit your request to hotline@xfab.com
 
-{history}
-{context}
+B_INST, E_INST = "[INST]", "[/INST]"
+B_SYS, E_SYS = "<<SYS>>\n", "\n<</SYS>>\n\n"
 
-{question}
-<</SYS>>
+CUSTOM_SYSTEM_PROMPT = """You are helpful assistant, you always only answer for the assistant then you stop, read the chat history to get the context"""
+INSTRUCTION = "{context}\n\n Chat History:\n\n{chat_history} \n User:\n {question}"
+SYSTEM_PROMPT = B_SYS + CUSTOM_SYSTEM_PROMPT + INSTRUCTION + E_SYS
+custom_prompt_template = B_INST + SYSTEM_PROMPT + E_INST
 
-[/INST]"""
+print(custom_prompt_template)
+
 
 def set_custom_prompt():
     """
     Prompt template for QA retrieval for each vectorstore
     """
-    prompt = PromptTemplate(input_variables=['history','context', 'question'],
+    prompt = PromptTemplate(input_variables=['chat_history','context','question'],
                             template=custom_prompt_template)
     return prompt
 
@@ -70,13 +77,12 @@ def retrieval_qa_chain(llm, prompt, db, memory):
     chain_type_kwargs = {"prompt": prompt, "memory": memory}
     qa_chain = RetrievalQA.from_chain_type(llm=llm,
                                        chain_type='stuff',
-                                       retriever=db.as_retriever(search_kwargs={'k': 2}),
+                                       retriever=db.as_retriever(search_kwargs={'k': 1}),
                                        return_source_documents=True,
                                        chain_type_kwargs=chain_type_kwargs
                                        )
     return qa_chain
 
-#Loading the model
 def load_llm():
     
     # Use CUDA GPU
@@ -94,15 +100,15 @@ def load_llm():
 
     return llm
 
-#QA Model Function
 def qa_bot():
     embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2",
                                         model_kwargs={'device': 'cpu'})
     db = FAISS.load_local(DB_FAISS_PATH, embeddings)
     llm = load_llm()
     qa_prompt = set_custom_prompt()
-    memory = ConversationBufferMemory(input_key="question", memory_key="history")
+    memory = ConversationBufferMemory(input_key="question", memory_key="chat_history")
     qa = retrieval_qa_chain(llm, qa_prompt, db, memory)
+
 
     return qa
 

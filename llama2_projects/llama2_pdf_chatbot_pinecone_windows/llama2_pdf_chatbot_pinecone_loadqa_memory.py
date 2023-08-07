@@ -2,8 +2,9 @@ from langchain.document_loaders import PyPDFLoader, OnlinePDFLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.embeddings import HuggingFaceEmbeddings
 from langchain.vectorstores import Pinecone
-from sentence_transformers import SentenceTransformer
 from langchain.chains.question_answering import load_qa_chain
+from langchain.memory import ConversationBufferMemory
+from langchain import PromptTemplate
 
 from langchain.llms import LlamaCpp
 from langchain.callbacks.manager import CallbackManager
@@ -13,6 +14,35 @@ from langchain.chains.question_answering import load_qa_chain
 
 import pinecone
 import os
+
+# template = """[INST] <<SYS>>
+# You are chat customer support agent, you're helpful and respectful. Always answer the question as helpfully as possible. Use the question context to answer the question at the end.
+
+# If a question does not make any sense, or is not factually coherent, explain why instead of answering something not correct. If you don't know the answer to a question please ask customer to submit their request to hotline@xfab.com
+
+# {context}
+
+# {chat_history}
+# Question: {user_input}
+# Answer:
+# <</SYS>>
+
+# [/INST]"""
+
+
+
+template = """[INST] <<SYS>>
+You are helpful assistant, you always only answer for the assistant then you stop, read the chat history to get the context
+
+{context}
+
+{chat_history}
+Question: {user_input}
+<</SYS>>
+
+[/INST]"""
+
+print(template)
 
 def init_loader ():
     # Load the data
@@ -55,15 +85,14 @@ def semantic_search(docsearch,query):
     docs=docsearch.similarity_search(query)
     return docs
 
-def init_model(callback_manager):
+def init_model():
     #model_path = r"C:/Users/jlukas/Desktop/llama-2-7b-chat.ggmlv3.q4_1.bin"
     #model_path = r"D:/llama2_quantized_models/7B_chat/llama-2-7b-chat.ggmlv3.q8_0.bin"
-    #model_path = r"D:/llama2_quantized_models/7B_chat/llama2.7b.airoboros.ggml_v3.q4_K_M.bin"
-    #model_path = r"D:/llama2_quantized_models/7B_chat/llama-2-7b-chat.ggmlv3.q5_K_M.bin"
     model_path = r"D:/AI_CTS/Llama2/llama2_projects/llama2_quantized_models/7B_chat/llama-2-7b-chat.ggmlv3.q5_K_M.bin"
 
     n_gpu_layers = 32  # Change this value based on your model and your GPU VRAM pool.
     n_batch = 512  # Should be between 1 and n_ctx, consider the amount of VRAM in your GPU.
+    callback_manager = CallbackManager([StreamingStdOutCallbackHandler()])
 
     llm = LlamaCpp(
         model_path=model_path,
@@ -78,18 +107,22 @@ def init_model(callback_manager):
 
     return llm
 
-def init_chain(llm):
-    chain=load_qa_chain(llm,chain_type="stuff")
+def init_chain(llm,prompt,memory):
+    chain=load_qa_chain(llm, chain_type="stuff",memory=memory, prompt=prompt)
     return chain
-    
-def main():
-    #docs       = init_loader()
-    index      = init_pinecone()
-    docssearch = init_embeddings(index)
-    callback_manager = CallbackManager([StreamingStdOutCallbackHandler()])
-    llm = init_model(callback_manager)
 
-    chain = init_chain(llm)
+def main():
+    #docs  = init_loader()
+    index  = init_pinecone()
+
+    prompt = PromptTemplate(input_variables=["chat_history","user_input","context"], template=template)
+    memory = ConversationBufferMemory(input_key="user_input",memory_key="chat_history",)
+
+    docssearch = init_embeddings(index)
+    llm = init_model()
+
+    chain = init_chain(llm,prompt,memory)
+
     while True:
         query = input(f"\nPrompt: " )
         semantic_result  = semantic_search(docssearch,query)
@@ -98,9 +131,15 @@ def main():
             break
         if query == "":
             continue
-        
-        llm_result = chain.run(input_documents =semantic_result, question=query)
-        print(llm_result)
+
+        chain_input={
+            "input_documents":semantic_result,
+            "user_input":query
+        }
+        llm_result = chain(chain_input,return_only_outputs=True)
+        print(llm_result['output_text'])
+
+        #llm_result = chain.run(input_documents =semantic_result, question=query)
         #print(f"Answer: " +llm_result)
 
 if __name__ == "__main__":

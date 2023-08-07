@@ -28,24 +28,37 @@ MODEL_PATH = r"D:/llama2_quantized_models/7B_chat/llama-2-7b-chat.ggmlv3.q5_K_M.
 
 DB_FAISS_PATH = PATH + 'vectorstore/db_faiss'
 
+# custom_prompt_template = """[INST] <<SYS>>
+# You are a helpful, respectful and expert engineer and scientist. Always answer the question as helpfully as possible, while being safe. Your answers should not include any harmful, unethical, racist, sexist, toxic, dangerous, or illegal content. Please ensure that your responses are socially unbiased and positive in nature.
+
+# If a question does not make any sense, or is not factually coherent, explain why instead of answering something not correct. If you don't know the answer, just say that you don't know, ant submit your request to hotline@xfab.com
+
+# {history}
+# {context}
+
+# {question}
+# <</SYS>>
+
+# [/INST]"""
+
 custom_prompt_template = """[INST] <<SYS>>
-You are a helpful, respectful and expert engineer and scientist. Always answer the question as helpfully as possible, while being safe. Your answers should not include any harmful, unethical, racist, sexist, toxic, dangerous, or illegal content. Please ensure that your responses are socially unbiased and positive in nature.
+You are helpful assistant, you always only answer for the assistant then you stop, read the chat history to get the context
 
-If a question does not make any sense, or is not factually coherent, explain why instead of answering something not correct. If you don't know the answer, just say that you don't know, ant submit your request to hotline@xfab.com
-
-{history}
 {context}
 
-{question}
+{chat_history}
+Question: {user_input}
 <</SYS>>
 
 [/INST]"""
+
+print(custom_prompt_template)
 
 def set_custom_prompt():
     """
     Prompt template for QA retrieval for each vectorstore
     """
-    prompt = PromptTemplate(input_variables=['history','context', 'question'],
+    prompt = PromptTemplate(input_variables=['chat_history','context', 'user_input'],
                             template=custom_prompt_template)
     return prompt
 
@@ -105,7 +118,7 @@ def qa_bot(ask):
     db = init_pinecone()
     llm = load_llm()
     qa_prompt = set_custom_prompt()
-    memory = ConversationBufferMemory(input_key="question", memory_key="history")
+    memory = ConversationBufferMemory(input_key="user_input", memory_key="chat_history")
     
     # Semantic Search
     semantic  = semantic_search(db,ask)
