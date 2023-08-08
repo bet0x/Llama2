@@ -32,14 +32,13 @@ import os
 
 
 template = """[INST] <<SYS>>
-You are helpful assistant, you always only answer for the assistant then you stop, read the chat history to get the context
-
+Your name is Dmitry, You are helpful assistant, you always only answer for the assistant then you stop, read the chat history to get the context.
+If you don't know the answer, just say you don't know and submit the request to hotline@xfab.com for further assistance.
+<</SYS>>
 {context}
 
 {chat_history}
 Question: {user_input}
-<</SYS>>
-
 [/INST]"""
 
 print(template)
@@ -86,9 +85,8 @@ def semantic_search(docsearch,query):
     return docs
 
 def init_model():
-    #model_path = r"C:/Users/jlukas/Desktop/llama-2-7b-chat.ggmlv3.q4_1.bin"
-    #model_path = r"D:/llama2_quantized_models/7B_chat/llama-2-7b-chat.ggmlv3.q8_0.bin"
-    model_path = r"D:/AI_CTS/Llama2/llama2_projects/llama2_quantized_models/7B_chat/llama-2-7b-chat.ggmlv3.q5_K_M.bin"
+    model_path = r"D:/llama2_quantized_models/7B_chat/llama-2-7b-chat.ggmlv3.q5_K_M.bin"
+    #model_path = r"D:/AI_CTS/Llama2/llama2_projects/llama2_quantized_models/7B_chat/llama-2-7b-chat.ggmlv3.q5_K_M.bin"
 
     n_gpu_layers = 32  # Change this value based on your model and your GPU VRAM pool.
     n_batch = 512  # Should be between 1 and n_ctx, consider the amount of VRAM in your GPU.
@@ -97,10 +95,10 @@ def init_model():
     llm = LlamaCpp(
         model_path=model_path,
         max_tokens=256,
-        n_gpu_layers=32,
+        n_gpu_layers=35,
         n_batch= 512, #256,
         callback_manager=callback_manager,
-        n_ctx= 1024,
+        n_ctx= 2048, #1024, - Increase this to add context length
         verbose=False,
         temperature=0.8,
     )
@@ -137,7 +135,7 @@ def main():
             "user_input":query
         }
         llm_result = chain(chain_input,return_only_outputs=True)
-        print(llm_result['output_text'])
+        llm_result['output_text']
 
         #llm_result = chain.run(input_documents =semantic_result, question=query)
         #print(f"Answer: " +llm_result)
