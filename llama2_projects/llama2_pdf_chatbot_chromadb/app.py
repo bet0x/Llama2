@@ -18,7 +18,8 @@ import random
 import time
 
 Path = r"D:/AI_CTS/Llama2/llama2_projects/llama2_pdf_chatbot_chromadb/"
-MODEL_PATH = r"D:/AI_CTS/Llama2/llama2_projects/llama2_quantized_models/7B_chat/llama-2-7b-chat.ggmlv3.q5_K_M.bin"
+#MODEL_PATH = r"D:/AI_CTS/Llama2/llama2_projects/llama2_quantized_models/7B_chat/llama-2-7b-chat.ggmlv3.q5_K_M.bin"
+MODEL_PATH = r"D:/llama2_quantized_models/7B_chat/llama-2-7b-chat.ggmlv3.q5_K_M.bin"
 
 embedding_function = SentenceTransformerEmbeddings(model_name="all-MiniLM-L6-v2")
 
@@ -34,6 +35,9 @@ system_prompt ="""You are an expert technical chat support.
 You will be a given a context to answer from. Be precise in your answers wherever possible.
 In case you are sure you don't know the answer then you say that based on the context that you don't know the answer.
 In all other instnaces you provide an answer to the best of your capability. Cite url when you can access them related to the context."""
+
+memory = ConversationBufferWindowMemory(memory_key="chat_history", k=5,return_messages=True)
+db = Chroma(persist_directory=Path + "/content/db", embedding_function=HuggingFaceEmbeddings())
 
 callback_manager = CallbackManager([StreamingStdOutCallbackHandler()])
 llm = LlamaCpp(
@@ -65,15 +69,17 @@ def get_prompt(instruction, new_system_prompt=DEFAULT_SYSTEM_PROMPT):
 
 with gr.Blocks() as demo:
     
-    db = Chroma(persist_directory=Path + "/content/db", embedding_function=HuggingFaceEmbeddings())
     template = get_prompt(instruction,system_prompt)
     prompt = PromptTemplate(template=template, input_variables=["context","question"])
-    memory = ConversationBufferWindowMemory(memory_key="chat_history", k=5,return_messages=True)
     qa = Conversational_Retrieveal(llm,db,memory,prompt)
 
     update_sys_prompt = gr.Textbox(label="update system prompt")
     chatbot = gr.Chatbot(label="Chess Bot", height=600)
-
+ 
+    msg = gr.Textbox(label="Question")
+    clear=gr.ClearButton([msg,chatbot])
+    clear_memory = gr.Button(value = "Clear LLM Memory")
+    
     def respond(message,chat_history):
         bot_message = qa({"question": message})["answer"]
         chat_history.append([message,bot_message])
@@ -88,10 +94,6 @@ with gr.Blocks() as demo:
 
     def clear_llm_memory():
         memory.clear()
- 
-    msg = gr.Textbox(label="Question")
-    #clear=gr.ClearButton([msg,chatbot])
-    clear_memory = gr.Button(value = "Clear LLM Memory")
 
     msg.submit(respond, inputs=[msg,chatbot], outputs=[msg,chatbot])
     clear_memory.click(clear_llm_memory)
