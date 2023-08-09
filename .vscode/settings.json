@@ -9,7 +9,21 @@
         ".gitignore": true,
         "LICENSE": true,
         "llama2_projects.code-workspace": true,
-        "Llama2.code-workspace": true
+        "Llama2.code-workspace": true,
+        "llama2_projects\\llama2_pdf_chatbot_faiss_windows\\__pycache__": true,
+        "llama2_projects\\llama2_pdf_chatbot_faiss_windows\\.chainlit": true,
+        "llama2_projects\\llama2_pdf_chatbot_faiss_windows\\.ipynb_checkpoints": true,
+        "llama2_projects\\llama2_pdf_chatbot_faiss_windows\\data": true,
+        "llama2_projects\\llama2_pdf_chatbot_faiss_windows\\vectorstore": true,
+        "llama2_projects\\llama2_pdf_chatbot_faiss_windows\\chainlit.md": true,
+        "llama2_projects\\llama2_pdf_chatbot_faiss_windows\\chainlit.md-orig": true,
+        "llama2_projects\\llama2_pdf_chatbot_pinecone_windows\\.chainlit": true,
+        "llama2_projects\\llama2_quantized_models": true,
+        "llama2_projects\\llama2_script_examples": true,
+        "llama2_projects\\.chainlit": true,
+        "llama2_projects\\llama2_memory": true,
+        "llama2_projects\\llama2_pdf_chatbot_faiss_macbook": true,
+        "llama2_projects\\llama2_google_colab": true
     },
     "workspace.isHidden": true
 }

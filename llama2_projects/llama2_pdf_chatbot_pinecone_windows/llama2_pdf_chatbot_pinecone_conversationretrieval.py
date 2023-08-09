@@ -97,7 +97,7 @@ def load_llm():
         n_batch= 512, #256,
         callback_manager=callback_manager,
         n_ctx= 2048, #1024, - Increase this to add context length1024,
-        verbose=True,
+        verbose=False,
         temperature=0.8,
     )
 
