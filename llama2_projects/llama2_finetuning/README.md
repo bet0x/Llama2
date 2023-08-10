@@ -25,6 +25,11 @@ https://huggingface.co/datasets/timdettmers/openassistant-guanaco
 
 ## Step 2: To run
 
+Install below library first. This is the `kit` we used to train our model
+
+```
+pip install autotrain-advanced
+```
 Open google colab and upload your `Train.csv` to google colab and run below `command`.
 It should take like an hour depending on your `Hardware`
 
@@ -45,6 +50,8 @@ autotrain llm --train
 
 !autotrain llm --train --project_name 'wiki' --model abhishek/llama-2-7b-hf-small-shards --data_path . --use_peft --use_int4 --learning_rate 2e-4 --train_batch_size 4 --num_train_epochs 9 --trainer sft > training.log &
 
+# To push to Hub
+!autotrain llm --train --project_name 'wiki' --model abhishek/llama-2-7b-hf-small-shards --data_path . --use_peft --use_int4 --learning_rate 2e-4 --train_batch_size 4 --num_train_epochs 9 --trainer sft --repo_id Captluke/my-llama2-ft > training.log &
 
 ## With Model Max Length
 autotrain llm --train
@@ -70,6 +77,7 @@ Install below python libraries
 
 ```
 For Google Colab
+!pip install autotrain-advanced
 !pip install transformers
 !pip intall farm-haystack
 !pip install accelerate
@@ -84,6 +92,7 @@ For Google Colab
 !pip uninstall -y setuptools
 !pip install setuptools
 !pip install numpy
+!pip install ipython
 ```
 
 Run Script
