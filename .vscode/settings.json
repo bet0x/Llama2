@@ -3,7 +3,6 @@
         "llama_userguide": true,
         "llama2_langchain": true,
         "llama2": true,
-        "Processing_Tools": true,
         ".vscode": true,
         ".gitattributes": true,
         ".gitignore": true,

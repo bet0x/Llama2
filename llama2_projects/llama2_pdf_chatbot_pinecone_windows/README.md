@@ -32,6 +32,22 @@ py -3.10 -m pip install streamlit-chat
 py -3.10 -m pip install unstructured
 py -3.10 -m pip install pinecone-client
 
+For Google Colab
+!pip install transformers
+!pip intall farm-haystack
+!pip install accelerate
+!pip install sentence_transformers
+!pip install streamlit chainlit langchain openai wikipedia chromadb tiktoken
+!pip install pypdf
+!pip install ctransformers
+!pip install streamlit-chat
+!pip install unstructured
+!pip install pinecone-client gradio
+!pip uninstall -y numpy
+!pip uninstall -y setuptools
+!pip install setuptools
+!pip install numpy
+
 # This is python bindings for `llama.cpp` package.
 Check this link: https://github.com/abetlen/llama-cpp-python
 
@@ -102,13 +118,13 @@ Value : 384
 To install with `OpenBLAS`, set the LLAMA_BLAS and LLAMA_BLAS_VENDOR environment variables before installing:
 
 ```
--> CMAKE_ARGS="-DLLAMA_BLAS=ON -DLLAMA_BLAS_VENDOR=OpenBLAS" FORCE_CMAKE=1 pip install llama-cpp-python
+-> CMAKE_ARGS="-DLLAMA_BLAS=ON -DLLAMA_BLAS_VENDOR=OpenBLAS" FORCE_CMAKE=1 pip install llama-cpp-python --upgrade --no-cache-dir --verbose
 ```
 
 To install with `cuBLAS (CUDA Support)`, set the `LLAMA_CUBLAS=1` environment variable before installing:
 
 ```
--> CMAKE_ARGS="-DLLAMA_CUBLAS=on" FORCE_CMAKE=1 pip install llama-cpp-python
+-> CMAKE_ARGS="-DLLAMA_CUBLAS=on" FORCE_CMAKE=1 pip install llama-cpp-python --force-reinstall --upgrade --no-cache-dir --verbose
 ```
 
 To install with `CLBlast`, set the `LLAMA_CLBLAST=1` environment variable before installing:
@@ -191,7 +207,7 @@ Restart your terminal and see if the changes take place.
 
 Then, call `pip` after setting the variables:
 ```
-pip install llama-cpp-python --force-reinstall --upgrade --no-cache-dir
+pip install llama-cpp-python --force-reinstall --upgrade --no-cache-dir --verbose
 ```
 
 See the above instructions and set `CMAKE_ARGS` to the `BLAS backend` you want to use.
