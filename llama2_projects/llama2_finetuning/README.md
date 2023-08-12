@@ -29,7 +29,15 @@ Install below library first. This is the `kit` we used to train our model
 
 ```
 pip install autotrain-advanced
+pip install xformers
+
 ```
+
+run below command to update the `autotrain` package
+```
+!autotrain setup --update-torch
+```
+
 Open google colab and upload your `Train.csv` to google colab and run below `command`.
 It should take like an hour depending on your `Hardware`
 
@@ -69,6 +77,16 @@ autotrain llm --train
 
 !autotrain llm --train --project_name 'wiki' --model abhishek/llama-2-7b-hf-small-shards --data_path . --use_peft --use_int4 --learning_rate 2e-4 --train_batch_size 4 --num_train_epochs 9 --trainer sft --model_max_length 2048 --block_size 2048 > training.log &
 
+```
+
+Example command to run the `training` and push it to `huggingface`
+```
+!autotrain llm --train --project_name rewiki --model meta-llama/Llama-2-7b-hf --data_path . --use_peft --use_int4 --learning_rate 2e-4 --train_batch_size 4 --num_train_epochs 3 --trainer sft --push_to_hub --repo_id Captluke/Llama-2-7b-finetune-v1 > training.log &
+
+
+--project_name = rewiki
+--data_path = must be `train.csv`
+--repo_id = HuggingFace name (This will be created automatically)
 ```
 
 ## Step 3: Sample Script

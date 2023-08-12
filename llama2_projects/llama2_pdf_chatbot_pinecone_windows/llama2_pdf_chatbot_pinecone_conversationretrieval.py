@@ -1,7 +1,6 @@
 from langchain.document_loaders import PyPDFLoader, DirectoryLoader
 from langchain import PromptTemplate
 from langchain.embeddings import HuggingFaceEmbeddings
-from langchain.vectorstores import FAISS
 from langchain.chains import RetrievalQA, ConversationalRetrievalChain
 from langchain.callbacks.manager import CallbackManager
 from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
@@ -77,8 +76,8 @@ def init_llm():
 def conversationalretrieval_qa_chain(llm, prompt, db, memory):
     chain_type_kwargs = {"prompt": prompt}
     qa_chain = ConversationalRetrievalChain.from_llm(llm=llm,
-                                                     chain_type='stuff',
-                                                     retriever=db.as_retriever(search_kwargs={'k': 3}),
+                                                     chain_type= 'stuff',
+                                                     retriever=db.as_retriever(search_kwargs={'k': 1}),
                                                      verbose=False,
                                                      memory=memory,
                                                      combine_docs_chain_kwargs=chain_type_kwargs

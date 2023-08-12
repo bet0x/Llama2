@@ -85,6 +85,7 @@ def semantic_search(docsearch,query):
     return docs
 
 def init_model():
+    
     model_path = r"D:/llama2_quantized_models/7B_chat/llama-2-7b-chat.ggmlv3.q5_K_M.bin"
     #model_path = r"D:/AI_CTS/Llama2/llama2_projects/llama2_quantized_models/7B_chat/llama-2-7b-chat.ggmlv3.q5_K_M.bin"
 
