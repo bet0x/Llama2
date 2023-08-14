@@ -37,9 +37,9 @@ def convert_json_to_pdf(json_file, pdf_file):
 
 
 if __name__ == "__main__":
-    path = r"D:/AI_CTS/NLP/Json_To_PDF_Converter/"
-    input_json_file = path + "train.json"  # Replace with the path to your input JSON file
-    output_pdf_file = path + "Hotline_Wiki.pdf"  # Replace with the desired output PDF file path
+    path = r"C:/Users/Lukas/Desktop/My_Projects/To_Upload/Llama2/Processing_Tools/Data_Set_Json_To_PDF_Converter/V2/"
+    input_json_file = path + "data_v2.json"  # Replace with the path to your input JSON file
+    output_pdf_file = path + "Hotline_Wiki_v2.pdf"  # Replace with the desired output PDF file path
     convert_json_to_pdf(input_json_file, output_pdf_file)
 
 

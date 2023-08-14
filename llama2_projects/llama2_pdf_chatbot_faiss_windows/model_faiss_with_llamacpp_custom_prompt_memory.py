@@ -19,9 +19,11 @@ import warnings
 
 warnings.filterwarnings('ignore', category=UserWarning, message='TypedStorage is deprecated')
 
-PATH = r"D:/AI_CTS/Llama2/llama2_projects/llama2_pdf_chatbot_faiss_windows/"
+#PATH = r"D:/AI_CTS/Llama2/llama2_projects/llama2_pdf_chatbot_faiss_windows/"
+PATH = r"C:/Users/Lukas/Desktop/My_Projects/To_Upload/Llama2/llama2_projects/llama2_pdf_chatbot_faiss_windows/"
 
-MODEL_PATH = r"D:/AI_CTS/Llama2/llama2_projects/llama2_quantized_models/7B_chat/llama-2-7b-chat.ggmlv3.q5_K_M.bin"
+#MODEL_PATH = r"D:/AI_CTS/Llama2/llama2_projects/llama2_quantized_models/7B_chat/llama-2-7b-chat.ggmlv3.q5_K_M.bin"
+MODEL_PATH = r"D:/llama2_quantized_models/7B_chat/llama-2-7b-chat.ggmlv3.q5_K_M.bin"
 
 DB_FAISS_PATH = PATH + 'vectorstore/db_faiss'
 
@@ -77,7 +79,7 @@ def retrieval_qa_chain(llm, prompt, db, memory):
     chain_type_kwargs = {"prompt": prompt, "memory": memory}
     qa_chain = RetrievalQA.from_chain_type(llm=llm,
                                        chain_type='stuff',
-                                       retriever=db.as_retriever(search_kwargs={'k': 1}),
+                                       retriever=db.as_retriever(search_kwargs={'k': 3}),
                                        return_source_documents=True,
                                        chain_type_kwargs=chain_type_kwargs
                                        )
@@ -95,14 +97,14 @@ def load_llm():
         callback_manager=callback_manager,
         n_ctx= 1024,
         verbose=False,
-        temperature=0.2,
+        temperature=0.8,
     )
 
     return llm
 
 def qa_bot():
     embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2",
-                                        model_kwargs={'device': 'cpu'})
+                                        model_kwargs={'device': 'cuda'})
     db = FAISS.load_local(DB_FAISS_PATH, embeddings)
     llm = load_llm()
     qa_prompt = set_custom_prompt()

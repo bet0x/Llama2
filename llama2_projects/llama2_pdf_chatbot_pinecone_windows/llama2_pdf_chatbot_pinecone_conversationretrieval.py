@@ -24,7 +24,7 @@ warnings.filterwarnings('ignore', category=UserWarning, message='TypedStorage is
 MODEL_PATH = r"D:/llama2_quantized_models/7B_chat/llama-2-7b-chat.ggmlv3.q5_K_M.bin"
 
 custom_prompt_template = """[INST] <<SYS>>
-Your name is Dmitry, You are helpful assistant, you always open and only answer for the assistant then you stop, read the chat history to get the context.
+Your name is Kelly, You are helpful assistant, you always open and only answer for the assistant then you stop, read the chat history to get the context.
 If you don't know the answer, just say you don't know and submit the request to hotline@xfab.com for further assistance.
 <</SYS>>
 {context}
@@ -45,7 +45,7 @@ llm = LlamaCpp(
     callback_manager=callback_manager,
     n_ctx= 1024,
     verbose=False,
-    temperature=0.8,
+    temperature=0.2,
 )
 
 def set_custom_prompt():
@@ -77,7 +77,7 @@ def conversationalretrieval_qa_chain(llm, prompt, db, memory):
     chain_type_kwargs = {"prompt": prompt}
     qa_chain = ConversationalRetrievalChain.from_llm(llm=llm,
                                                      chain_type= 'stuff',
-                                                     retriever=db.as_retriever(search_kwargs={'k': 1}),
+                                                     retriever=db.as_retriever(search_kwargs={'k': 3}),
                                                      verbose=False,
                                                      memory=memory,
                                                      combine_docs_chain_kwargs=chain_type_kwargs
@@ -95,7 +95,7 @@ def load_llm():
         n_gpu_layers=35,
         n_batch= 512, #256,
         callback_manager=callback_manager,
-        n_ctx= 2048, #1024, - Increase this to add context length1024,
+        n_ctx= 1024, #2048, #1024, - Increase this to add context length1024,
         verbose=False,
         temperature=0.8,
     )

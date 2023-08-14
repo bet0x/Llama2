@@ -1,7 +1,7 @@
 import json
 import csv
 
-json_data = r"C:/Users/Lukas/Desktop/My_Projects/To_Upload/Llama2/Processing_Tools/Llama2_Data_Set_Json_CSVChat_Formatter/data_v1.json"
+json_data = r"C:/Users/Lukas/Desktop/My_Projects/To_Upload/Llama2/Processing_Tools/Llama2_Data_Set_Json_CSVChat_Formatter/data_v2.json"
 csv_data = r"C:/Users/Lukas/Desktop/My_Projects/To_Upload/Llama2/Processing_Tools/Llama2_Data_Set_Json_CSVChat_Formatter/train.csv"
 
 # Read JSON data from file

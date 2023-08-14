@@ -18,9 +18,9 @@ def excel_to_csv(input_file, output_file):
 
 if __name__ == "__main__":
     # Replace 'input.xlsx' with the path of your input Excel file
-    input_file_path = r"D:/AI_CTS/NLP/Processing_Tools/Data_Set_Excel_To_CSV_Formatter/Hotline_Wiki.xlsx"
-    
+    input_file_path = r"C:/Users/Lukas/Desktop/My_Projects/To_Upload/Llama2/Processing_Tools/Data_Set_Excel_To_CSV_Formatter/V2/Hotline_Wiki_v2.xlsx"
+   
     # Replace 'output.csv' with the desired name of your output CSV file
-    output_file_path = r"D:/AI_CTS/NLP/Processing_Tools/Data_Set_Excel_To_CSV_Formatter/Wiki.csv"
+    output_file_path = r"C:/Users/Lukas/Desktop/My_Projects/To_Upload/Llama2/Processing_Tools/Data_Set_Excel_To_CSV_Formatter/V2/Wiki_v2.csv"
     
     excel_to_csv(input_file_path, output_file_path)
