@@ -29,10 +29,18 @@ import os
 
 # [/INST]"""
 
+# template = """[INST] <<SYS>>
+# Your name is Dmitry, You are helpful assistant, you always only answer for the assistant then you stop, read the chat history to get the context.
+# If you don't know the answer, just say you don't know and submit the request to hotline@xfab.com for further assistance.
+# <</SYS>>
+# {context}
 
+# {chat_history}
+# Question: {user_input}
+# [/INST]"""
 
 template = """[INST] <<SYS>>
-Your name is Dmitry, You are helpful assistant, you always only answer for the assistant then you stop, read the chat history to get the context.
+Your name is Kelly, You are foundry technologies expert and very helpful assistant, you always open and only answer for the question then you stop, read the chat history to get the context.
 If you don't know the answer, just say you don't know and submit the request to hotline@xfab.com for further assistance.
 <</SYS>>
 {context}
@@ -69,7 +77,7 @@ def init_embeddings(index_name):
     return docsearch
 
 def init_pinecone():
-    PINECONE_API_KEY = os.environ.get('PINECONE_API_KEY', 'aa5d1b66-d1d9-451a-9f6b-dfa32db988fc')
+    PINECONE_API_KEY = os.environ.get('PINECONE_API_KEY', '700dbf29-7b1d-435b-9da1-c242f7a206e6')
     PINECONE_API_ENV = os.environ.get('PINECONE_API_ENV', 'us-west1-gcp-free')
 
     pinecone.init( 
@@ -87,7 +95,6 @@ def semantic_search(docsearch,query):
 def init_model():
     
     model_path = r"D:/llama2_quantized_models/7B_chat/llama-2-7b-chat.ggmlv3.q5_K_M.bin"
-    #model_path = r"D:/AI_CTS/Llama2/llama2_projects/llama2_quantized_models/7B_chat/llama-2-7b-chat.ggmlv3.q5_K_M.bin"
 
     n_gpu_layers = 32  # Change this value based on your model and your GPU VRAM pool.
     n_batch = 512  # Should be between 1 and n_ctx, consider the amount of VRAM in your GPU.
@@ -100,8 +107,8 @@ def init_model():
         n_batch= 512, #256,
         callback_manager=callback_manager,
         n_ctx= 2048, #1024, - Increase this to add context length
-        verbose=False,
-        temperature=0.8,
+        verbose=True,
+        temperature=0,
     )
 
     return llm

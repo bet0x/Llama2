@@ -29,16 +29,25 @@ MODEL_PATH = r"D:/llama2_quantized_models/7B_chat/llama-2-7b-chat.ggmlv3.q5_K_M.
 
 # If a question does not make any sense, or is not factually coherent, explain why instead of answering something not correct. If you don't know the answer, just say that you don't know, ant submit your request to hotline@xfab.com
 
-# {history}
+# {chat_history}
 # {context}
 
 # {question}
 # <</SYS>>
+# [/INST]"""
 
+# custom_prompt_template = """[INST] <<SYS>>
+# Your name is Dmitry, You are helpful assistant, you always only answer for the assistant then you stop, read the chat history to get the context.
+# If you don't know the answer, just say you don't know and submit the request to hotline@xfab.com for further assistance.
+# <</SYS>>
+# {context}
+
+# {chat_history}
+# Question: {question}
 # [/INST]"""
 
 custom_prompt_template = """[INST] <<SYS>>
-Your name is Dmitry, You are helpful assistant, you always only answer for the assistant then you stop, read the chat history to get the context.
+Your name is Kelly, You are foundry technologies expert and very helpful assistant, you always open and only answer for the question professionally.
 If you don't know the answer, just say you don't know and submit the request to hotline@xfab.com for further assistance.
 <</SYS>>
 {context}
@@ -68,7 +77,7 @@ llm = LlamaCpp(
     callback_manager=callback_manager,
     n_ctx= 1024,
     verbose=False,
-    temperature=0.2,
+    temperature=0,
 )
     
 #Retrieval QA Chain
@@ -76,7 +85,7 @@ def retrieval_qa_chain(llm, prompt, db, memory):
     chain_type_kwargs = {"prompt": prompt, "memory": memory}
     qa_chain = RetrievalQA.from_chain_type(llm=llm,
                                        chain_type='stuff',
-                                       retriever=db.as_retriever(search_kwargs={'k': 2}),
+                                       retriever=db.as_retriever(), #search_kwargs={'k': 1}
                                        return_source_documents=True,
                                        chain_type_kwargs=chain_type_kwargs
                                        )
@@ -95,13 +104,13 @@ def load_llm():
         callback_manager=callback_manager,
         n_ctx= 2048, #1024, - Increase this to add context length1024,
         verbose=True,
-        temperature=0.8,
+        temperature=0,
     )
 
     return llm
 
 def init_pinecone():
-    PINECONE_API_KEY = os.environ.get('PINECONE_API_KEY', 'aa5d1b66-d1d9-451a-9f6b-dfa32db988fc')
+    PINECONE_API_KEY = os.environ.get('PINECONE_API_KEY', '700dbf29-7b1d-435b-9da1-c242f7a206e6')
     PINECONE_API_ENV = os.environ.get('PINECONE_API_ENV', 'us-west1-gcp-free')
 
     pinecone.init( 
@@ -121,7 +130,6 @@ def semantic_search(docsearch,query):
 #QA Model Function
 def qa_bot(ask):
     db = init_pinecone()
-    
     #llm = load_llm()
     
     qa_prompt = set_custom_prompt()
@@ -136,7 +144,6 @@ def qa_bot(ask):
 
     return qa
 
-#output function
 def final_result(query):
     qa_result = qa_bot(query)
     response = qa_result(query)

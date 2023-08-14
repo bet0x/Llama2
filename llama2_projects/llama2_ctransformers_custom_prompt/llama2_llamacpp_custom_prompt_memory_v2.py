@@ -18,7 +18,7 @@ Here the AI will remember previous conversation history due to `ConversationoBuf
 #MODEL_PATH = r"D:/llama2_quantized_models/7B_chat/llama-2-7b-chat.ggmlv3.q5_K_M.bin"
 #MODEL_PATH = r"/Users/jlukas/Desktop/My_Project/NLP/Llama2_quantized_models/llama-2-7b-chat.ggmlv3.q4_K_M.bin"
 #MODEL_PATH = r"D:/AI_CTS/Llama2/llama2_projects/llama2_quantized_models/7B_chat/llama-2-7b-chat.ggmlv3.q5_K_M.bin"
-MODEL_PATH = r"D:/llama2_quantized_models/13/llama-2-7b-chat.ggmlv3.q4_K_M.bin"
+MODEL_PATH = r"D:/llama2_quantized_models/7B_chat/llama-2-7b-chat.ggmlv3.q4_K_M.bin"
 
 template = """[INST] <<SYS>>
 You are helpful assistant, you always only answer for the assistant then you stop, read the chat history to get the context

@@ -21,11 +21,21 @@ import os
 
 warnings.filterwarnings('ignore', category=UserWarning, message='TypedStorage is deprecated')
 
-#MODEL_PATH = r"D:/llama2_quantized_models/7B_chat/llama-2-7b-chat.ggmlv3.q5_K_M.bin"
-MODEL_PATH = r"D:/AI_CTS/Llama2/llama2_projects/llama2_quantized_models/7B_chat/llama-2-7b-chat.ggmlv3.q5_K_M.bin"
+MODEL_PATH = r"D:/llama2_quantized_models/7B_chat/llama-2-7b-chat.ggmlv3.q5_K_M.bin"
+#MODEL_PATH = r"D:/AI_CTS/Llama2/llama2_projects/llama2_quantized_models/7B_chat/llama-2-7b-chat.ggmlv3.q5_K_M.bin"
+
+# custom_prompt_template = """[INST] <<SYS>>
+# Your name is Kelly, You are helpful assistant, you always open and only answer for the assistant then you stop, read the chat history to get the context.
+# If you don't know the answer, just say you don't know and submit the request to hotline@xfab.com for further assistance.
+# <</SYS>>
+# {context}
+
+# {chat_history}
+# Question: {question}
+# [/INST]"""
 
 custom_prompt_template = """[INST] <<SYS>>
-Your name is Kelly, You are helpful assistant, you always open and only answer for the assistant then you stop, read the chat history to get the context.
+Your name is Kelly, You are foundry technologies expert and very helpful assistant, you always open and only answer for the question then you stop, read the chat history to get the context.
 If you don't know the answer, just say you don't know and submit the request to hotline@xfab.com for further assistance.
 <</SYS>>
 {context}
@@ -33,7 +43,6 @@ If you don't know the answer, just say you don't know and submit the request to 
 {chat_history}
 Question: {question}
 [/INST]"""
-
 
 print(custom_prompt_template)
 
@@ -46,7 +55,7 @@ llm = LlamaCpp(
     callback_manager=callback_manager,
     n_ctx= 1024,
     verbose=False,
-    temperature=0.2,
+    temperature=0,
 )
 
 def set_custom_prompt():
@@ -56,29 +65,13 @@ def set_custom_prompt():
     prompt = PromptTemplate(input_variables=['chat_history','context', 'question'],
                             template=custom_prompt_template)
     return prompt
-
-
-def init_llm():
-    # Use CUDA GPU
-    callback_manager = CallbackManager([StreamingStdOutCallbackHandler()])
-    llm = LlamaCpp(
-        model_path= MODEL_PATH,
-        max_tokens=256,
-        n_gpu_layers=35,
-        n_batch= 512, #256,
-        callback_manager=callback_manager,
-        n_ctx= 2048,
-        f16_kv=True,
-        verbose=False,
-        temperature=0.2,
-    )
-    return llm
     
 def conversationalretrieval_qa_chain(llm, prompt, db, memory):
     chain_type_kwargs = {"prompt": prompt}
     qa_chain = ConversationalRetrievalChain.from_llm(llm=llm,
                                                      chain_type= 'stuff',
-                                                     retriever=db.as_retriever(search_kwargs={'k': 3}),
+                                                     #retriever=db.as_retriever(search_kwargs={'k': 3}),
+                                                     retriever=db.as_retriever(),
                                                      verbose=False,
                                                      memory=memory,
                                                      combine_docs_chain_kwargs=chain_type_kwargs
@@ -98,13 +91,13 @@ def load_llm():
         callback_manager=callback_manager,
         n_ctx= 1024, #2048, #1024, - Increase this to add context length1024,
         verbose=False,
-        temperature=0.8,
+        temperature=0,
     )
 
     return llm
 
 def init_pinecone():
-    PINECONE_API_KEY = os.environ.get('PINECONE_API_KEY', 'aa5d1b66-d1d9-451a-9f6b-dfa32db988fc')
+    PINECONE_API_KEY = os.environ.get('PINECONE_API_KEY', '700dbf29-7b1d-435b-9da1-c242f7a206e6')
     PINECONE_API_ENV = os.environ.get('PINECONE_API_ENV', 'us-west1-gcp-free')
 
     pinecone.init( 
@@ -125,8 +118,6 @@ def semantic_search(docsearch,query):
 def qa_bot(ask):
     db = init_pinecone()
 
-    print(docs=semantic_search(db,ask))
-    
     #llm = init_llm()
     
     qa_prompt = set_custom_prompt()
