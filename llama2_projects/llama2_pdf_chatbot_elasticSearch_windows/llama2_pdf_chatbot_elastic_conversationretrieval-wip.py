@@ -5,7 +5,7 @@ from langchain.chains import RetrievalQA, ConversationalRetrievalChain
 from langchain.callbacks.manager import CallbackManager
 from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
 from langchain.memory import ConversationBufferMemory
-from langchain.vectorstores import Pinecone
+from langchain.vectorstores import ElasticVectorSearch
 
 # Use for CPU
 #from langchain.llms import CTransformers
@@ -18,6 +18,9 @@ import chainlit as cl
 import warnings
 import pinecone
 import os
+
+import sys
+sys.setrecursionlimit(1500)
 
 warnings.filterwarnings('ignore', category=UserWarning, message='TypedStorage is deprecated')
 
@@ -34,8 +37,10 @@ If you don't know the answer, just say you don't know and submit the request to 
 Question: {question}
 [/INST]"""
 
-
 print(custom_prompt_template)
+
+embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2",
+                            model_kwargs={'device': 'cpu'})
 
 callback_manager = CallbackManager([StreamingStdOutCallbackHandler()])
 llm = LlamaCpp(
@@ -78,44 +83,47 @@ def conversationalretrieval_qa_chain(llm, prompt, db, memory):
     chain_type_kwargs = {"prompt": prompt}
     qa_chain = ConversationalRetrievalChain.from_llm(llm=llm,
                                                      chain_type= 'stuff',
-                                                     retriever=db.as_retriever(search_kwargs={'k': 3}),
+                                                     #retriever=db.as_retriever(search_kwargs={'k': 3}),
+                                                     retriever=db.as_retriever(),
                                                      verbose=False,
                                                      memory=memory,
                                                      combine_docs_chain_kwargs=chain_type_kwargs
                                                      )
     return qa_chain
+
+
+#Retrieval QA Chain
+def retrieval_qa_chain(llm, prompt, db, memory):
+    chain_type_kwargs = {"prompt": prompt, "memory": memory}
+    qa_chain = RetrievalQA.from_chain_type(llm=llm,
+                                       chain_type='stuff',
+                                       #retriever=db.as_retriever(search_kwargs={'k': 2}),
+                                       retriever=db.as_retriever(),
+                                       return_source_documents=True,
+                                       chain_type_kwargs=chain_type_kwargs
+                                       )
+    return qa_chain
     
-#Loading the model
-def load_llm():
+def load_db():
+    CERT_FINGERPRINT = "7e73d3cf8918662a27be6ac5f493bf55bd8af2a95338b9b8c49384650c59db08"
+    CERT_PATH = "D:\elasticsearch-8.4.2\config\certs\http_ca.crt"
+    ELASTIC_PASSWORD = "Eldernangkai92"
+    elasticsearch_url = f"https://elastic:Eldernangkai92@localhost:9200"
+
+    db= ElasticVectorSearch(
+        elasticsearch_url=elasticsearch_url,
+        index_name="elastic_wiki",
+        ssl_verify={
+            "verify_certs": True,
+            "basic_auth": ("elastic", ELASTIC_PASSWORD),
+            "ssl_assert_fingerprint" :  CERT_FINGERPRINT # You can use fingerprint also
+            #"ca_certs": CERT_PATH, # You can Certificate path too
+        },
+        embedding=embeddings
+    )
     
-    # Use CUDA GPU
-    callback_manager = CallbackManager([StreamingStdOutCallbackHandler()])
-    llm = LlamaCpp(
-        model_path= MODEL_PATH,
-        max_tokens=256,
-        n_gpu_layers=35,
-        n_batch= 512, #256,
-        callback_manager=callback_manager,
-        n_ctx= 1024, #2048, #1024, - Increase this to add context length1024,
-        verbose=False,
-        temperature=0.8,
-    )
+    return db
 
-    return llm
-
-def init_pinecone():
-    PINECONE_API_KEY = os.environ.get('PINECONE_API_KEY', 'aa5d1b66-d1d9-451a-9f6b-dfa32db988fc')
-    PINECONE_API_ENV = os.environ.get('PINECONE_API_ENV', 'us-west1-gcp-free')
-
-    pinecone.init( 
-        api_key=PINECONE_API_KEY,  
-        environment=PINECONE_API_ENV,  
-    )
-    index_name = "llama2-pdf-chatbox" 
-    embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
-    docsearch = Pinecone.from_existing_index(index_name, embeddings)
-
-    return docsearch
 
 def semantic_search(docsearch,query):
     docs=docsearch.similarity_search(query)
@@ -123,20 +131,20 @@ def semantic_search(docsearch,query):
 
 #QA Model Function
 def qa_bot(ask):
-    db = init_pinecone()
 
-    print(docs=semantic_search(db,ask))
-    
-    #llm = init_llm()
+    llm = init_llm()
+    db = load_db()
+    #db = semantic_search(docs, ask)
     
     qa_prompt = set_custom_prompt()
     memory=ConversationBufferMemory(memory_key='chat_history', return_messages=True)
-    qa = conversationalretrieval_qa_chain(llm, qa_prompt, db, memory)
+    #qa = conversationalretrieval_qa_chain(llm, qa_prompt, db, memory)
+    qa = retrieval_qa_chain(llm, qa_prompt, db, memory)
     
-    result = qa({"question": ask})
-    res = result['answer']
+    #result = qa({"question": ask})
+    #res = result['answer']
 
-    return res
+    #return res
 
 #output function
 def final_result(query):

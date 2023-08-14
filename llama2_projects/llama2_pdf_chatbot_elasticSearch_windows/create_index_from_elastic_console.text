@@ -1,0 +1,53 @@
+# Got Tools Console and paste below to create the index
+
+PUT elastic_vector_wiki
+{
+"mappings": {
+    "properties": {
+        "general_text_vector": {
+            "type": "dense_vector",
+            "dims": 384,
+            "index": true,
+            "similarity": "cosine"
+        },
+        "general_text": {
+            "type": "text"
+        },
+        "color": {
+            "type": "text"
+        }
+    }
+}
+}
+
+# This is Working Index Format
+PUT wiki_vector
+{
+  "mappings": {
+    "properties": {
+      "metadata": {
+        "properties": {
+          "page": {
+            "type": "long"
+          },
+          "source": {
+            "type": "text",
+            "fields": {
+              "keyword": {
+                "type": "keyword",
+                "ignore_above": 256
+              }
+            }
+          }
+        }
+      },
+      "text": {
+        "type": "text"
+      },
+      "vector": {
+        "type": "dense_vector",
+        "dims": 384
+      }
+    }
+  }
+}

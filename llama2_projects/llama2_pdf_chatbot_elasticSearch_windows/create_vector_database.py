@@ -6,13 +6,13 @@ Link : https://www.elastic.co/guide/en/elasticsearch/client/python-api/master/co
 
 """
 
-
 from elasticsearch import Elasticsearch
 import logging
 import requests
 
-#CERT_FINGERPRINT = "ce0e62641c2e79c97a45439024cb446f3106c76806342758c00cbee83fd2cc4a"
-CERT_FINGERPRINT = "d05aaa8eba62fbb871cd966a29d0a9ba3336e29fbb6463deab015c1d985a246e"
+CERT_FINGERPRINT = "7e73d3cf8918662a27be6ac5f493bf55bd8af2a95338b9b8c49384650c59db08"
+#CERT_FINGERPRINT = "d05aaa8eba62fbb871cd966a29d0a9ba3336e29fbb6463deab015c1d985a246e"
+
 ELASTIC_PASSWORD = "Eldernangkai92"
 
 es = Elasticsearch(
@@ -26,25 +26,36 @@ if es.ping():
 else:
     print("Failed to connect")
 
-# Index name and mapping configuration
-index_name = "elastic_vector"
+# Index name and mapping configuration - index mapping is obtained from elastic_vector mapping 
+index_name = "elastic_wiki"
 index_mapping = {
-"mappings": {
+  "mappings": {
     "properties": {
-        "general_text_vector": {
-            "type": "dense_vector",
-            "dims": 384,
-            "index": true,
-            "similarity": "cosine"
-        },
-        "general_text": {
-            "type": "text"
-        },
-        "color": {
-            "type": "text"
+      "metadata": {
+        "properties": {
+          "page": {
+            "type": "long"
+          },
+          "source": {
+            "type": "text",
+            "fields": {
+              "keyword": {
+                "type": "keyword",
+                "ignore_above": 256
+              }
+            }
+          }
         }
+      },
+      "text": {
+        "type": "text"
+      },
+      "vector": {
+        "type": "dense_vector",
+        "dims": 384
+      }
     }
-}
+  }
 }
 
 # Create the index with the specified mapping

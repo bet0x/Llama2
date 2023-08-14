@@ -1,12 +1,6 @@
+import chainlit as cl
 from langchain import ElasticVectorSearch
-from langchain.document_loaders import PyPDFLoader, OnlinePDFLoader
-from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.embeddings import HuggingFaceEmbeddings
-from sentence_transformers import SentenceTransformer
-from langchain.chains.question_answering import load_qa_chain
-from elasticsearch import Elasticsearch
-from langchain.chains import RetrievalQA
-
 
 embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
 
@@ -17,7 +11,21 @@ elasticsearch_url = f"https://elastic:Eldernangkai92@localhost:9200"
 
 CERT_FINGERPRINT = "7e73d3cf8918662a27be6ac5f493bf55bd8af2a95338b9b8c49384650c59db08"
 
-db= ElasticVectorSearch(
+# Initial message to start - This function will start first before others
+@cl.on_chat_start
+async def start():
+    # 1st - This message will get display first
+    msg = cl.Message(content="Starting the bot...")
+    await msg.send()
+
+    # 2nd - Then we update the content of the message
+    msg.content = "Hi, Welcome to X-Fab Hotline Bot. What is your query ?"
+    await msg.send()
+
+@cl.on_message
+async def main(message: str):
+    result = message
+    db= ElasticVectorSearch(
         elasticsearch_url=elasticsearch_url,
         index_name="elastic_wiki",
         ssl_verify={
@@ -28,12 +36,10 @@ db= ElasticVectorSearch(
         },
         embedding=embeddings
         )
+    docs = db.similarity_search(result, k=3)
+    print(docs)
     
-#print(db.client.info())
-
-query = "how to setup pdk using json ?"
-docs = db.similarity_search(query)
-
-#print(docs)
-print(docs[0].page_content)
-
+    for i in range(len(docs)):
+        await cl.Message(content=f"Sure, here is the message {docs[i].page_content}").send()
+    
+    #await cl.Message(content=f"Sure, here is the message {docs[0].page_content}").send()
