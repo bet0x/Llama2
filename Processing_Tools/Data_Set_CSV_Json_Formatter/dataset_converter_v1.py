@@ -31,7 +31,7 @@ def convert_csv_to_json(csv_path, json_path):
         json.dump(data, jsonfile, indent=2)
 
 # Replace these paths with your input CSV file and desired output JSON file
-csv_file_path = r"C:/Users/Lukas/Desktop/My_Projects/To_Upload/Llama2/Processing_Tools/Data_Set_CSV_Json_Formatter/V2/wiki_v2.csv"
-json_file_path = r"C:/Users/Lukas/Desktop/My_Projects/To_Upload/Llama2/Processing_Tools/Data_Set_CSV_Json_Formatter/V2/data_v2.json"
+csv_file_path = r"D:/AI_CTS/Llama2/Processing_Tools/Data_Set_CSV_Json_Formatter/V2/Wiki_v2.csv"
+json_file_path = r"D:/AI_CTS/Llama2/Processing_Tools/Data_Set_CSV_Json_Formatter/V2/data_v2.json"
 
 convert_csv_to_json(csv_file_path, json_file_path)

@@ -7,9 +7,9 @@ from langchain.chains.question_answering import load_qa_chain
 from elasticsearch import Elasticsearch
 from langchain.vectorstores import FAISS
 
-
 # Convert to Embedded
-embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
+#embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
+embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/msmarco-MiniLM-L-12-v3")
 
 def create_vector_db():
     #path = r"D:/AI_CTS/Llama2/llama2_projects/llama2_pdf_chatbot_faiss_windows/data//V1/Hotline_Wiki.pdf"
@@ -20,7 +20,7 @@ def create_vector_db():
     data = loader.load()
 
     # Split the text into Chunks
-    text_splitter=RecursiveCharacterTextSplitter(chunk_size=500, chunk_overlap=0)
+    text_splitter=RecursiveCharacterTextSplitter(chunk_size=800, chunk_overlap=300)
     docs=text_splitter.split_documents(data)
 
     CERT_FINGERPRINT = "7e73d3cf8918662a27be6ac5f493bf55bd8af2a95338b9b8c49384650c59db08"
