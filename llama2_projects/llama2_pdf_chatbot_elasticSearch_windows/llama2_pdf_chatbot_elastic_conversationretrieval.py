@@ -91,18 +91,6 @@ def conversationalretrieval_qa_chain(llm, prompt, db, memory):
                                                      )
     return qa_chain
 
-
-#Retrieval QA Chain
-def retrieval_qa_chain(llm, prompt, db, memory):
-    chain_type_kwargs = {"prompt": prompt, "memory": memory}
-    qa_chain = RetrievalQA.from_chain_type(llm=llm,
-                                       chain_type='stuff',
-                                       #retriever=db.as_retriever(search_kwargs={'k': 2}),
-                                       retriever=db.as_retriever(),
-                                       return_source_documents=True,
-                                       chain_type_kwargs=chain_type_kwargs
-                                       )
-    return qa_chain
     
 def load_db():
     CERT_FINGERPRINT = "7e73d3cf8918662a27be6ac5f493bf55bd8af2a95338b9b8c49384650c59db08"
@@ -138,13 +126,12 @@ def qa_bot(ask):
     
     qa_prompt = set_custom_prompt()
     memory=ConversationBufferMemory(memory_key='chat_history', return_messages=True)
-    #qa = conversationalretrieval_qa_chain(llm, qa_prompt, db, memory)
-    qa = retrieval_qa_chain(llm, qa_prompt, db, memory)
+    qa = conversationalretrieval_qa_chain(llm, qa_prompt, db, memory)
     
-    #result = qa({"question": ask})
-    #res = result['answer']
+    result = qa({"question": ask})
+    res = result['answer']
 
-    #return res
+    return res
 
 #output function
 def final_result(query):

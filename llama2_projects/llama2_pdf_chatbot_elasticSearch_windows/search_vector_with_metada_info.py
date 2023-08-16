@@ -10,6 +10,7 @@ from langchain.chains import RetrievalQA
 from pprint import pprint
 
 embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
+#embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/msmarco-MiniLM-L-12-v3")
 
 CERT_PATH = "D:\elasticsearch-8.4.2\config\certs\http_ca.crt"
 CERT_FINGERPRINT = "7e73d3cf8918662a27be6ac5f493bf55bd8af2a95338b9b8c49384650c59db08"

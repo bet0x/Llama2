@@ -36,10 +36,22 @@ async def main(message: str):
         },
         embedding=embeddings
         )
-    docs = db.similarity_search(result, k=3)
-    print(docs)
+    docs = db.similarity_search(result, k=1)
+    #print(docs)
     
     for i in range(len(docs)):
-        await cl.Message(content=f"Sure, here is the message {docs[i].page_content}").send()
-    
+        answer = docs[i].page_content
+        document = docs[i].metadata.get("source")
+        page = docs[i].metadata.get("page")
+
+        if document or page:
+            answer += f"\n\nSource: " + str(document) + "\nPage: "  + str(page)
+        
+        else:
+            answer += "\nNo Source Found"
+
+        await cl.Message(content=f"Sure, here is the message {answer}").send()
+
+        #await cl.Message(content=f"Sure, here is the message {docs[i].page_content}").send()
+
     #await cl.Message(content=f"Sure, here is the message {docs[0].page_content}").send()
