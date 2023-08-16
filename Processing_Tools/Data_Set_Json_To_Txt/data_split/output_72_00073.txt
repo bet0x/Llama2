@@ -1,0 +1,4 @@
+Question: Can you tell me, my layout was flagged because it contain BOX elements and why are they not accepted ?
+Answer: Certainly, I'd be happy to help you with it. To answer your question why your layout was flagged because it contain BOX elements and why are they not accepted. This issue with BOX elements has been described in the 'Guideline for GDSII data' document on my X-FAB: https://my.xfab.com/search/_action/relation/596e0b4e-74cd-47af-96ae-87dd43b1bdf5/
+Unlike the boundary, the BOX element is not a filled figure. Therefore it cannot be used for IC geometry.
+

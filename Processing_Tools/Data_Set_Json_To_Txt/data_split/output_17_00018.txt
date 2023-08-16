@@ -1,0 +1,10 @@
+Question: Can you tell me, What info is needed for digital library customized PVT Process, Voltage, Temperature request ?
+Answer: Certainly, I'd be happy to help you with it. To answer your question regarding on  what info is needed for digital library customized PVT Process, Voltage, Temperature request, you can see an example from the ticket. See example form in ticket. These information are needed as follow:
+PVT is stands for Process, Voltage and Temperature.
+1). Design Service: Customized PVT characterization
+2). Process name, Library, Library version, PVTs: slow_1_62V_4_50V_150C
+3). Delivery data: liberty_LP5MOS_MOS5 liberty_CCS_TIMING_LP5MOS_MOS5 liberty_CCS_POWER_LP5MOS_MOS5 power_grid_voltus
+4). Desired Delivery date
+5). Status of results: Non-exclusive.
+
+

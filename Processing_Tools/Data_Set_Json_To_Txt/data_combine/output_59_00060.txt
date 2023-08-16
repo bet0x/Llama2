@@ -1,0 +1,2 @@
+Can you tell me, if I ignore DRC errors on my logo elements ? Certainly, I'd be happy to help you with it. To answer your question if you can ignore DRC errors on your logo elements is that although a logo strucure is not a circuit element, it can be very dangerous, in some cases, to waive logo DRC errors. For example, metals and/or photo-resist that are below minimum width may float off the silicon during the processing and then get deposited elsewhere on the design and cause chip failures.
+

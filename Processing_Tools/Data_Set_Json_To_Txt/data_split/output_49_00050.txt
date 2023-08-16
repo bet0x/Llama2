@@ -1,0 +1,3 @@
+Question: Can you tell me where I can find QRC tech file for X*035, 0.35um or 350nm process that can be used with Innovus tools ?
+Answer: Certainly, I'd be happy to help you with it. To answer your question on  where you can find QRC tech file for X*035, 0.35um or 350nm process that can be used with Innovus tools is that  X-FAB does not support the QRC extraction from Innovus by using Quantus and QRC-tech files for our 0.35um or X*035 processes. The precision provided by our *.techLEF and *.capTbl files is sufficient for that technology node. Therefore we suggest you run the RC extraction in Innovus based on capTbl files which required in the Innovus setup.
+

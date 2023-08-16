@@ -27,7 +27,7 @@ class TogetherLLM(LLM):
     together_api_key: str = os.environ["TOGETHER_API_KEY"]
     """Together API key"""
 
-    temperature: float = 0
+    temperature: float = 0.7
     """What sampling temperature to use."""
 
     max_tokens: int = 512
@@ -61,6 +61,9 @@ class TogetherLLM(LLM):
                                           model=self.model,
                                           max_tokens=self.max_tokens,
                                           temperature=self.temperature,
+                                          top_p=0.7,
+                                          top_k=50,
+                                          repetition_penalty=1
                                           )
         text = output['output']['choices'][0]['text']
         return text

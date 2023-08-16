@@ -1,0 +1,2 @@
+Can you tell me, which DRC settings should I use to match the X-Fab Data Input Checks for tapeout ? Certainly, I'd be happy to help you with it. To answer your question regarding which DRC settings should you need to use to match the X-Fab Data Input Checks for tapeout, you can Switch on density and popping and DUMMY_FILL.
+

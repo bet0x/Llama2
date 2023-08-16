@@ -1,0 +1,2 @@
+Can you tell me, The NVRAM datasheet indicates 1.8V and 3.3V supplies are required, are they both needed for normal operationor just only for programming ? Certainly, I'd be happy to help you with it. To answer your question.  STORE / RECALL operations require 1.8V and 3.3V; READ / WRITE of the SRAM requires only 1.8V. The 3.3V is only necessary (in addition to 1.8V) during STORE (the programming of the non-volatile part) and during RECALL (the cycle for bring back the information to the SRAM). For read / write of the SRAM only the 1.8V supply is needed.
+

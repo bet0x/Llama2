@@ -1,0 +1,24 @@
+Can you tell me, What are X-FAB's recommendations for timing signoff ? Certainly, I'd be happy to help you with it. To answer your question regarding X-FAB's recommendations for timing signoff is that for 0.18 tech STA we have the 0.18um-ApplicationNote-Digital_Implementation_Guidelines document at "https://my.xfab.com/search/_action/relation/4aeecb61-a2b5-4d16-ab9a-f6a4457c583f/"
+On page 7, section 6.3 it states  A further set_timing derate ... is not needed as only the variation of the pin input capacitances is modelled in X-FAB's 180nm, X*018 libraries. Further up to now we did not recommend any derating to customers. It's your responsibility (and sometimes based on your internal quality requirement) how much margin you add to a timing analysis. In our standard Place and Route STA's we always use OCV (with no further de rating) in PrimeTime as this is PT's default method. In Innovus we run up to routing the simple and faster bc/wc delay calculation, only for post-route optimization we switch to OCV (when we don't forget that one line in the scripting...).From our customers base we know, we could give you few scenarios as follow:
+
+Customer 1: (mostly XH018): they add +/-15% to the delay calculation (requested by their quality department):
+set_timing_derate -cell_delay -net_delay -early 0.85
+set_timing_derate -cell_delay -net_delay -late 1.15
+in sdc
+
+Customer 2: We used +/-5% for their XP018 redesign (their first design had no timing closure with our standard settings without derating, so they needed a special process modification to get working silicon at all).
+set_timing_derate -cell_delay -net_delay -early 0.95
+set_timing_derate -cell_delay -net_delay -late 1.05
+
+(Their redesign had timing closure with this additional margin).
+For a complete STA you have to run 3 sets:
+- the 'normal' one without derating
+- the pessimistic one:
+set_timing_derate -cell_delay -net_delay -early 0.95
+set_timing_derate -cell_delay -net_delay -late 1.05
+- and the optimistic one:
+set_timing_derate -cell_delay -net_delay -early 1.05
+set_timing_derate -cell_delay -net_delay -late 0.95
+
+To have a complete picture. Basically we believe the more derating margin you add, the lesser confidence you have into the quality of the spice models of the transistors and all the timing characterization of the digital libraries and parasitic extraction.
+

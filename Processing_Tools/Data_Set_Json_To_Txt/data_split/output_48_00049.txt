@@ -1,0 +1,8 @@
+Question: Can you tell me, if qpa device causes issues during LVS and how I can resolve it ?
+Answer: Certainly, I'd be happy to help you with it. To answer your question regarding if qpa device causes an issues during LVS and how you can resolve it. To solve this in hierarchical run, the Calibre LVS layout-extracted netlist creates an internal subcircuit for qpa which is the source of the error, for example as follow
+.SUBCKT qpa 1 2 3 5
+** N=8 EP=4 IP=0 FDC=1
+X0 3 5 2 1 QPA $X=2600 $Y=2600 $D=20
+.ENDS
+As we cannot interfere with Calibre's internal hierarchy processing engine, the workaround is to explicitly flatten the cell by including this command in calibre GUI LVS Options/Include tab : FLATTEN CELL qpa
+

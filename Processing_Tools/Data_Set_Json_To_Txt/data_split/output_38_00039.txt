@@ -1,0 +1,3 @@
+Question: Can you tell me, which antenna diode should i use in my design ?
+Answer: Certainly, I'd be happy to help you with it. To answer your question regarding of which antenna diode should you use in your  design is that  the connection to DIFF provides a discharge path during manufacture, so its function as an antenna diode doesn't matter which diode is used. After manufacture, the antenna role is no longer needed, and how the diode could impact the function of the circuit must dictate which diode is selected. Rather than the breakdown voltage parameter, the reverse bias operating limit should be used to decide. Alternatively, where possible, a metal bridge close to the at-risk gate oxide can be used to fix an antenna violation.
+

@@ -1,0 +1,3 @@
+Question: Can you tell me, where I can find fatal rule list location ?
+Answer: Certainly, I'd be happy to help you with it. To answer your question on where you can find fatal rule list location, This  fatal rule records are available on sharepoint under "http://sp.erf.xfab.de/RandD/Projects_and_Reports/Lists/ProcessInformation/Category.aspx"
+

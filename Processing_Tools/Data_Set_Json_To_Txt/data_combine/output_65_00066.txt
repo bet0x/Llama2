@@ -1,0 +1,2 @@
+Can you tell me, the recommendation or suggestion of electromigration tests for AC or DC factor ? Certainly, I'd be happy to help you with it. To answer your question regarding the recommendation or suggestion of electromigration tests for AC or DC factor is that  we usually calculate with a DC to AC conversion factor of 10. It is referred to the Pass or Fail margin at 0.1% error probability for the individual test.
+

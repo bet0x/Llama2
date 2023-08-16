@@ -1,0 +1,2 @@
+Can you tell me, what is Voltage Class Tags ? Certainly, I'd be happy to help you with it. To answer your question Voltage Class Tags is you can check 63023372 article 4 provides links to related Jira tickets DSBU-1064 / DSBU-1128 / DSBU-1435.  Here, also you can check 63040485 which discusses application to HV IO's 63009953 has some nice general descriptions on how to apply the checks
+

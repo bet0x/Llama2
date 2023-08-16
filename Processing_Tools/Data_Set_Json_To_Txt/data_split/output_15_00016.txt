@@ -1,0 +1,3 @@
+Question: Can you tell me, how to use LEF file ?
+Answer: Thank you for the question. To answer your question on  how to use LEF file,  you can simply import each LEF to a library on the LEF in form, you only need to specify the LEF file and the library, then streamout the resulting abstract view to a GDS file. As a check, open each GDS with KLayout to verify it looks right and which layers it has. You also can  check the Cadence streamout logs.
+

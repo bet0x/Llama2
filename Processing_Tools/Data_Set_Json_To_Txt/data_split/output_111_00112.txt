@@ -1,0 +1,3 @@
+Question: Can you tell me, What is the relation, coorelation of FIMP mask to drawn layers ?
+Answer: Certainly, I'd be happy to help you with it. To answer your question regarding the  the relation, coorelation of FIMP mask to drawn layers is that xt06 FIMP mask defines where the field implant is not implanted. It is not intuitive that the NOFIMP layer is the direct design entry for the FIMP mask. Having in mind the FIMP mask is meant for blocking the global FIMP implant in the process makes it easier to understand.
+

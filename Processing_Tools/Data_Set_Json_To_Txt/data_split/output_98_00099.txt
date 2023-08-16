@@ -1,0 +1,3 @@
+Question: Can you tell me, some MOS devices have butted NDIFF and PDIFF regions with only a single contact and how should this connection be understood, comprehend, explained ?
+Answer: Certainly, I'd be happy to help you with it. To answer your question regarding that some MOS devices have butted NDIFF and PDIFF regions with only a single contact and how should this connection be understood, comprehend, explained. In general, the NDIFF and PDIFF can be butted and a single CONT used to connect to the butted nodes because all the DIFF is covered with a silicide layer which shorts together the NDIFF and PDIFF, the CONT makes connection to the silicide layer."
+

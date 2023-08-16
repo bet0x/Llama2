@@ -1,0 +1,3 @@
+Question: Can you tell me, why Q1SU DRC flags or trigger ?
+Answer: Certainly, I'd be happy to help you with it. To answer your question regarding why why Q1SU DRC flags or trigger is that because the SUBCUT layer is not used for any masks, its purpose is only to perform a 'trick' for LVS to pretend the substrate is separable for different ground domains. The Q1SU rule is only a warning as are all Q* rules. B1SU is the only check for how SUBCUT is used; while DRC will always flag Q1SU whenever SUBCUT is present. You might interpret Q1SU as asking if you are intentionally using SUBCUT.
+

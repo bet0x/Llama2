@@ -1,0 +1,4 @@
+Question: Can you tell me, which Synopsys tools are supported ?
+Answer: Certainly, I'd be happy to help you with it. To answer your question regarding  which Synopsys tools are supported by X-Fab is that  we support several Synopsys tools such as  Design Compiler which is purposed for digital synthesis with required inputs Data Formats -> Liberty.
+Next we also support Custom Compiler so called Custom Designer which is purposed for full analog design framework similar  to Cadence IC61 with required inputs EDA Vendors->Synopsys ->CustomCompiler or CustomDesigner. Lastly, supported synopsys tool is IC Compiler which is purposely for  digital implementation, PnR with required inputs EDA Vendors->Synopsys->IC Compiler.
+

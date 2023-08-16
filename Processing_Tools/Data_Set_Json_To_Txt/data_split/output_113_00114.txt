@@ -1,0 +1,10 @@
+Question: Can you tell me, What helps are available for resolving, clearing, fix MIM capacitor antenna errors ?
+Answer: Certainly, I'd be happy to help you with it. To answer your question regarding of what helps are available for resolving, clearing, fix MIM capacitor antenna errors is that The MIM-capacitor antenna rules are defined in the 0.18um-ProcessSpecification-DR_MIM_Antenna_Rules document. Advice for preventing and resolving such errors can be found in the 0.18um-ApplicationNote-MIM_Capacitors_Check document.
+You can visit this  link on how to resolve this violations:
+
+1). https://my.xfab.com/search/_action/relation/0d92400d-b4de-48f3-9bb8-38e7aaf134b9/
+2). Supplemental 'MIMANT' DRC runsets for checking these antenna rules are available for PVS, Calibre, and IC Validator.
+3). https://my.xfab.com/search/_action/relation/491ae11f-379c-4a5e-b2b0-8445c79c830d/
+4). https://my.xfab.com/search/_action/relation/557ba3a2-ee77-4034-8518-5917dac84d4d/
+5). https://my.xfab.com/search/_action/relation/de9558d0-b114-4f5f-bf3f-d8c7ab2562d3/
+

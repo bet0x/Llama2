@@ -1,0 +1,3 @@
+Question: Can you tell me, Show me how to Kill processes from SiFo compiler job fails ?
+Answer: Thank you for the question. To answer your question regarding on how to Kill processes from SiFo compiler job fails, you can delete the task file (.tsk) in ~iprepdes/ip_replacement/app/data/tmp to clear the blue triangle
+

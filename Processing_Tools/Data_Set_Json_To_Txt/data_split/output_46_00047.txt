@@ -1,0 +1,3 @@
+Question: Can you tell me, Is backgrinding available for xs018 ?
+Answer: Certainly, I'd be happy to help you with it. To answer your question if backgrinding is available for xs018, in general backgrinding is not supported for xs018. This is due to the risk on optical applications which are both logistical handling and the potential defect . If it is a single exception for example MPW or non-optical application, you can try to align with our Customer Projects department to check if X-FAB can offer backgrinding.
+

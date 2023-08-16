@@ -1,0 +1,2 @@
+Can you tell me, What is the purpose, intent and meaning of design rule B1MD ? Certainly, I'd be happy to help you with it. To answer your question regarding the purpose, intent and meaning of design rule B1MD is that he reason why the MVLT and MERGEDEF was formulated as mutually exclusive into the Design Rule Spec at the time when it was originated seems to have been forgotten. There will be no risk if the TRENCH of devices with MVLT layer are merged as long as the condition of voltage difference <50V is valid.
+

@@ -1,0 +1,2 @@
+Can you tell me, what is the convention for the SiFo major and minor versioning ? Certainly, I'd be happy to help you with it. To answer your question regarding the convention for the SiFo major and minor versioning  is that the major version indicates how often a SiFo was sent to X-FAB AND went into the Data Input Check loop. The minor version indicates how often a SiFo was edited AND saved in my X-FAB.
+

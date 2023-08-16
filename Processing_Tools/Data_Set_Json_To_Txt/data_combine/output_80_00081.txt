@@ -1,0 +1,2 @@
+Can you tell me, The PVS.sum DRC result will last error counts for each rule like RULECHECK B1M2MIM ............. Total Result   68 ( 80). What is the differences and distinction between these two given numbers? Certainly, I'd be happy to help you with it. To answer your question regarding the differences and distinction between RULECHECK B1M2MIM ............. Total Result   68 ( 80) is that In this example, the 68 is the hierarchy result and the 80 is the flat run result.
+

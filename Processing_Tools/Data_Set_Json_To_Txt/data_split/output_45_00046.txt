@@ -1,0 +1,3 @@
+Question: Can you tell me, Is backgrinding available for X-Fab MPW shuttle runs ?
+Answer: Certainly, I'd be happy to help you with it. To answer your question if backgrinding is available for X-Fab MPW shuttle runs is that  by default, we do not offer backgrinding service for customer tape-in for the MPW scheduled run. However, if a customer has such request and informs us during tape-in, we could check if we can support backgrinding for the particular case.
+

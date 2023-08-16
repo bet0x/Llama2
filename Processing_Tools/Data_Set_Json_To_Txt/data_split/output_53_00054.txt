@@ -1,0 +1,3 @@
+Question: Can you tell me, what exactly does the ESD module do ?
+Answer: Certainly, I'd be happy to help you with it. To answer your question regarding of what exactly does the ESD module do is that Usually in older technology nodes such as CX08, the ESD implant of the ESD module is added to aid with a vertical 'spike' issue that occurs under high current such as an ESD pulse when the aluminum which is slightly p-type in the contact can 'spike' through the n-junction and short it to the P-bulk below. The ESD n-type implant is deeper than the normal n-junction, preventing a short from occurring. The p-junction is not shorted out in the same circumstance, so ESD implant is not needed on p-devices.
+

@@ -1,0 +1,2 @@
+Can you tell me, What is the basis for Schottky diode forward bias limit ? Certainly, I'd be happy to help you with it. To answer your question regarding the basis for Schottky diode forward bias limit is that It is important not to exceed the Vanode-Vcathode operating limit for the forward direction current. This would tend to exceed the allowable thermal load of the diode. Select an appropriate size for the intended current and to be safe, apply some margin with respect to the size.
+

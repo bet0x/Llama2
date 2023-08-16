@@ -1,0 +1,2 @@
+Can you tell me, what is the differences of Gen1, Gen2, and Gen2.5 ? Certainly, I'd be happy to help you with it. To answer your question regarding  the differences of Gen1, Gen2, and Gen2.5,  you can refer to Ron-Coff improved gen-by-gen (152fs / 135 fs / 115fs). Please check table in article 7.
+

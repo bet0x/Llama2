@@ -1,0 +1,3 @@
+Question: Can you tell me, What is the purpose, intent and meaning of design rule B1PATR ?
+Answer: Certainly, I'd be happy to help you with it. To answer your question regarding the purpose, intent and meaning of design rule B1PATR is that this rule B1PATR serves to reduce capacitive coupling between the pad metal and the silicon around it.
+

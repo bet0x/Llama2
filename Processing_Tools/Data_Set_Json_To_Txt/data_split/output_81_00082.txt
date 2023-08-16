@@ -1,0 +1,15 @@
+Question: Can you tell me, How to generate the PDL.txt or primtive device list file ?
+Answer: Certainly, I'd be happy to help you with it. To answer your question on how you can  generate  PDL.txt or primtive device list file is that this the primitive device list is generated using PVS LVS. The command line option requires setting parameters in a header file. Using the PVS LVS GUI may be easier for most users to extract a list of the primitive devices used in a given layout. Please refer to  below method on how to generate PDL.txt or Primitive Device List file as follow:
+
+1). Open layout (read-only is OK)
+2). PVS -> Run LVS
+3). Input -> exclude comparison setup
+4). Output -> LVS Report -> Click 'SET' button.
+5). Apply/Submit to initiate the run.
+
+To generate the Results, please refer to following:
+
+1). Files/Output Files: Extraction report -> scroll to bottom of report.
+2). Or in the Extraction tab, Uncheck 'hide statistic' then click on flat device count.
+3). Or you can just open the <cell name>_lvs.sum file from the run directory. The list is at the end of the file.
+

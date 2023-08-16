@@ -1,0 +1,3 @@
+Question: Can you tell me on how to set an environment variable to be used in cds.lib ?
+Answer: Certainly, I'd be happy to help you with it. To answer your question regarding on how to set an environment variable to be used in cds.lib, you can set the syntax as DEFINE analogLib ${CDSHOME}/tools/dfII/etc/cdslib/artist/analogLib.
+

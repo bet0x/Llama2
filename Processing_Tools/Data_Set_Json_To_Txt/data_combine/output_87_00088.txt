@@ -1,0 +1,2 @@
+Can you tell me, What is the crystal orientation of X-FAB wafers ? Certainly, I'd be happy to help you with it. To answer your question regarding crystal orientation of X-FAB wafers.  The crystal orientation for 8-inch CMOS wafers are Wafer surface plane is 100 and Wafer notch direction is 110.
+

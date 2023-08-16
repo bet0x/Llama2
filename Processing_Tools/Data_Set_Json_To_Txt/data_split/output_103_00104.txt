@@ -1,0 +1,18 @@
+Question: Can you tell me, How should I connect the 'wh' handle or handle wafer pin ?
+Answer: Certainly, I'd be happy to help you with it. To answer your question on  how you can connect  'wh' handle or handle wafer pin is that the 'wh' handle wafer pin represents the connection of the back handle of the wafer situated just below the BOX and allows the connection of a substrate model to the device.
+A local artificial substrate under the below devices is recognized as their 'wh' terminal with description as follow:
+
+1). RF MOS : diffusion area enclosing source/drain regions
+2). Front-End Resistors : body of the devices
+3). Capacitors : bounding box of the device
+4). Varactors : diffusion area
+
+The 'wh' handle wafer terminal connection for RF MOS, Front-End Resistors (Poly1 and Diffusion type), capacitors and varactors as follow:
+1). Leave it floating
+2). Connect it to a noConn device (to avoid warnings after 'Check and Save")
+3). Connect it to lsubmod device
+
+The 'wh' pin for all other devices (DC MOS, inductors and metal resistors) are merged together during LVS/PEX to a single substrate node which equals the wafer back side connection
+the 'wh' terminal of these devices must be tied together in the schematic a label with the name of this common node must be placed anywhere in the layout cell view. The label must be drawn using the LPP Wafer_txt:drawing.
+ Merging 'wh' pins in the layout view for example it is required when using of multiplier 'm' device parameter for the devices with internal vertical substrate model or when using ser/par of resistors such as  series resistors The Marksub:Commonsub (33:33) has to be drawn around the concerned devices in order to represent their common wafer handle terminal. Concerning the third pin of the MIMCAP, the 'wh' pin (pin below the BOX) could be ignored. This is for simulating the lateral substrate model. There is no issue in ignoring it concerning LVS.
+
