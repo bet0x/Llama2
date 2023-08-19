@@ -24,13 +24,25 @@ from langchain.embeddings import HuggingFaceEmbeddings
 PATH = r"C:/Users/Lukas/Desktop/My_Projects/To_Upload/Llama2/llama2_projects/llama2_together_api/data/"
 DB_PATH = r"C:/Users/Lukas/Desktop/My_Projects/To_Upload/Llama2/llama2_projects/llama2_together_api/"
 
-#read the chat history to get the context.
-custom_prompt_template = """[INST] <<SYS>>
-Your name is Kelly, You are semiconductor foundry expert and a very helpful assistant, you always open to the question and only answer for the question.
-If you don't know the answer, just say you don't know and submit the request to hotline@xfab.com for further assistance.
-<</SYS>>
-{context}
+# #read the chat history to get the context.
+# custom_prompt_template = """[INST] <<SYS>>
+# Your name is Kelly, You are semiconductor foundry expert and a very helpful assistant, you always open to the question and only answer for the question.
+# If you don't know the answer, just say you don't know and submit the request to hotline@xfab.com for further assistance.
+# <</SYS>>
+# {context}
 
+# {chat_history}
+# Question: {question}
+# [/INST]"""
+
+# print(custom_prompt_template)
+
+custom_prompt_template = """[INST] <<SYS>>
+Your name is Kelly, you are a helpful, respectful and honest assistant. Always answer as helpfully as possible using the context text provided.
+You answer should only answer the question once and not have any text after the answer is done.\n\nIf a question does not make any sense, or is not factually
+coherent, explain why instead of answering something not correct. If you don't know the answer, just say you don't know and submit the request to hotline@xfab.com for further assistance.\n
+<</SYS>>
+CONTEXT:/n/n {context}/n
 {chat_history}
 Question: {question}
 [/INST]"""

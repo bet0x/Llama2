@@ -15,6 +15,34 @@ from langchain.embeddings import HuggingFaceEmbeddings
 from togetherllm import TogetherLLM
 import together
 
+from langchain.prompts import ChatPromptTemplate
+from langchain.chat_models import ChatOpenAI
+from langchain.llms import OpenAI
+
+from langchain.schema.output_parser import StrOutputParser
+
+import langchain
+langchain.debug = False
+from operator import itemgetter
+
+from langchain import PromptTemplate
+from langchain.prompts.chat import (
+    ChatMessagePromptTemplate,
+    SystemMessagePromptTemplate,
+    AIMessagePromptTemplate,
+    HumanMessagePromptTemplate,
+)
+
+template = "You are a helpful assistant that imparts wisdom and guide people with accurate answers."
+
+system_message_prompt=SystemMessagePromptTemplate.from_template(template)
+
+human_template="{question}"
+human_message_prompt=HumanMessagePromptTemplate.from_template(human_template)
+
+chat_prompt=ChatPromptTemplate.from_messages([system_message_prompt,human_message_prompt])
+
+
 #embeddings = HuggingFaceInstructEmbeddings(model_name="hkunlp/instructor-xl",
 #                                                      model_kwargs={"device": "cuda"})
 #embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
@@ -38,7 +66,7 @@ print(custom_prompt_template)
 
 llm = TogetherLLM(
     model= "togethercomputer/llama-2-7b-chat",
-    temperature=0.7,
+    temperature=0,
     max_tokens=512
 )
 
@@ -89,22 +117,66 @@ def create_vector_db():
     persist_directory = DB_PATH + '/content/db'
     db = Chroma.from_documents(text, embeddings, persist_directory=persist_directory)
 
+def recursive(ask,llm,db,memory,prompt):
+    template = "You are a helpful assistant that imparts wisdom and guide people with accurate answers."
+    system_message_prompt=SystemMessagePromptTemplate.from_template(template)
+    human_template="{question} {context}"
+    human_message_prompt=HumanMessagePromptTemplate.from_template(human_template)
+    chat_prompt=ChatPromptTemplate.from_messages([system_message_prompt,human_message_prompt])
+    
+    qa = conversationalretrieval_qa_chain(llm, prompt, db, memory) 
+    result = qa({"question": ask})
+    initial_answer = result['answer']
+    print(f"Recursive >> {initial_answer}")
+    
+    return initial_answer
+    
+def critique(initial_answer,initial_question):
+    template = "You are a helpful assistant that looks at answer and finds what is wrong with them based on the original question given"
+    system_message_prompt=SystemMessagePromptTemplate.from_template(template)
+    human_template="### Question:\n\n{question}\n\n ### Answer Given:{initial_answer}\n\n Review your previous answer and find problems with it"
+    human_message_prompt=HumanMessagePromptTemplate.from_template(human_template)
+    rc_prompt=ChatPromptTemplate.from_messages([system_message_prompt,human_message_prompt])
+    
+    chain2 = rc_prompt | llm | StrOutputParser()
+    constructive_criticsm = chain2.invoke({"question": initial_question, "initial_answer":initial_answer})
+    print(f"Critique >> {constructive_criticsm}")
+    
+    return constructive_criticsm
 
+def improvement(initial_answer,constructive_criticsm,initial_question):
+    template = "You are a helpful assistant that looks at answer and finds what is wrong with them based on the original question given"
+    system_message_prompt=SystemMessagePromptTemplate.from_template(template)
+    human_template="### Question:\n\n{question}\n\n ### Answer Given:{initial_answer}\n\n \
+        ###Constructive Criticsm:{constructive_criticsm}\n\n Based on the problem you found, improve your answer.\n\n"
+    
+    human_message_prompt=HumanMessagePromptTemplate.from_template(human_template)
+    improvement_prompt = ChatPromptTemplate.from_messages([system_message_prompt,human_message_prompt])
+    
+    chain3 = improvement_prompt | llm | StrOutputParser()
+
+    final_result = chain3.invoke({"question": initial_question,
+           "initial_answer": initial_answer,
+           "constructive_criticsm": constructive_criticsm})
+    print(f"Improvement >> {final_result}")
+    
+    return final_result
+    
 def main(ask):
     # load db from disk
     db = load_db()
     prompt = set_custom_prompt()
     memory=ConversationBufferMemory(memory_key='chat_history', return_messages=True)
-    qa = conversationalretrieval_qa_chain(llm, prompt, db, memory)
-    result = qa({"question": ask})
-    res = result['answer']
-    
-    return res
 
+    initial_answer = recursive(ask,llm,db,memory,prompt)
+    constructive_criticsm = critique(initial_answer,ask)
+    chain3 = improvement(initial_answer,constructive_criticsm,ask) 
+    
+    return chain3
 
 if __name__ == "__main__":
     #create_vector_db()
-    db = load_db()
+    #db = load_db()
     while True:
         query = input(f"\n\nPrompt: " )
         if query == "exit":
@@ -119,12 +191,14 @@ if __name__ == "__main__":
         
         # Answer
         answer = main(query)  
+        for word in answer:
+            print(word, end='')
         
         # Source and Page
-        sc = db.similarity_search(query,k=1)
-        for i in range(len(sc)):
-            document = sc[i].metadata.get("source")
-            page =sc[i].metadata.get("page")
+        # sc = db.similarity_search(query,k=1)
+        # for i in range(len(sc)):
+        #     document = sc[i].metadata.get("source")
+        #     page =sc[i].metadata.get("page")
             
-        print(answer)
-        print(f"\n\nSource: " + str(document) + "\nPage: "  + str(page))
+        # print(answer)
+        # print(f"\n\nSource: " + str(document) + "\nPage: "  + str(page))
