@@ -1,0 +1,85 @@
+[[pages]]
+path = "./pages/app.py"
+name = "Home"
+icon = ":house:"
+
+[[pages]]
+name = "Contents"
+icon = ":books:"
+is_section = true
+
+[[pages]]
+path = "./pages/problem.py"
+name = "Problem Statement"
+icon = "📖"
+
+[[pages]]
+path = "./pages/objective.py"
+name = "Objective"
+icon = "🎯"
+
+[[pages]]
+path = "./pages/architecture_old.py"
+name = "Feasiblity Study | Early Architecture"
+icon = "1️⃣"
+
+[[pages]]
+path = "./pages/block.py"
+name = "Feasiblity Study | Functional Block"
+icon = "2️⃣"
+
+[[pages]]
+path = "./pages/question_answer_1.py"
+name = "Feasibility Study | Q&A "
+icon = "3️⃣"
+
+[[pages]]
+path = "./pages/question_answer_2.py"
+name = "Feasibility Study | Q&A"
+icon = "4️⃣"
+
+[[pages]]
+path = "./pages/question_answer_3.py"
+name = "Feasibility Study | Q&A"
+icon = "5️⃣"
+
+[[pages]]
+path = "./pages/question_answer_4.py"
+name = "Feasibility Study | Q&A"
+icon = "6️⃣"
+
+[[pages]]
+path = "./pages/inprogress.py"
+name = "In Progress"
+icon = "⌛"
+
+[[pages]]
+path = "./pages/helpneeded.py"
+name = "Help Needed"
+icon = "🛠️"
+
+[[pages]]
+name = "Wiki Search"
+icon = "🚀"
+is_section = true
+
+[[pages]]
+path = "./pages/wiki_v1_0.py"
+name = "Wiki v1.0"
+icon = "⚡"
+
+[[pages]]
+path = "./pages/wiki_v2_0.py"
+name = "Wiki v2.0"
+icon = "⚡"
+
+[[pages]]
+path = "./pages/wiki_v3_0.py"
+name = "Wiki 3.0"
+icon = "⚡"
+
+[[pages]]
+path = "./pages/info.py"
+name = "About"
+icon = "📢"
+in_section = false
