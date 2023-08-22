@@ -27,7 +27,7 @@ else:
     print("Failed to connect")
 
 # Index name and mapping configuration - index mapping is obtained from elastic_vector mapping 
-index_name = "elastic_wiki"
+index_name = "new_wikidb"
 index_mapping = {
   "mappings": {
     "properties": {
@@ -52,11 +52,14 @@ index_mapping = {
       },
       "vector": {
         "type": "dense_vector",
-        "dims": 384
+        "dims": 768
       }
     }
   }
 }
+
+# 384 for all-MiniLM-L6-v2
+# 768 for mpne5-base-v2
 
 # Create the index with the specified mapping
 response = es.indices.create(index=index_name, body=index_mapping)

@@ -13,11 +13,23 @@ st.markdown(
 
 
 genre = st.radio(
-    "Task",
-    ('RCI Development', 'Experiment with different Prompt', 'Clean the dataset', 
+    "# Backend Development",
+    ('RCI Development', 'Experiment with different Prompt', 
      'Enable Memory for different RAG','Develop correction mechanism', 'Re-train the model using QLora',
-    'Learn how to correctly split the data','Experiment RAG with llama-index', 'Advise team to correctly format their dataset',
-    'Create API that enable model to conenct to SpecXplorer, FeatureXplorer'))
+     'Experiment RAG with llama-index', 'Create API that enable model to conenct to SpecXplorer, FeatureXplorer'))
+
+genre = st.radio(
+    "# Frontend Development",
+    ('Clean the dataset', 'Learn how to correctly split the data','Advise team to correctly format their dataset','Update the documentation'))
+
+genre = st.radio(
+    "# Deplyoment Method",
+    ('Discover way how to deploy the Wiki', 'Experiment to use Docker'))
+
+genre = st.radio(
+    "Resources",
+    ('Backend Developer - that can help to to improve the backend architecture and experiment with different retrieval method.',
+     'Frontend Developer - that can help to focus on UI development', 'Intern to help with dataset','Training Facility'))
 
 # if genre == 'Comedy':
 #     st.write('You selected comedy.')

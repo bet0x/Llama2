@@ -22,7 +22,7 @@ elasticsearch_url = f"https://elastic:Eldernangkai92@localhost:9200"
 
 db= ElasticVectorSearch(
         elasticsearch_url=elasticsearch_url,
-        index_name="elastic_wiki",
+        index_name="latest_wikidb",
         ssl_verify={
             "verify_certs": True,
             "basic_auth": ("elastic", ELASTIC_PASSWORD), 

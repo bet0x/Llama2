@@ -8,8 +8,9 @@ from elasticsearch import Elasticsearch
 from langchain.vectorstores import FAISS
 
 # Convert to Embedded
-embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
+#embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
 #embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/msmarco-MiniLM-L-12-v3")
+embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/all-mpnet-base-v2")
 
 def create_vector_db():
     #path = r"D:/AI_CTS/Llama2/llama2_projects/llama2_pdf_chatbot_faiss_windows/data//V1/Hotline_Wiki.pdf"
@@ -19,8 +20,12 @@ def create_vector_db():
     loader = PyPDFLoader(path)
     data = loader.load()
 
+    query_result=embeddings.embed_query("Hello")
+    dimensions = len(query_result)
+    print(dimensions) # 768 for mpne5-base-v2 - therefore we need to create a database with 768
+
     # Split the text into Chunks
-    text_splitter=RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=100)
+    text_splitter=RecursiveCharacterTextSplitter(chunk_size=500, chunk_overlap=100)
     docs=text_splitter.split_documents(data)
 
     CERT_FINGERPRINT = "7e73d3cf8918662a27be6ac5f493bf55bd8af2a95338b9b8c49384650c59db08"
@@ -33,7 +38,7 @@ def create_vector_db():
         docs,
         embeddings,
         elasticsearch_url=elasticsearch_url,
-        index_name="elastic_wiki",
+        index_name="new_wikidb",
         ssl_verify={
             "verify_certs": True,
             "basic_auth": ("elastic", ELASTIC_PASSWORD), # You can use fingerprint also

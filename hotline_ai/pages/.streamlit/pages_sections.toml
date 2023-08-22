@@ -75,8 +75,19 @@ icon = "⚡"
 
 [[pages]]
 path = "./pages/wiki_v3_0.py"
-name = "Wiki 3.0"
+name = "Wiki v3.0"
 icon = "⚡"
+
+[[pages]]
+path = "./pages/chatbot_conversational.py"
+name = "X-Chat"
+icon = "🤖"
+
+[[pages]]
+path = "./pages/finetuning.py"
+name = "Fine-Tuning Method"
+icon = "🗝️"
+in_section = false
 
 [[pages]]
 path = "./pages/info.py"
