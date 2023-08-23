@@ -50,6 +50,41 @@ if prompt:
             st.info(res)
             print(res)
 
+with st.expander("Read More"):
+    col1, col2= st.columns(2)
+
+    with col1:
+        st.header("Pros")
+        st.markdown(""" 
+                    ### Advantageous when it comes to precision
+                    * The retriever ensures that return content exactly matched the desired input.
+                    * The retriever searches for exact matches of the provided query, character. It looks
+                    for the sequence of characters.
+
+                    ### Coherent understanding of natural human query.
+                    * The retreiver able to understand simple natural prompt and return an associated content.
+                    """)
+    
+    with col2:
+        st.header("Cons")
+        st.markdown("""
+                    ### Didn't support chain of questions.
+                    * Elastic retriever is not build to accept chain of question which lead to nonsene and no result.
+                    * The retriever unable to support 2 separate question in one prompt.
+                    """)
+        st.code("""
+                    Example of Question:
+                    * What is flatpv ?  and how to bias fifth terminal of HW wafer ?
+                """)   
+
+         
+        st.markdown("""
+            ### Limited scability of database.
+            * The dataset is stored as a metadata (Json) in elastic database.
+            * This may work only with elastic but not scalable to other database platform as well when it comes to data migration.
+            * Therefore it's not suitable to be used as a general knowledge base.
+            """)   
+        
 # col1, col2, col3 = st.columns(3)
 
 # with col1:

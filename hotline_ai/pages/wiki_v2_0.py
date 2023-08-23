@@ -31,7 +31,7 @@ prompt=st.text_input("Enter your question here")
 def load_db():
     db= ElasticVectorSearch(
         elasticsearch_url=elasticsearch_url,
-        index_name="new_wikidb",
+        index_name="new_wikidb_v1",
         ssl_verify={
             "verify_certs": True,
             "basic_auth": ("elastic", ELASTIC_PASSWORD),
@@ -57,7 +57,52 @@ if prompt:
       x = search(prompt)
       for i in range(len(x)):
           st.info(x[i].page_content)
-   
+
+with st.expander("Read More"):
+    col1, col2= st.columns(2)
+
+    with col1:
+        st.header("Pros")
+        st.markdown(""" 
+                    ### Improved Relevance
+                    * The retriever can understand synonyms, acronyms, and variations of terms,
+                    reducing the likelihood of missing relevant content due to differences in terminology
+
+                    ### Support chain of question
+                    * The retriever is based on BERT model. Therefore, it can support more complex and natural
+                    human prompt and return releveant content due to its capability to perform text classification.
+                    * User able to input their queries in a more conversational and natural manner.
+                    * Retriever will return all relevant answer based on user input.
+
+                    ### Support chain of question
+                    * The retriever is based on BERT model. Therefore, it can support more complex and natural
+                    human prompt and return releveant content due to its capability to perform text classification.
+                    * User able to input their queries in a more conversational and natural manner.
+                    * Retriever will return all relevant answer based on user input.
+
+                    ### Support Vector Data
+                    * Vector Data (Embedded) is quite popular now adays due to its speed and scability.
+                    * With arising number of ticets, therefore it's recommended to convert `dataset` as vector data
+                    because it support semantic search as part of the retrieval system. 
+                    * In this project, i'm using vector database (Elastic Vector) as a knowledge base.
+                    """)
+        st.code("""
+            Example of Question:
+            * What is flatpv ?  and how to bias fifth terminal of HW wafer ?
+        """)   
+    
+    with col2:
+        st.header("Cons")
+        st.markdown("""
+            ### Non Generative model
+            * Unable to generate creative answer based on return response.
+            * Return result usually in ranked top response with relate to user input.
+            """)
+        
+with st.expander("Sample Output"):
+    st.image("./images/wiki_2_0_image.jpg", caption="Fig 1: Semantic result")
+
+           
       # print(x)
       # print("\n")
    

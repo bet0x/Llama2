@@ -1,2 +1,4 @@
 
 llama2_projects/llama2_pdf_chatbot_windows/airoboros-l2-7b-gpt4-1.4.1.ggmlv3.q8_0.bin
+llama2_projects/llama2_quantized_models/7B_chat/llama2.7b.airoboros.ggml_v3.q4_K_M.bin
+*.bin

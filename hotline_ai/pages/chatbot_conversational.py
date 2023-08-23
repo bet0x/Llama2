@@ -44,11 +44,13 @@ print(custom_prompt_template)
 # prompt=st.text_input("Enter your question here")
 
 embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/all-mpnet-base-v2")
-memory = ConversationBufferMemory(input_key='question', memory_key='chat_history')
+memory = ConversationBufferMemory(input_key='question', memory_key='chat_history', return_messages=True)
 
+# Top_p: This is like setting a rule that the AI can only choose from the best possible options. If you set top_p to 0.1, it's like telling the AI, "You can only pick from the top 10% of your 'best guesses'."
+# Top_k: This one is similar to top_p but with a fixed number. If top_k is set to 50, it's like telling the AI, "You have 50 guesses. Choose the best one."
 llm = TogetherLLM(
     model= "togethercomputer/llama-2-7b-chat",
-    temperature=0.1,
+    temperature=0,
     max_tokens=512
 )
 
@@ -64,8 +66,8 @@ def conversationalretrieval_qa_chain(llm, prompt, db, memory):
     chain_type_kwargs = {"prompt": prompt}
     qa_chain = ConversationalRetrievalChain.from_llm(llm=llm,
                                                      chain_type= 'stuff',
-                                                     retriever=db.as_retriever(search_kwargs={'k': 1}),
-                                                     verbose=False,
+                                                     retriever=db.as_retriever(search_kwargs={'k': 3}),
+                                                     verbose=True,
                                                      memory=memory,
                                                      combine_docs_chain_kwargs=chain_type_kwargs
                                                      )

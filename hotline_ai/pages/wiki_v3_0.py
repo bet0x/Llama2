@@ -39,8 +39,8 @@ st.code("""
     Your name is Kelly, you are a helpful, respectful and honest assistant. Always answer as helpfully as possible using the context text provided.
     You answer should only answer the question once and not have any text after the answer is done.
 
-    If a question does not make any sense, or is not factually
-    coherent, explain why instead of answering something not correct. If you don't know the answer, just say you don't know and submit the request to hotline@xfab.com for further assistance.
+    If a question does not make any sense, or is not factually coherent, explain why instead of answering something not correct. If you don't know the
+    answer, just say you don't know and submit the request to hotline@xfab.com for further assistance.
 
     <</SYS>>
     CONTEXT:/n/n {context}/n
@@ -50,7 +50,7 @@ st.code("""
 
 custom_prompt_template = """[INST] <<SYS>>
 Your name is Kelly, you are a helpful, respectful and honest assistant. Always answer as helpfully as possible using the context text provided.
-You answer should only answer the question once and not have any text after the answer is done.\n\nIf a question does not make any sense, or is not factually
+You answer should only answer the question once and not have any text after the answer is done and please ensure your answer is relevant to the question.\n\nIf a question does not make any sense, or is not factually
 coherent, explain why instead of answering something not correct. If you don't know the answer, just say you don't know and submit the request to hotline@xfab.com for further assistance.\n
 <</SYS>>
 CONTEXT:/n/n {context}/n
@@ -83,8 +83,8 @@ def conversationalretrieval_qa_chain(llm, prompt, db, memory):
     chain_type_kwargs = {"prompt": prompt}
     qa_chain = ConversationalRetrievalChain.from_llm(llm=llm,
                                                      chain_type= 'stuff',
-                                                     retriever=db.as_retriever(search_kwargs={'k': 3}),
-                                                     verbose=False,
+                                                     retriever=db.as_retriever(search_kwargs={'k': 1}),
+                                                     verbose=True,
                                                      memory=memory,
                                                      combine_docs_chain_kwargs=chain_type_kwargs
                                                      )
@@ -99,7 +99,7 @@ def load_db():
 
     db= ElasticVectorSearch(
         elasticsearch_url=elasticsearch_url,
-        index_name="new_wikidb",
+        index_name="new_wikidb_v1",
         ssl_verify={
             "verify_certs": True,
             "basic_auth": ("elastic", ELASTIC_PASSWORD),
@@ -146,7 +146,9 @@ if prompt:
         answer = qa_bot(prompt)
         st.info(answer)
         print(answer)
-
+        
+with st.expander("Sample Output"):
+    st.image("./images/wiki_3_0_image.jpg", caption="Fig 1: LLM + RAG result")
 # while True:
 #     query = input(f"\n\nPrompt: " )
 #     if query == "exit":

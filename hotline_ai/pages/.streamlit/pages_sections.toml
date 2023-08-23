@@ -79,8 +79,18 @@ name = "Wiki v3.0"
 icon = "⚡"
 
 [[pages]]
+path = "./pages/chatbot_retrievalqa.py"
+name = "X-Chat - RAG (Retrieval QA)"
+icon = "🤖"
+
+[[pages]]
+path = "./pages/chatbot_loadqa.py"
+name = "X-Chat - RAG (Load Chain Retrieval QA)"
+icon = "🤖"
+
+[[pages]]
 path = "./pages/chatbot_conversational.py"
-name = "X-Chat"
+name = "X-Chat - RAG (Conversational Retrieval QA)"
 icon = "🤖"
 
 [[pages]]
