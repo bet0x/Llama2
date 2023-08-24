@@ -1,4 +1,22 @@
-py -3.11 -m pip install streamlit-elements==0.1.*
-py -3.11 -m pip install st-pages
-py -3.11 -m pip install streamlit-disqus
-py -3.11 -m pip install termcolor
+streamlit-elements==0.1.*
+st-pages
+streamlit-disqus
+termcolor
+sentence_transformers
+streamlit 
+chainlit
+langchain
+openai 
+wikipedia
+chromadb
+tiktoken
+streamlit-chat
+transformers
+huggingface-hub
+einops
+accelerate
+bitsandbytes
+pypdf
+unstructured
+together
+huggingface_hub 
