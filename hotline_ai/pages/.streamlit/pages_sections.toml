@@ -89,7 +89,7 @@ name = "X-Chat - RAG (Load Chain Retrieval QA)"
 icon = "🤖"
 
 [[pages]]
-path = "./pages/chatbot_conversational.py"
+path = "./pages/chatbot_conversational_v1.py"
 name = "X-Chat - RAG (Conversational Retrieval QA)"
 icon = "🤖"
 
@@ -104,3 +104,8 @@ path = "./pages/info.py"
 name = "About"
 icon = "📢"
 in_section = false
+
+[[pages]]
+path = "./pages/chatbot_playground_v1.py"
+name = "Chat with Me"
+icon = "📎"
