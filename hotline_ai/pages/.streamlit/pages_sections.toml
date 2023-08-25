@@ -100,6 +100,12 @@ icon = "🗝️"
 in_section = false
 
 [[pages]]
+path = "./pages/glossary.py"
+name = "Glossary"
+icon = "📜"
+in_section = false
+
+[[pages]]
 path = "./pages/info.py"
 name = "About"
 icon = "📢"

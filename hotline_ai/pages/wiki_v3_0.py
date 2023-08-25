@@ -149,6 +149,32 @@ if prompt:
         
 with st.expander("Sample Output"):
     st.image("./images/wiki_3_0_image.jpg", caption="Fig 1: LLM + RAG result")
+
+with st.expander("Read More"):
+    col1, col2= st.columns(2)
+
+    with col1:
+        st.header("Pros")
+        st.markdown(""" 
+                    ### Combination of Encoder and Decoder
+                    * Support the integration with Encoder model that allow the LLM to generate
+                    specific answer based on the retriever output and user prompt.
+                    * Provide more natural human response of the subject.
+
+                    ### Prompt to shape the behavior of model
+                    * LLM model behavior can be controlled and defined based on the System Prompt.
+                    * This prompt enable the model to act within its define characters.
+                    * Therefore, for customer support, it's best to set the behavior of the model
+                    that relect to an actual character of that profession.
+                    """)    
+    with col2:
+        st.header("Cons")
+        st.markdown("""
+            ### Answer accuracy.
+            * Despite it can generate sensisble answer based on the retriever output, however we can't tell
+            if the provided answer is neither correct or not. Which can lead to misunderstanding.
+            * Therefore, it's really important to ensure the generated answer is correct and factual.
+            """)
 # while True:
 #     query = input(f"\n\nPrompt: " )
 #     if query == "exit":

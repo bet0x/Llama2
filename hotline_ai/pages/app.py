@@ -11,7 +11,7 @@ st.set_page_config(
 add_page_title()
 
 st.title("Hotline AI and Future of CTS")
-st.markdown("### Feasibility `Study` of Hotline AI and Future of CTS")
+st.markdown("### Feasibility :green[Study] of Hotline AI and Future of CTS")
 
 st.markdown(
     """
@@ -33,7 +33,9 @@ st.markdown(
     - [Github](https://github.com/streamlit/demo-self-driving)
 """
 )
-
-show_pages_from_config("./pages/.streamlit/pages_sections.toml")
+try:
+    show_pages_from_config("./pages/.streamlit/pages_sections.toml")
+except:
+    pass
 
 

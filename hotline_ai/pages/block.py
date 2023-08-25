@@ -8,7 +8,7 @@ st.title("New Wiki Backend Architecture")
 st.markdown( 
     """
     ### Blocks Descriptions
-    * The overall system architecture is structured into 3 distinct block: Encoder, Decode and Knowledge Base. 
+    * The overall system architecture is structured into 3 distinct block: :green[Encoder], :green[Decoder] and :green[Knowledge Base]. 
     Each block serves a specific function within the AI model.
 
     """

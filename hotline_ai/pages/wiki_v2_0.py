@@ -74,12 +74,6 @@ with st.expander("Read More"):
                     * User able to input their queries in a more conversational and natural manner.
                     * Retriever will return all relevant answer based on user input.
 
-                    ### Support chain of question
-                    * The retriever is based on BERT model. Therefore, it can support more complex and natural
-                    human prompt and return releveant content due to its capability to perform text classification.
-                    * User able to input their queries in a more conversational and natural manner.
-                    * Retriever will return all relevant answer based on user input.
-
                     ### Support Vector Data
                     * Vector Data (Embedded) is quite popular now adays due to its speed and scability.
                     * With arising number of ticets, therefore it's recommended to convert `dataset` as vector data

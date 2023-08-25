@@ -16,7 +16,7 @@ genre = st.radio(
     "# Backend Development",
     ('RCI Development', 'Experiment with different Prompt', 
      'Enable Memory for different RAG','Develop correction mechanism', 'Re-train the model using QLora',
-     'Experiment RAG with llama-index', 'Create API that enable model to conenct to SpecXplorer, FeatureXplorer'))
+     'Experiment RAG with llama-index', 'Create API that enable model to connect to SpecXplorer, FeatureXplorer'))
 
 genre = st.radio(
     "# Frontend Development",

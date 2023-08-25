@@ -45,7 +45,9 @@ print(custom_prompt_template)
 
 #print(custom_prompt_template)
 
-@st.cache_resource()
+#@st.cache_resource()
+
+@st.cache_data(experimental_allow_widgets=True)  # 👈 Set the parameter
 def chat_model():
     llm = TogetherLLM(
         model= "togethercomputer/llama-2-7b-chat",

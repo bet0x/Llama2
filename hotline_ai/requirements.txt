@@ -19,4 +19,9 @@ bitsandbytes
 pypdf
 unstructured
 together
-huggingface_hub 
+huggingface_hub
+elasticsearch
+pinecone-client
+unstructured
+pinecone-client 
+gradio

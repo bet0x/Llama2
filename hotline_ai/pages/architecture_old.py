@@ -13,7 +13,7 @@ st.markdown(
 
     ### Source Data
     * Information collected from Tim (First FAQ).
-    * This data was pre-processed and converted to `json`.
+    * This data was pre-processed and converted to **:green[json]**.
     * This data push and store into Elastic db.
 
     ### Search Mechanism
