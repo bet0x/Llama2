@@ -22,21 +22,32 @@ with st.expander("Quality Data Preprocessing"):
     * Clean and preprocess dataset thoroughly. This include handling missing values, use proper sentence and wording, avoid abbreviations without context and performing text normalization (lowercase, stemming and etc).    
     """)
 
-with st.expander("Use correct prompt for dataset provide details answer"):
+with st.expander("Use correct format for dataset provide details answer ⭐"):
     st.markdown("""
     * Avoid using refer to ticket with no details context provided.  
     * To write question and answer in full english sentence and in complete paragraph.
     * Justify the abbreviation.
-    * Use prompt format as follow that should include `Can you tell me`  for question.
-    * Use `Certainly, I'd be happy to help you with it` and repeat the question as part of the prompt
-    `To answer your question regarding on how 
+    * Use correct format for process :green[XH018], Topic :green[Process and Device Specifications]
+    * Use prompt format as follow that should include :green[_Can you tell me_] for question.
+    * Use :green[_Certainly, I'd be happy to help you with it_] and repeat the question as part of the prompt
+    :green[_To answer your question regarding on how_]
     are the MLM layers grouped in each reticle`
     """)
-    st.code("""
-    Question
+    
+    st.info("""
+    **:green[Ticket]** :
+    63040513
+            
+    **:green[Process]** :
+    XH018
+    
+    **:green[Topic]** :
+    Backend
+            
+    **:green[Question]** :
     Can you tell me, How are the MLM layers grouped in each reticle ? 
 
-    Answer
+    **:green[Answer]** :
     Certainly, I'd be happy to help you with it. To answer your question regarding on how 
     are the MLM layers grouped in each reticle, I suggest you to visit  AX device page, you can 
     go to MGO tab on right side to view. From the MGO page, you can see the item name which shows

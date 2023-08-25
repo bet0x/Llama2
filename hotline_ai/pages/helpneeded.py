@@ -16,15 +16,15 @@ genre = st.radio(
     "# Backend Development",
     ('RCI Development', 'Experiment with different Prompt', 
      'Enable Memory for different RAG','Develop correction mechanism', 'Re-train the model using QLora',
-     'Experiment RAG with llama-index', 'Create API that enable model to connect to SpecXplorer, FeatureXplorer'))
+     'Experiment RAG with llama-index', 'Create API that enable model to connect to SpecXplorer, FeatureXplorer', 'Discuss with Andreas Klein for Elastic Vector Database indexing' ))
 
 genre = st.radio(
     "# Frontend Development",
-    ('Clean the dataset', 'Learn how to correctly split the data','Advise team to correctly format their dataset','Update the documentation'))
+    ('Clean the dataset', 'Learn how to correctly split the data','Advise team to use standard FAQ template','Update the documentation','Assign Specialist to review individual FAQ'))
 
 genre = st.radio(
     "# Deplyoment Method",
-    ('Discover way how to deploy the Wiki', 'Experiment to use Docker'))
+    ('Discover the best approach to deploy the Wiki', 'Experiment to use Docker'))
 
 genre = st.radio(
     "Resources",
