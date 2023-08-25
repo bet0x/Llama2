@@ -1,0 +1,22 @@
+Questions:
+
+how to perhow to run calibre mimant using virtuoso ?
+how to perform timing signoff ? and why there is no mim antenna rule in xh035 ?
+can you help me to list down all the devices with fifth hw terminal ?
+can you list down synopys tool supported by x-fab ?
+can you list down synopys tool supported by x-fab ? how to setup alpha pdk with xkit ?
+why there is no mim antenna drc in xh035 ? how to setup alpha pdk with xkit ?
+is it necessary to update my PDK kit if i have ongoing design ?
+can you tell, where i can find cpk locations ?
+where i can find fatal rule list ?
+how to setup alpha pdk with xkit ?
+what is the differences between HV_CELLS and IO Cells library ?
+can you advise what drc setting i should use for tapeout ?
+can you tell recommendations for corner lot split ?
+
+
+
+
+
+
+
