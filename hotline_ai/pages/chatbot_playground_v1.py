@@ -115,7 +115,6 @@ if prompt := st.chat_input(disabled= not add_replicate_api):
         st.write(prompt)   
 
 if st.session_state.messages[-1]["role"] != "assistant":
-    
     with st.chat_message("assistant"):
         with st.spinner("Thinking"):
             #response = LLM_Chain.run(prompt)
