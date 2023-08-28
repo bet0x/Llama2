@@ -25,8 +25,91 @@ from langchain.agents import AgentType
 
 import pinecone
 import os
+
+from langchain.agents import Tool, AgentExecutor, LLMSingleActionAgent, AgentOutputParser
+from langchain.prompts import StringPromptTemplate
+
+from langchain import LLMChain
+
+from langchain.tools import DuckDuckGoSearchRun 
+from langchain.utilities import GoogleSearchAPIWrapper
+
+from typing import List, Union
+from langchain.schema import AgentAction, AgentFinish
+import re
+import langchain
+from togetherllm import TogetherLLM
+import pinecone
+from langchain.vectorstores import Pinecone
+
 embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/all-mpnet-base-v2")
 
+
+# Set up the base template
+template = """Answer the following questions as best you can, but speaking as helpful X-Fab customer support assistant. You have access to the following tools:
+
+{tools}
+
+Use the following format:
+
+Question: the input question you must answer
+Thought: you should always think about what to do
+Action: the action to take, should be one of [{tool_names}]
+Action Input: the input to the action
+Observation: the result of the action
+... (this Thought/Action/Action Input/Observation can repeat N times)
+Thought: I now know the final answer
+Final Answer: the final answer to the original input question
+
+Begin! Remember to answer as a as helpful X-Fab customer support assistant when giving your final answer.
+
+Question: {input}
+{agent_scratchpad}"""
+
+# Set up a prompt template
+class CustomPromptTemplate(StringPromptTemplate):
+    # The template to use
+    template: str
+    # The list of tools available
+    tools: List[Tool]
+    
+    def format(self, **kwargs) -> str:
+        # Get the intermediate steps (AgentAction, Observation tuples)
+        # Format them in a particular way
+        intermediate_steps = kwargs.pop("intermediate_steps")
+        thoughts = ""
+        for action, observation in intermediate_steps:
+            thoughts += action.log
+            thoughts += f"\nObservation: {observation}\nThought: "
+        # Set the agent_scratchpad variable to that value
+        kwargs["agent_scratchpad"] = thoughts
+        # Create a tools variable from the list of tools provided
+        kwargs["tools"] = "\n".join([f"{tool.name}: {tool.description}" for tool in self.tools])
+        # Create a list of tool names for the tools provided
+        kwargs["tool_names"] = ", ".join([tool.name for tool in self.tools])
+        return self.template.format(**kwargs)
+
+class CustomOutputParser(AgentOutputParser):
+    
+    def parse(self, llm_output: str) -> Union[AgentAction, AgentFinish]:
+        # Check if agent should finish
+        if "Final Answer:" in llm_output:
+            return AgentFinish(
+                # Return values is generally always a dictionary with a single `output` key
+                # It is not recommended to try anything else at the moment :)
+                return_values={"output": llm_output.split("Final Answer:")[-1].strip()},
+                log=llm_output,
+            )
+        # Parse out the action and action input
+        regex = r"Action\s*\d*\s*:(.*?)\nAction\s*\d*\s*Input\s*\d*\s*:[\s]*(.*)"
+        match = re.search(regex, llm_output, re.DOTALL)
+        if not match:
+            raise ValueError(f"Could not parse LLM output: `{llm_output}`")
+        action = match.group(1).strip()
+        action_input = match.group(2)
+        # Return the action and action input
+        return AgentAction(tool=action, tool_input=action_input.strip(" ").strip('"'), log=llm_output)
+    
 def init_pinecone():
     PINECONE_API_KEY = os.environ.get('PINECONE_API_KEY', '700dbf29-7b1d-435b-9da1-c242f7a206e6')
     PINECONE_API_ENV = os.environ.get('PINECONE_API_ENV', 'us-west1-gcp-free')
@@ -144,6 +227,16 @@ max_tokens=512
 def _handle_error(error) -> str:
     return str(error)[:50]
 
+def retrieval_qa_chain(llm, db):
+    # Set up the question-answering system
+    qa = RetrievalQA.from_chain_type(
+        llm=llm,
+        chain_type = "stuff",
+        retriever=db.as_retriever(search_kwargs={'k': 3}),
+    )
+    
+    return qa
+
 # Allow the user to upload a PDF file
 uploaded_file = st.file_uploader("**Upload Your PDF File**", type=["pdf"])
 
@@ -165,37 +258,54 @@ if uploaded_file:
             # Test the embeddings and save the index in a vector database
             #index = test_embed()
             db = init_pinecone()
-            
-            # Set up the question-answering system
-            qa = RetrievalQA.from_chain_type(
-                llm=llm,
-                chain_type = "stuff",
-                retriever=db.as_retriever(),
-            )
-            
+     
+            qa = retrieval_qa_chain(llm,db)
+           
             # Set up the conversational agent
             tools = [
                 Tool(
-                    name="X-Fab QA Chat",
+                    name="Search X-FAB",
                     func=qa.run,
                     description="Useful for when you need to answer questions about the X-Fab. Input may be a partial or fully formed question.",
                 ),
             ]
             
-            query = st.text_input("**What's on your mind?**",placeholder="Ask me anything ")
+            #query = st.text_input("**What's on your mind?**",placeholder="Ask me anything ")
+            # x = qa.run(query)
+            # st.info(x)
             
-            # agent = initialize_agent(tools, llm, agent=AgentType.ZERO_SHOT_REACT_DESCRIPTION, verbose=True) #STRUCTURED_CHAT_ZERO_SHOT_REACT_DESCRIPTION
-            agent = initialize_agent(tools, llm, agent=AgentType.STRUCTURED_CHAT_ZERO_SHOT_REACT_DESCRIPTION, verbose=True) 
+            # prompt = CustomPromptTemplate(
+            #     template=template,
+            #     tools=tools,
+            #     # This omits the `agent_scratchpad`, `tools`, and `tool_names` variables because those are generated dynamically
+            #     # This includes the `intermediate_steps` variable because that is needed
+            #     input_variables=["input", "intermediate_steps"])
+            
+            # output_parser = CustomOutputParser() 
+            # llm_chain = LLMChain(llm=llm, prompt=prompt)
+            # tool_names = [tool.name for tool in tools]
+            # agent = LLMSingleActionAgent(
+            #     llm_chain=llm_chain, 
+            #     output_parser=output_parser,
+            #     stop=["\nObservation:"], 
+            #     allowed_tools=tool_names
+            # )
+            
+            # agent_executor = AgentExecutor.from_agent_and_tools(agent=agent, 
+            #                                         tools=tools, 
+            #                                         verbose=False)
+            
+            # x = agent_executor.run(query) 
+            # st.info(x)       
+            
+            agent = initialize_agent(tools, llm, agent=AgentType.ZERO_SHOT_REACT_DESCRIPTION, verbose=True) #STRUCTURED_CHAT_ZERO_SHOT_REACT_DESCRIPTION
 
             # x = agent.run(query)
             # st.info(x)
-            
-            # prefix = """Have a conversation with a human, answering the following questions as best you can based on the context and memory available. 
-            #             You have access to a single tool:"""
-            # suffix = """Begin!"
-            
-            prefix = """Answer the following questions as best you can based on retrieval result. You have access to the following tools:"""
-            suffix = """Begin! Remember to speak professionally when giving your final answer."
+        
+            prefix = """Have a conversation with a human, answering the following questions as best you can based on the context and memory available. 
+                        You have access to a single tool:"""
+            suffix = """Begin!"
 
             {chat_history}
             Question: {input}
@@ -216,19 +326,17 @@ if uploaded_file:
             agent = ZeroShotAgent(llm_chain=llm_chain, tools=tools, verbose=True)
             agent_chain = AgentExecutor.from_agent_and_tools(agent=agent, tools=tools, verbose=True, memory=st.session_state.memory)
 
-            # # Allow the user to enter a query and generate a response
-            # query = st.text_input(
-            #     "**What's on your mind?**",
-            #     placeholder="Ask me anything from {}".format(name_of_file),
-            # )
+            # Allow the user to enter a query and generate a response
+            query = st.text_input(
+                "**What's on your mind?**",
+                placeholder="Ask me anything from {}".format(name_of_file),
+            )
             
             if query:
-                with st.spinner(
-                    "Generating Answer to your Query : `{}` ".format(query)
-                ):  
+                with st.spinner("Generating Answer to your Query : `{}` ".format(query)):  
                     try:
                         res = agent_chain.run(query)
-                        # st.info(res, icon="🤖")
+                        #st.info(res, icon="🤖")
                     except Exception as e:
                         res = str(e)
                         if res.startswith("Could not parse LLM output: `"):
