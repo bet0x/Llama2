@@ -1,0 +1,13 @@
+pip install embedchain
+pip install langchain
+pip install bitsandbytes accelerate transformers
+pip install datasets loralib sentencepiece
+pip install pypdf
+pip install sentence_transformers
+pip install openai
+pip install tiktoken
+pip install unstructured
+pip install tokenizers
+pip install faiss-cpu
+pip install xformers
+pip install pinecone-client

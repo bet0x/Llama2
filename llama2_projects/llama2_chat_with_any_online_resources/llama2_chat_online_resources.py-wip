@@ -1,0 +1,69 @@
+import together
+from togetherllm import TogetherLLM
+from time import sleep
+import os
+from embedchain import App
+import streamlit as st
+
+# Initiating the Embed Chain Bot
+@st.cache_resource
+def botadd(URL):
+    databutton_bot = App()
+    databutton_bot.add("web_page",URL)
+    return databutton_bot
+
+if "btn_state" not in st.session_state:
+    st.session_state.btn_state = False
+
+URL_TO_EMBED = st.text_input("Enter a URL")
+
+btn = st.button("Initialize Bot")
+
+if btn or st.session_state.btn_state:
+    st.session_state.btn_state = True
+    databutton_bot = botadd(URL_TO_EMBED)
+    st.success("Bot Initiated")
+    
+# Initialize Chat History
+if "messages" not in st.session_state:
+    st.session_state.messages = []
+    
+# Display Chat Messages From History on App rerun
+for message in st.session_state.messages:
+    with st.chat_message(message["role"]):
+        st.markdown(message["content"])
+
+# Accept user input
+if prompt := st.chat_input("What is up ?"):
+    # Add user message to chat history
+    st.session_state.messages.append({"role":"user", "content": prompt})
+    
+    # Display user message in chat message container
+    with st.chat_message("user"):
+        st.markdown(prompt)
+        
+    # Display assistant reponse in chat message container
+    with st.chat_message("assistant"):
+        message_placeholder = st.empty()
+        full_response = ""
+        assistant_reponse = databutton_bot.query(prompt)
+        
+    # Simulate stream of response with miliseconds delay
+    for chunk in assistant_reponse.split():
+        full_response += chunk + " "
+        sleep(0.05)
+        
+        # Add a blinking cursor to simulate typing
+        message_placeholder.markdown(full_response + "!! ")
+    message_placeholder.markdown(full_response)
+    
+    # Add assistant response to chat history
+    st.session_state.messages.append(
+        {"role":"assistant", "content": full_response}
+    )
+
+else:
+    st.info("initiate a bot first")
+                                
+        
+    
