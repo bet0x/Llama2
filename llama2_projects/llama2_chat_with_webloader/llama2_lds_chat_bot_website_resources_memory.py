@@ -1,14 +1,28 @@
-import streamlit as st
-from streamlit_chat import message
-from langchain.chains import ConversationalRetrievalChain
-from langchain.embeddings import HuggingFaceEmbeddings
-from langchain.memory import ConversationBufferMemory
+
+from langchain.document_loaders import UnstructuredURLLoader
+from langchain.text_splitter import CharacterTextSplitter
+
+from langchain.vectorstores import FAISS
 from langchain.vectorstores import Pinecone
 import pinecone
+
+from langchain.chains import RetrievalQAWithSourcesChain
+from langchain.embeddings import HuggingFaceEmbeddings
+import textwrap
+import sys
 import os
+import torch
 from togetherllm import TogetherLLM
-from langchain import PromptTemplate
 from time import sleep
+import streamlit as st
+from langchain import PromptTemplate
+from langchain.memory import ConversationBufferMemory
+from langchain.chains import ConversationalRetrievalChain
+from streamlit_chat import message
+
+PATH = r"D:/AI_CTS/Llama2/llama2_projects/llama2_chat_with_webloader/"
+DATA_PATH = PATH + 'data/'
+DB_FAISS_PATH = PATH + 'vectorstore/db_faiss'
 
 embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/all-mpnet-base-v2")
 llm = TogetherLLM(
@@ -43,7 +57,7 @@ if 'history' not in st.session_state:
     st.session_state['history'] = []
 
 with st.sidebar:
-    st.title("X-Chat")
+    st.title("LDS Chat")
     st.header("Settings")
     add_replicate_api = st.text_input("Enter your password here", type='password')
 
@@ -77,19 +91,6 @@ def set_custom_prompt():
 if 'entity_memory' not in st.session_state:
     st.session_state.entity_memory = ConversationBufferMemory(memory_key="chat_history", return_messages=True)
 
-def init_pinecone():
-    PINECONE_API_KEY = os.environ.get('PINECONE_API_KEY', '700dbf29-7b1d-435b-9da1-c242f7a206e6')
-    PINECONE_API_ENV = os.environ.get('PINECONE_API_ENV', 'us-west1-gcp-free')
-
-    pinecone.init( 
-        api_key=PINECONE_API_KEY,  
-        environment=PINECONE_API_ENV,  
-    )
-    index_name = "new-wikidb-v1" 
-    docsearch = Pinecone.from_existing_index(index_name, embeddings)
-
-    return docsearch
-
 def conversationalretrieval_qa_chain(llm,qa_prompt,db):
     chain_type_kwargs = {"prompt": qa_prompt}
     qa_chain = ConversationalRetrievalChain.from_llm(llm=llm,chain_type='stuff',
@@ -101,12 +102,12 @@ def conversationalretrieval_qa_chain(llm,qa_prompt,db):
     return qa_chain
 
 def conversation_chat(query):
-    db = init_pinecone()
+    db = FAISS.load_local(DB_FAISS_PATH, embeddings)
     qa_prompt = set_custom_prompt()
     qa = conversationalretrieval_qa_chain(llm,qa_prompt,db)
 
-    result = qa({"question": query, "chat_history": st.session_state['history']})
-    #result = qa({"question": query})
+    #result = qa({"question": query, "chat_history": st.session_state['history']})
+    result = qa({"question": query})
 
     #st.session_state['history'].append((query, result["answer"]))
     return result["answer"]
@@ -122,6 +123,7 @@ if st.session_state.messages[-1]["role"] != "assistant":
             
             st.session_state.past.append(prompt)
             st.session_state.generated.append(response)
+            
             placeholder = st.empty()
             full_response=''
             for item in response:
@@ -133,59 +135,39 @@ if st.session_state.messages[-1]["role"] != "assistant":
                 for i in range(len(st.session_state['generated'])-1, -1, -1):
                     st.info(st.session_state["past"][i],icon="🧐")
                     st.success(st.session_state["generated"][i], icon="🤖")
-                
-                st.markdown(st.session_state.generated)
                     
     message = {"role":"assistant", "content": full_response}
     st.session_state.messages.append(message)
 
 
+
+
+
+
+
 # st.set_page_config(page_title='🧠MemoryBot🤖', layout='wide')
 
-# st.title('🎈 Llama 2 Pinecone Chatbot With Memory')
+# st.title('🎈 Llama 2 Chatbot | Entity Memory')
 
-# def set_custom_prompt():
-#     """
-#     Prompt template for QA retrieval for each vectorstore
-#     """
-#     prompt = PromptTemplate(input_variables=['chat_history','context', 'question'],
-#                             template=custom_prompt_template)
-#     return prompt
 
-# def init_pinecone():
-#     PINECONE_API_KEY = os.environ.get('PINECONE_API_KEY', '700dbf29-7b1d-435b-9da1-c242f7a206e6')
-#     PINECONE_API_ENV = os.environ.get('PINECONE_API_ENV', 'us-west1-gcp-free')
 
-#     pinecone.init( 
-#         api_key=PINECONE_API_KEY,  
-#         environment=PINECONE_API_ENV,  
-#     )
-#     index_name = "new-wikidb-v1" 
-#     embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/all-mpnet-base-v2")
-#     docsearch = Pinecone.from_existing_index(index_name, embeddings)
+# with st.sidebar:
+#     st.title("X-Chat")
+#     st.header("Settings")
+#     add_replicate_api = st.text_input("Enter your password here", type='password')
 
-#     return docsearch
+#     if not (add_replicate_api.startswith('jl')):
+#         st.warning('Please enter your credentials', icon='⚠️')
+#     else:
+#         st.success('Proceed to entering your prompt message!', icon='👉')
 
-# db = init_pinecone()
-# prompt = set_custom_prompt()
+# if ask := st.chat_input(disabled=not add_replicate_api):
+#     with st.chat_message("user"):
+#         st.write(ask)
 
-# if 'entity_memory' not in st.session_state:
-#     st.session_state.entity_memory = ConversationBufferMemory(memory_key="chat_history", return_messages=True)
-    
-# #memory = ConversationBufferMemory(memory_key="chat_history", return_messages=True)
 
-# chain_type_kwargs = {"prompt": prompt}
-# chain = ConversationalRetrievalChain.from_llm(llm=llm,chain_type='stuff',
-#                                               retriever=db.as_retriever(search_kwargs={"k":2}),
-#                                               verbose=True,
-#                                               memory=st.session_state.entity_memory,
-#                                               combine_docs_chain_kwargs=chain_type_kwargs)
 
-# def conversation_chat(query):
-#     result = chain({"question": query, "chat_history": st.session_state['history']})
-#     st.session_state['history'].append((query, result["answer"]))
-#     return result["answer"]
-        
+
 # def initialize_session_state():
 #     if 'history' not in st.session_state:
 #         st.session_state['history'] = []

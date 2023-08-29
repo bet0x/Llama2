@@ -16,8 +16,9 @@ from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
 from langchain.chains.summarize import load_summarize_chain
 from langchain.llms import LlamaCpp
 from langchain.text_splitter import RecursiveCharacterTextSplitter 
+from togetherllm import TogetherLLM
 
-#MODEL_PATH = r"D:/llama2_quantized_models/7B_chat/llama-2-7b-chat.ggmlv3.q4_K_M.bin"
+
 MODEL_PATH = r"D:/AI_CTS/Llama2/llama2_projects/llama2_quantized_models/7B_chat/llama-2-7b-chat.ggmlv3.q4_K_M.bin"
 PATH = r"C:/Users/Lukas/Desktop/My_Projects/To_Upload/Llama2/llama2_projects/llama2_youtube_summarizer/"
 
@@ -43,18 +44,12 @@ def split_chunking(result):
 
     return texts
 
-callback_manager = CallbackManager([StreamingStdOutCallbackHandler()])
-llm = LlamaCpp(
-    model_path= MODEL_PATH,
-    max_tokens=256,
-    n_gpu_layers=32,
-    n_batch= 512, #256,
-    callback_manager=callback_manager,
-    n_ctx= 2048, #1024,
-    verbose=False,
-    temperature=0.8,
-)
-    
+llm = TogetherLLM(
+    model= "togethercomputer/llama-2-7b-chat",
+    temperature=0.7,
+    max_tokens=512
+) 
+
 data = load_youtube_url()
 result = split_chunking(data)
 

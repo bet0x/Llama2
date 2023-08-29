@@ -1,0 +1,5 @@
+pip install youtube-transcript-ap
+pip install pytube
+pip install unstructured
+pip install libmagic
+pip install selenium

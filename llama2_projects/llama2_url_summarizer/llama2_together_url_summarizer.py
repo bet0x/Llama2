@@ -16,25 +16,48 @@ from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
 from langchain.chains.summarize import load_summarize_chain
 from langchain.llms import LlamaCpp
 from langchain.text_splitter import RecursiveCharacterTextSplitter 
+from togetherllm import TogetherLLM
 
-#MODEL_PATH = r"D:/llama2_quantized_models/7B_chat/llama-2-7b-chat.ggmlv3.q4_K_M.bin"
+################################################################
+from langchain.document_loaders import UnstructuredURLLoader
+from langchain.document_loaders import SeleniumURLLoader
+
+from langchain.text_splitter import CharacterTextSplitter
+from langchain.vectorstores import FAISS
+from langchain.vectorstores import Pinecone
+import pinecone
+from langchain.chains import RetrievalQAWithSourcesChain
+from langchain.embeddings import HuggingFaceEmbeddings
+from transformers import AutoTokenizer, AutoModelForCausalLM
+from transformers import pipeline
+from langchain import HuggingFacePipeline
+from huggingface_hub import notebook_login
+import textwrap
+import sys
+import os
+import torch
+from langchain.document_loaders import WebBaseLoader, DirectoryLoader
+
+
 MODEL_PATH = r"D:/AI_CTS/Llama2/llama2_projects/llama2_quantized_models/7B_chat/llama-2-7b-chat.ggmlv3.q4_K_M.bin"
 PATH = r"C:/Users/Lukas/Desktop/My_Projects/To_Upload/Llama2/llama2_projects/llama2_youtube_summarizer/"
 
 DATA_PATH = PATH + 'data/'
 DB_FAISS_PATH = PATH + 'vectorstore/db_faiss'
 
-def load_youtube_url():
-    
-    loader = YoutubeLoader.from_youtube_url("https://www.youtube.com/watch?v=128fp0rqfbE&ab_channel=TED-Ed", add_video_info=True)
-    #loader = YoutubeLoader.from_youtube_url("https://www.youtube.com/watch?v=AGS45Fd9nmE&ab_channel=TheRisen", add_video_info=True)
-    
-    result = loader.load()
-    print(f"Found Video From {result[0].metadata['author']} that is {result[0].metadata['length']} seconds length")
-    print(result)
+def load_website_url():
+    URLs=[
+        'https://www.thechurchnews.com/leaders/2023/8/28/23847533/elder-cook-byu-university-conference-church-doctrinal-purposes-education',
+        'http://www.tanyajpeterson.com/8-mindful-lessons-in-wellbeing-i-learned-from-my-frog/',
+        'https://www.churchofjesuschrist.org/learn/youth-theme-2023?lang=eng'
+    ]
+        
+    #loaders=UnstructuredURLLoader(urls=URLs)
+    loaders=SeleniumURLLoader(urls=URLs)
+    data=loaders.load()
 
-    return result
-
+    return data
+    
 # We need to split the youtube result because due to limited input token - ValueError: Requested tokens (6046) exceed context window of 2048
 def split_chunking(result):
     text_splitter = RecursiveCharacterTextSplitter(chunk_size=500,
@@ -43,19 +66,13 @@ def split_chunking(result):
 
     return texts
 
-callback_manager = CallbackManager([StreamingStdOutCallbackHandler()])
-llm = LlamaCpp(
-    model_path= MODEL_PATH,
-    max_tokens=256,
-    n_gpu_layers=32,
-    n_batch= 512, #256,
-    callback_manager=callback_manager,
-    n_ctx= 2048, #1024,
-    verbose=False,
-    temperature=0.8,
-)
-    
-data = load_youtube_url()
+llm = TogetherLLM(
+    model= "togethercomputer/llama-2-7b-chat",
+    temperature=0.7,
+    max_tokens=512
+) 
+
+data = load_website_url()
 result = split_chunking(data)
 
 chain = load_summarize_chain(llm=llm, chain_type="map_reduce", verbose=True)

@@ -19,9 +19,9 @@
         "llama2_projects\\llama2_quantized_models": true,
         "llama2_projects\\llama2_script_examples": true,
         "llama2_projects\\.chainlit": true,
-        "llama2_projects\\llama2_memory": true,
         "llama2_projects\\llama2_pdf_chatbot_faiss_macbook": true,
-        "llama2_projects\\llama2_google_colab": true
+        "llama2_projects\\llama2_google_colab": true,
+        "Processing_Tools": true
     },
     "workspace.isHidden": true
 }
