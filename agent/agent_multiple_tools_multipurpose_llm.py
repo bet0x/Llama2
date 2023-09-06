@@ -14,6 +14,7 @@ import os
 
 from langchain.prompts import PromptTemplate
 from langchain.chains import LLMChain
+from pprint import pprint
 
 llm = TogetherLLM(
     model= "togethercomputer/llama-2-7b-chat",
@@ -52,8 +53,10 @@ zero_shot_agent = initialize_agent(
     verbose=True,
     handle_parsing_errors="Check your output and make sure it conforms!",
     max_iterations=3,
+    early_stopping_method="generate", #to perform one FINAL pass through the LLM to generate an output
 )
 
-print(
-    zero_shot_agent("Write me a romantic letter to my girlfriend?")
+pprint(f"""  
+    {zero_shot_agent("Write me a python code that convert excel to csv?")}
+  """
 )
