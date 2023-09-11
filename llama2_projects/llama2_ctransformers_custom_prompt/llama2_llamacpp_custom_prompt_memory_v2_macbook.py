@@ -16,23 +16,28 @@ Here the AI will remember previous conversation history due to `ConversationoBuf
 Here we make it with METAL=1
 CMAKE_ARGS="-DLLAMA_METAL=on" FORCE_CMAKE=1 pip install llama-cpp-python --force-reinstall --upgrade --no-cache-dir --verbose
 
-CT_METAL=1 pip install ctransformers --no-binary ctransformers
+Download GGUF model
+https://huggingface.co/TheBloke/Llama-2-7b-Chat-GGUF/tree/main
 
+Please remember that latest release of llamaCpp is no longer support GGML. We will need to use GGUF model format.
 """
 
+## GGML
 #MODEL_PATH = r"D:/llama2_quantized_models/7B_chat/llama-2-7b-chat.ggmlv3.q8_0.bin"
 #MODEL_PATH = r"D:/llama2_quantized_models/7B_chat/llama-2-7b-chat.ggmlv3.q4_K_M.bin"
 #MODEL_PATH = r"D:/llama2_quantized_models/7B_chat/llama-2-7b-chat.ggmlv3.q5_K_M.bin"
-MODEL_PATH = r"/Users/jlukas/Desktop/My_Project/NLP/Llama2_quantized_models/llama-2-7b-chat.ggmlv3.q4_K_M.bin"
+
+# GGUF
+MODEL_PATH = r"/Users/jlukas/Desktop/My_Project/NLP/Llama2_quantized_models/llama-2-7b-chat.Q4_K_M.gguf"
 
 template = """[INST] <<SYS>>
-You are a helpful, respectful and honest assistant. Always answer the question as helpfully as possible, while being safe. Your answers should not include any harmful, unethical, racist, sexist, toxic, dangerous, or illegal content. Please ensure that your responses are socially unbiased and positive in nature.
-
-If a question does not make any sense, or is not factually coherent, explain why instead of answering something not correct. If you don't know the answer to a question, please don't share false information.
+Your name is Kelly.
+You are helpful assistant, you always only answer for the question then you stop, read the chat history to get the context
+You always answer the question as helpfully as possible.
 
 {chat_history}
 
-{user_input}
+{question}
 <</SYS>>
 
 [/INST]"""
@@ -41,12 +46,12 @@ print(template)
 
 def init_memory():
     memory = ConversationBufferMemory(
-        input_key="user_input",
+        input_key="question",
         memory_key="chat_history",
     )
     return memory
 
-prompt = PromptTemplate(input_variables=["chat_history", "user_input"], template=template)
+prompt = PromptTemplate(input_variables=["chat_history", "question"], template=template)
 memory = init_memory()
 
 callback_manager = CallbackManager([StreamingStdOutCallbackHandler()])
@@ -58,7 +63,7 @@ llm = LlamaCpp(
     n_batch= 512, #256,
     callback_manager=callback_manager,
     n_ctx= 1024,
-    verbose=True,
+    #verbose=True,
     temperature=0.8,
 )
 print(llm.n_gpu_layers)
