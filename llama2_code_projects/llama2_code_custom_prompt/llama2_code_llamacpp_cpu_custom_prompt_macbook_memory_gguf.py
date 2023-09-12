@@ -18,32 +18,21 @@ MODEL_PATH = r"/Users/jlukas/Library/Application Support/Open Interpreter/models
 custom_prompt_template = """[INST] <<SYS>>
 You are an AI Coding Assistant and your task is to solve coding problems and return code snippets based on given user's query. Below is the user's query.
 <</SYS>>
-Query: {query}
+{chat_history}
 
+Query: {query}
 You just return the helpful code.
 Helpful Answer:
 [/INST]"""
 
 callback_manager = CallbackManager([StreamingStdOutCallbackHandler()])
-
-prompt = PromptTemplate(input_variables=["query"], template=custom_prompt_template)
-
-# llm = LlamaCpp(
-#     model_path= MODEL_PATH,
-#     max_tokens=5000,#2000,
-#     n_gpu_layers=32,
-#     n_ctx= 5000, #2048,
-#     temperature=0.75,
-#     f16_kv = True, # Must set to True, otherwise you will run into a problem after couple of calss
-#     top_p=1,
-#     callback_manager=callback_manager, 
-#     verbose=True, # Verbose is required to pass to the callback manager
-# )
+prompt = PromptTemplate(input_variables=["chat_history","query"], template=custom_prompt_template)
+memory = ConversationBufferMemory(input_key="query",memory_key="chat_history",)
 
 llm = LlamaCpp(
     model_path= MODEL_PATH,
     max_tokens=256,
-    n_gpu_layers=1, #32, # for M1 set equal to 1 only # for ubuntu or windows set depend on layer = 32
+    n_gpu_layers=32, #32, # for M1 set equal to 1 only # for ubuntu or windows set depend on layer = 32
     n_ctx= 2048,
     n_batch= 512, #256,
     callback_manager=callback_manager,
@@ -57,7 +46,7 @@ print(llm.n_gpu_layers)
 
 def chain_pipeline():
     qa_prompt = prompt
-    qa_chain = LLMChain(prompt=qa_prompt,llm=llm)
+    qa_chain = LLMChain(prompt=qa_prompt, memory=memory, llm=llm)
     return qa_chain
 
 llmchain = chain_pipeline()
