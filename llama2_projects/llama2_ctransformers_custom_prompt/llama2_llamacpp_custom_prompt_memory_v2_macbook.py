@@ -34,12 +34,10 @@ template = """[INST] <<SYS>>
 Your name is Kelly.
 You are helpful assistant, you always only answer for the question then you stop, read the chat history to get the context
 You always answer the question as helpfully as possible.
-
+<</SYS>>
 {chat_history}
 
-{question}
-<</SYS>>
-
+Question: {user_input}
 [/INST]"""
 
 print(template)
@@ -59,10 +57,9 @@ callback_manager = CallbackManager([StreamingStdOutCallbackHandler()])
 llm = LlamaCpp(
     model_path= MODEL_PATH,
     max_tokens=256,
-    n_gpu_layers=32,
+    n_gpu_layers=32, # for M1 set equal to 1 only # for ubuntu or windows set depend on layer = 32
     n_batch= 512, #256,
     callback_manager=callback_manager,
-    n_ctx= 1024,
     #verbose=True,
     temperature=0.8,
 )

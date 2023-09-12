@@ -3,6 +3,14 @@
 Recently Meta has released an open source of LLAMA2 model. which available 
 for all.
 
+In this we're going to use llama-cpp to run our Llama2 model locally. 
+Recently llama-cpp has release an update to support `GGUF` model. Therefore `GGML` model is no longer supported.
+
+To use `GGML` model, you can always revert and install this package version
+```
+llama-cpp-python                         0.1.77
+```
+
 ## Download the Model
 To start, you will need to download the `llama-2-13b-chat.ggmlv3.q8_0.bin` or `llama-2-7b-chat.ggmlv3.q8_0.bin` from `Hugging Face` library.
 This is quantized model which should support local run for lower machine spec.
