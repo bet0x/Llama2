@@ -1,1 +1,2 @@
 pip install open-interpreter
+pip install gradio
