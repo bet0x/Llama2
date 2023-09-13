@@ -14,6 +14,7 @@ from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
 from langchain.memory import ConversationBufferMemory
 from langchain.vectorstores import ElasticVectorSearch
 from streamlit_chat import message
+from time import sleep
 
 import together
 from togetherllm import TogetherLLM
@@ -41,7 +42,7 @@ Question: {question}
 print(custom_prompt_template)
 
 embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/all-mpnet-base-v2")
-memory = ConversationBufferMemory(input_key='question', memory_key='chat_history', return_messages=True, output_key='answer')
+#memory = ConversationBufferMemory(input_key='question', memory_key='chat_history', return_messages=True, output_key='answer')
 
 # Top_p: This is like setting a rule that the AI can only choose from the best possible options. If you set top_p to 0.1, it's like telling the AI, "You can only pick from the top 10% of your 'best guesses'."
 # Top_k: This one is similar to top_p but with a fixed number. If top_k is set to 50, it's like telling the AI, "You have 50 guesses. Choose the best one."
@@ -59,7 +60,7 @@ with st.sidebar:
     add_replicate_api = st.text_input("Enter your password here", type='password')
     # os.environ["TOGETHER_API_KEY"] = "4ed1cb4bc5e717fef94c588dd40c5617616f96832e541351195d3fb983ee6cb5"
 
-    if not (add_replicate_api.startswith('jlu')):
+    if not (add_replicate_api.startswith('jl')):
         st.warning('Please enter your credentials', icon='⚠️')
     else:
         st.success('Proceed to enter your prompt message!', icon='👉')
@@ -78,6 +79,9 @@ with st.sidebar:
     
 if "messages" not in st.session_state.keys():
     st.session_state.messages=[{"role": "assistant","content": "How may i assist you today ?"}]
+
+if 'entity_memory' not in st.session_state:
+    st.session_state.entity_memory = ConversationBufferMemory(input_key='question', memory_key='chat_history', return_messages=True, output_key='answer')
 
 for message in st.session_state.messages:
     with st.chat_message(message['role']):
@@ -141,20 +145,20 @@ def semantic_search(docsearch,query):
     return docs
 
 #QA Model Function
-def qa_bot(ask):
+# def qa_bot(ask):
 
-    db = load_db()
-    prompt = set_custom_prompt()
-    qa = conversationalretrieval_qa_chain(llm, prompt, db, memory)
+#     db = load_db()
+#     prompt = set_custom_prompt()
+#     qa = conversationalretrieval_qa_chain(llm, prompt, db, st.session_state.entity_memory)
     
-    result = qa({"question": ask})
-    res = result['answer']
+#     result = qa({"question": ask})
+#     res = result['answer']
 
 # Generate new response if last message is not from the assistant
 if st.session_state.messages[-1]["role"] != "assistant":
     db = load_db()
     default_prompt = set_custom_prompt()
-    qa = conversationalretrieval_qa_chain(llm, default_prompt, db, memory)
+    qa = conversationalretrieval_qa_chain(llm, default_prompt, db, st.session_state.entity_memory)
     
     with st.chat_message("assistant"):
         with st.spinner("Thinking"):
@@ -167,6 +171,7 @@ if st.session_state.messages[-1]["role"] != "assistant":
             full_response=''
             for item in response:
                 full_response+=item
+                sleep(0.01)
                 placeholder.markdown(full_response)
             placeholder.markdown(full_response)
 
