@@ -15,7 +15,8 @@ Here the AI will remember previous conversation history due to `ConversationoBuf
 
 #MODEL_PATH = r"D:/llama2_quantized_models/7B_chat/llama-2-7b-chat.ggmlv3.q8_0.bin"
 #MODEL_PATH = r"D:/llama2_quantized_models/7B_chat/llama-2-7b-chat.ggmlv3.q4_K_M.bin"
-MODEL_PATH = r"D:/llama2_quantized_models/7B_chat/llama-2-7b-chat.ggmlv3.q5_K_M.bin"
+#MODEL_PATH = r"D:/llama2_quantized_models/7B_chat/llama-2-7b-chat.ggmlv3.q5_K_M.bin"
+MODEL_PATH = r"/home/jlukas/Desktop/My_Project/AI_CTS/Llama2_Quantized/7B_GGUF/llama-2-7b-chat.Q4_K_M.gguf"
 
 B_INST, E_INST = "[INST]", "[/INST]"
 B_SYS, E_SYS = "<<SYS>>\n", "\n<</SYS>>\n\n"
@@ -44,7 +45,7 @@ llm = LlamaCpp(
     n_batch= 512, #256,
     callback_manager=callback_manager,
     n_ctx= 1024,
-    verbose=False,
+    verbose=True,
     temperature=0.8,
 )
 
