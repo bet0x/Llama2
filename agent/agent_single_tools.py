@@ -13,7 +13,7 @@ import os
 
 llm = TogetherLLM(
     model= "togethercomputer/llama-2-7b-chat",
-    temperature=0,
+    temperature=0.7,
     max_tokens=512
 )
 
