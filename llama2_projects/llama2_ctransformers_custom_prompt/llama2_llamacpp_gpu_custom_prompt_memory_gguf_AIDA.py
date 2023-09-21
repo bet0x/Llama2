@@ -8,6 +8,8 @@ from langchain.callbacks.manager import CallbackManager
 from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
 
 from langchain.llms import LlamaCpp
+import os
+
 
 # '''
 # Here, the instructions is part of the system prompt

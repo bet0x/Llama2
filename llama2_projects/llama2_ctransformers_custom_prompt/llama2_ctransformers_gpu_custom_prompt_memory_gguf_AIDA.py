@@ -35,24 +35,24 @@ prompt = PromptTemplate(input_variables=["chat_history", "question"], template=t
 memory = init_memory()
 
 # GPU Enabled
-# llm = CTransformers(model=MODEL_PATH,
-#                     model_type='llama',
-#                     config={'max_new_tokens': 2048,
-#                             'temperature': 0.7,
-#                             'gpu_layers': 35,
-#                             'stream' : True,
-#                             },
-                    
-#                    )
-
-# CPU Enabled
 llm = CTransformers(model=MODEL_PATH,
                     model_type='llama',
-                    config={'max_new_tokens': 5000,
-                            'temperature': 1,
-                            'stream' : True
+                    config={'max_new_tokens': 2048,
+                            'temperature': 0.7,
+                            'gpu_layers': 35,
+                            'stream' : True,
                             },
+                    
                    )
+
+# CPU Enabled
+# llm = CTransformers(model=MODEL_PATH,
+#                     model_type='llama',
+#                     config={'max_new_tokens': 5000,
+#                             'temperature': 1,
+#                             'stream' : True
+#                             },
+#                    )
 LLM_Chain=LLMChain(prompt=prompt, memory=memory, llm=llm)
 
 while True:
