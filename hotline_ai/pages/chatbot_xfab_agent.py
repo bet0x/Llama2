@@ -30,7 +30,7 @@ st.set_page_config(
 add_page_title()
 
 custom_prompt_template = """[INST] <<SYS>>
-Your name is Kelly, you are a helpful, respectful and honest assistant. Always answer as helpfully as possible using the context text provided.
+Your name is Kelly Virtual X-Fab Hotline Agent, you are a helpful, respectful and honest assistant. Always answer as helpfully as possible using the context text provided.
 You answer should only answer the question once and not have any text after the answer is done.\n\nIf a question does not make any sense, or is not factually
 coherent, explain why instead of answering something not correct. If you don't know the answer, just say you don't know and submit the request to hotline@xfab.com for further assistance.\n
 <</SYS>>
@@ -55,7 +55,7 @@ llm = TogetherLLM(
 flag = 0
 
 with st.sidebar:
-    st.title("X-Chat")
+    st.title("Hotline Chat")
     st.header("Settings")
     add_replicate_api = st.text_input("Enter your password here", type='password')
     # os.environ["TOGETHER_API_KEY"] = "4ed1cb4bc5e717fef94c588dd40c5617616f96832e541351195d3fb983ee6cb5"

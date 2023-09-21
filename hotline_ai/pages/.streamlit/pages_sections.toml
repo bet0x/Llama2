@@ -94,6 +94,11 @@ name = "X-Chat - RAG (Conversational Retrieval QA)"
 icon = "🤖"
 
 [[pages]]
+path = "./pages/chatbot_xfab_agent.py"
+name = "Hotline Agent"
+icon = "📎"
+
+[[pages]]
 path = "./pages/finetuning.py"
 name = "Fine-Tuning Method"
 icon = "🗝️"
